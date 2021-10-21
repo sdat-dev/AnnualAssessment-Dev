@@ -1,0 +1,37 @@
+.boxes {
+    margin: auto;
+    padding: 10px;
+    border: 1px solid #484848;
+  }
+  
+  form {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  div {
+    margin-bottom: 5px;
+  }
+  
+  fieldset {
+    border: 1px solid #484848;
+    padding: 10px;
+    
+  }
+  
+  legend {
+    padding: 10px;
+    width: auto;
+  }
+
+  .print-button{
+    margin-top: 15px;
+    background-color: #46166b;
+    color: white;
+    border-radius: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+
+  
