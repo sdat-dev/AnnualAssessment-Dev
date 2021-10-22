@@ -68,26 +68,26 @@ let goalDetailsAdmin = function (reportdata, year1, year2) {
     }
 
     data = [];
-    if (reportdata.Q131_8 != '' && reportdata.Q83 != '')
-        data.push(reportdata.Q83);
-    if (reportdata.Q131_9 != '' && reportdata.Q93 != '')
-        data.push(reportdata.Q93);
-    if (reportdata.Q131_13 != '' && reportdata.Q103 != '')
-        data.push(reportdata.Q103);
-    if (reportdata.Q131_11 != '' && reportdata.Q113 != '')
-        data.push(reportdata.Q113);
-    if (reportdata.Q131_12 != '' && reportdata.Q123 != '')
-        data.push(reportdata.Q123);
-    if (reportdata.Q132_4 != '')
-        data.push(reportdata.Q132_4);
-    if (reportdata.Q132_5 != '')
-        data.push(reportdata.Q132_5);
-    if (reportdata.Q132_6 != '')
-        data.push(reportdata.Q132_6);
-    if (reportdata.Q132_7 != '')
-        data.push(reportdata.Q132_7);
-    if (reportdata.Q132_8 != '')
-        data.push(reportdata.Q132_8);
+    if (reportdata.topAchievements1 != 'false' && reportdata.noteworthResults1 != '')
+        data.push(reportdata.noteworthResults1);
+    if (reportdata.topAchievements2 != 'false' && reportdata.noteworthResults2 != '')
+        data.push(reportdata.noteworthResults2);
+    if (reportdata.topAchievements3 != 'false' && reportdata.noteworthResults3 != '')
+        data.push(reportdata.noteworthResults3);
+    if (reportdata.topAchievements4 != 'false' && reportdata.noteworthResults4 != '')
+        data.push(reportdata.noteworthResults4);
+    if (reportdata.topAchievements5 != 'false' && reportdata.noteworthResults5 != '')
+        data.push(reportdata.noteworthResults5);
+    if (reportdata.achievement1 != '')
+        data.push(reportdata.achievement1);
+    if (reportdata.achievement2 != '')
+        data.push(reportdata.achievement2);
+    if (reportdata.achievement3 != '')
+        data.push(reportdata.achievement3);
+    if (reportdata.achievement4 != '')
+        data.push(reportdata.achievement4);
+    if (reportdata.achievement5 != '')
+        data.push(reportdata.achievement5);
     content += printTopAchievements(data);
 
     data["opportunities"] = reportdata.Q141;
