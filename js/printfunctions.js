@@ -1,25 +1,25 @@
 
 function printAdminAssessment(reportdata, year1, year2) {
     let data = {};
-    data["unit"] = reportdata["ExternalReference"];
+    data["unit"] = reportdata["Unit"];
 
     if (year1 == '2019') {
         data["mission"] = reportdata["1819Mission"];
         data["vision"] = reportdata["1819Vision"];
     }
     else {
-        data["mission"] = reportdata.Q31;
-        data["vision"] = reportdata.Q32;
+        data["mission"] = reportdata.mission;
+        data["vision"] = reportdata.vision;
     }
 
-    data["annualBudget"] = reportdata.Q41;
-    data["employeesState"] = reportdata.Q42_1_1;
-    data["employeesRF"] = reportdata.Q42_1_2;
-    data["fteState"] = reportdata.Q42_2_1;
-    data["fteRF"] = reportdata.Q42_2_2;
+    data["annualBudget"] = reportdata.annualBudget;
+    data["employeesState"] = reportdata.stateHeadcount;
+    data["employeesRF"] = reportdata.rfHeadcount;
+    data["fteState"] = reportdata.stateNumber;
+    data["fteRF"] = reportdata.rfNumber;
     let content = '';
     content = '<h1 style="text-align: center;">' + data.unit + '</h1><div style="margin-botton:30px;"></div><h1 style="text-align: center;">Annual Assessment Report (' + year1 + '-' + year2 + ')</h1>' +
-        '<div style="margin-botton:30px;"></div><h3 style="text-align: center;">Director: ' + reportdata.RecipientFirstName + ' ' + reportdata.RecipientLastName + '</h3>' +
+        '<div style="margin-botton:30px;"></div><h3 style="text-align: center;">Director: ' + reportdata.firstName + ' ' + reportdata.lastName + '</h3>' +
         '<h4>MISSION</h4>' +
         '<p class="mission">' + data.mission + '</p>' +
         '<h4>VISION</h4>' +
@@ -40,80 +40,69 @@ let goalDetailsAdmin = function (reportdata, year1, year2) {
 
     let content = '';
     let data = {};
-    if (reportdata.Q51 == 'Yes') {
 
-        for (var i = 1; i < 7; i++) {
-            data['membership' + i] = reportdata["Q52_" + i];
-            data['benefit' + i] = reportdata["Q61_" + i];
-
-        }
-        content += printOrganizationalMemberships(data);
+    for (var i = 1; i < 7; i++) {
+        data['membership' + i] = reportdata["organization" + i];
+        data['benefit' + i] = reportdata["membershipBenefit" + i];
     }
+    content += printOrganizationalMemberships(data);
 
-    for (var i = 8; i < 13; i++) {
-        if (i > 10 && reportdata.Q105 === 'No') {
-            break;
-        }
-        let no = i - 7;
-        if (year1 == 2019) {
-            let goal = new Goal(no, reportdata["1819Goal" + no], reportdata["1819Activities" + no],
-                reportdata["1819Metrics" + no], reportdata["1819Timeframe" + no], reportdata["Q" + i + "2"], reportdata["Q" + i + "3"], reportdata["Q" + i + "4"]);
-            content += printSmartGoal(goal, year1);
-        }
-        else {
-            let goal = new Goal(no, reportdata["Q" + i + "1"], reportdata["Q" + i + "2"],
-                reportdata["Q" + i + "3"], reportdata["Q" + i + "4"], reportdata["Q" + i + "5"], reportdata["Q" + i + "6"], reportdata["Q" + i + "7"]);
-            content += printSmartGoal(goal, year1);
-        }
+    for (var i = 1; i <= 5; i++) {
+
+        let no = i;
+        let goal = new Goal(no, reportdata["goal" + i], reportdata["actions" + i],
+            reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["actionsImplemented" + i], reportdata["noteworthResults" + i], reportdata["changes" + i]);
+        content += addSmartGoal(ids, goal, year1);
+
     }
 
     data = [];
-    if (reportdata.Q131_8 != '' && reportdata.Q83 != '')
-        data.push(reportdata.Q83);
-    if (reportdata.Q131_9 != '' && reportdata.Q93 != '')
-        data.push(reportdata.Q93);
-    if (reportdata.Q131_13 != '' && reportdata.Q103 != '')
-        data.push(reportdata.Q103);
-    if (reportdata.Q131_11 != '' && reportdata.Q113 != '')
-        data.push(reportdata.Q113);
-    if (reportdata.Q131_12 != '' && reportdata.Q123 != '')
-        data.push(reportdata.Q123);
-    if (reportdata.Q132_4 != '')
-        data.push(reportdata.Q132_4);
-    if (reportdata.Q132_5 != '')
-        data.push(reportdata.Q132_5);
-    if (reportdata.Q132_6 != '')
-        data.push(reportdata.Q132_6);
-    if (reportdata.Q132_7 != '')
-        data.push(reportdata.Q132_7);
-    if (reportdata.Q132_8 != '')
-        data.push(reportdata.Q132_8);
+    if (reportdata.topAchievements1 != 'false' && reportdata.noteworthResults1 != '')
+        data.push(reportdata.noteworthResults1);
+    if (reportdata.topAchievements2 != 'false' && reportdata.noteworthResults2 != '')
+        data.push(reportdata.noteworthResults2);
+    if (reportdata.topAchievements3 != 'false' && reportdata.noteworthResults3 != '')
+        data.push(reportdata.noteworthResults3);
+    if (reportdata.topAchievements4 != 'false' && reportdata.noteworthResults4 != '')
+        data.push(reportdata.noteworthResults4);
+    if (reportdata.topAchievements5 != 'false' && reportdata.noteworthResults5 != '')
+        data.push(reportdata.noteworthResults5);
+    if (reportdata.achievement1 != '')
+        data.push(reportdata.achievement1);
+    if (reportdata.achievement2 != '')
+        data.push(reportdata.achievement2);
+    if (reportdata.achievement3 != '')
+        data.push(reportdata.achievement3);
+    if (reportdata.achievement4 != '')
+        data.push(reportdata.achievement4);
+    if (reportdata.achievement5 != '')
+        data.push(reportdata.achievement5);
     content += printTopAchievements(data);
 
-    data["opportunities"] = reportdata.Q141;
-    data["challenges"] = reportdata.Q142;
-    data["needs"] = reportdata.Q143;
-    data["strategies"] = reportdata.Q144;
-    data["suggestions"] = reportdata.Q145;
+    data["opportunities"] = reportdata.bigOpportunities;
+    data["challenges"] = reportdata.bigChallenges;
+    data["needs"] = reportdata.resourceNeeds;
+    data["strategies"] = reportdata.strategicSuggestions;
+    data["suggestions"] = reportdata.otherthoughts;
     content += printOtherThoughts(data);
     return content;
 }
 
 function printAdminPlanning(reportdata, year1, year2) {
     let data = {};
-    data["unit"] = reportdata.ExternalReference
+    data["unit"] = reportdata.Unit
     let content = '';
-    data["mission"] = reportdata.Q31;
-    data["vision"] = reportdata.Q32;
-    data["annualBudget"] = reportdata.Q41;
-    data["employeesState"] = reportdata.Q42_1_1;
-    data["employeesRF"] = reportdata.Q42_1_2;
-    data["fteState"] = reportdata.Q42_2_1;
-    data["fteRF"] = reportdata.Q42_2_2;
+    data["mission"] = reportdata.mission;
+    data["vision"] = reportdata.vision;
+    data["annualBudget"] = reportdata.annualBudget;
+    data["employeesState"] = reportdata.stateHeadcount;
+    data["employeesRF"] = reportdata.rfHeadcount;
+    data["fteState"] = reportdata.stateNumber;
+    data["fteRF"] = reportdata.rfNumber;
 
 
     content = '<h1 style="text-align: center;">' + data.unit + '</h1><div style="margin-botton:30px;"></div><h1 style="text-align: center;">Planning Report (' + year1 + '-' + year2 + ')</h1>' +
-        '<div style="margin-botton:30px;"></div><h3 style="text-align: center;">Director: ' + reportdata.RecipientFirstName + ' ' + reportdata.RecipientLastName + '</h3>' +
+        '<div style="margin-botton:30px;"></div><h3 style="text-align: center;">Director: ' + reportdata.firstName + ' ' + reportdata.lastName + '</h3>' +
         '<h4>MISSION</h4>' +
         '<p class="mission">' + data.mission + '</p>' +
         '<h4>VISION</h4>' +
@@ -135,37 +124,37 @@ function printResearchAssessment(reportdata, year1, year2) {
 
     let data = {};
 
-    data["unit"] = reportdata.ExternalReference;
+    data["unit"] = reportdata.Unit;
 
-    data["mission"] = reportdata.Q31;
-    data["vision"] = reportdata.Q32;
+    data["mission"] = reportdata.mission;
+    data["vision"] = reportdata.vision;
 
-    data["annualBudget"] = reportdata.Q41;
-    data["employeesState"] = checkNull(reportdata.Q42_1_1);
-    data["employeesRF"] = checkNull(reportdata.Q42_1_2);
-    data["fteState"] = checkNull(reportdata.Q42_2_1);
-    data["fteRF"] = checkNull(reportdata.Q42_2_2);
-    data["nameOfadditionalsource1"] = checkNull(reportdata.Q43_1);
-    data["nameOfadditionalsource11"] = checkNull(reportdata.Q43_1_TEXT);
+    data["annualBudget"] = reportdata.annualBudget;
+    data["employeesState"] = checkNull(reportdata.stateHeadcount);
+    data["employeesRF"] = checkNull(reportdata.rfHeadcount);
+    data["fteState"] = checkNull(reportdata.stateNumber);
+    data["fteRF"] = checkNull(reportdata.rfNumber);
+    data["nameOfadditionalsource1"] = checkNull(reportdata.otherRevenue1);
+    data["nameOfadditionalsource11"] = checkNull(reportdata.otherRevenue2);
 
-    data["nameOfadditionalsource2"] = checkNull(reportdata.Q43_2);
-    data["nameOfadditionalsource21"] = checkNull(reportdata.Q43_2_TEXT);
+    data["nameOfadditionalsource2"] = checkNull(reportdata.otherRevenue3);
+    data["nameOfadditionalsource21"] = checkNull(reportdata.otherRevenue4);
 
-    data["nameOfadditionalsource3"] = checkNull(reportdata.Q43_3);
-    data["nameOfadditionalsource31"] = checkNull(reportdata.Q43_3_TEXT);
+    data["nameOfadditionalsource3"] = checkNull(reportdata.otherRevenue5);
+    data["nameOfadditionalsource31"] = checkNull(reportdata.otherRevenue6);
 
-    data["total3"] = checkNull(reportdata.Q43_4_1);
-    data["total33"] = checkNull(reportdata.Q43_4_2);
+    addTotal3 = { 1: data["nameOfadditionalsource1"], 2: data["nameOfadditionalsource2"], 3: data["nameOfadditionalsource3"] };
+
+    data["total3"] = checkNull(addTotal3);
+    data["total33"] = checkNull(addTotal3);
 
     addData = {};
-    data["proposals"] = reportdata.Q51;
-    data["federalApplicationgoals"] = checkNull(reportdata.Q51_1_1);
-    data["federalApplicationactual"] = checkNull(reportdata.Q51_2_1);
-    data["stateApplicationgoals"] = checkNull(reportdata.Q51_1_2);
-    data["stateApplicationactual"] = checkNull(reportdata.Q51_2_2);
-
-    data["privateApplicationgoals"] = checkNull(reportdata.Q51_1_4);
-    data["privateApplicationactual"] = checkNull(reportdata.Q51_2_4);
+    data["federalApplicationgoals"] = checkNull(reportdata.porposals1);
+    data["federalApplicationactual"] = checkNull(reportdata.porposals4);
+    data["stateApplicationgoals"] = checkNull(reportdata.porposals3);
+    data["stateApplicationactual"] = checkNull(reportdata.porposals6);
+    data["privateApplicationgoals"] = checkNull(reportdata.porposals2);
+    data["privateApplicationactual"] = checkNull(reportdata.porposals5);
 
     addData = { 1: data["federalApplicationgoals"], 2: data["stateApplicationgoals"], 3: data["privateApplicationgoals"] };
     addData1 = { 1: data["federalApplicationactual"], 2: data["stateApplicationactual"], 3: data["stateApplicationactual"] };
@@ -174,13 +163,14 @@ function printResearchAssessment(reportdata, year1, year2) {
     data["proposal_total_actual"] = add(addData1);
 
     data["awards"] = reportdata.Q52;
-    data["federalAwardsgoals"] = checkNull(reportdata.Q52_1_1);
-    data["federalAwardsactual"] = checkNull(reportdata.Q52_2_1);
-    data["stateAwardsgoals"] = checkNull(reportdata.Q52_1_2);
-    data["stateAwardsactual"] = checkNull(reportdata.Q52_2_2);
+    data["federalAwardsgoals"] = checkNull(reportdata.awards1);
+    data["federalAwardsactual"] = checkNull(reportdata.awards4);
 
-    data["privateAwardsgoals"] = checkNull(reportdata.Q52_1_4);
-    data["privateAwardsactual"] = checkNull(reportdata.Q52_2_4);
+    data["stateAwardsgoals"] = checkNull(reportdata.awards3);
+    data["stateAwardsactual"] = checkNull(reportdata.awards6);
+
+    data["privateAwardsgoals"] = checkNull(reportdata.awards2);
+    data["privateAwardsactual"] = checkNull(reportdata.awards5);
 
     addData2 = { 1: data["federalAwardsgoals"], 2: data["stateAwardsgoals"], 3: data["privateAwardsgoals"] };
     addData3 = { 1: data["federalAwardsactual"], 2: data["stateAwardsactual"], 3: data["privateAwardsactual"] };
@@ -189,74 +179,77 @@ function printResearchAssessment(reportdata, year1, year2) {
     data["awrds_total_actual"] = add(addData3);
 
     data["largeScale"] = checkNull(reportdata.Q53);
-    data["proposal_goals"] = checkNull(reportdata.Q53_1_1);
-    data["proposal_actual"] = checkNull(reportdata.Q53_1_2);
-    data["lsAwards_goals"] = checkNull(reportdata.Q53_2_1);
-    data["lsAwards_actual"] = checkNull(reportdata.Q53_2_2);
+    data["proposal_goals"] = checkNull(reportdata.largeScale1);
+    data["proposal_actual"] = checkNull(reportdata.largeScale2);
+    data["lsAwards_goals"] = checkNull(reportdata.largeScale3);
+    data["lsAwards_actual"] = checkNull(reportdata.largeScale4);
 
     data["strr"] = checkNull(reportdata.Q54);
 
-    data["stProposal_goals"] = checkNull(reportdata.Q54_1_1);
-    data["stProposal_actual"] = checkNull(reportdata.Q54_1_2);
+    data["stProposal_goals"] = checkNull(reportdata.sttrAwards1);
+    data["stProposal_actual"] = checkNull(reportdata.sttrAwards2);
 
-    data["stAwards_goals"] = checkNull(reportdata.Q54_2_1);
-    data["stAwards_actual"] = checkNull(reportdata.Q54_2_2);
+    data["stAwards_goals"] = checkNull(reportdata.sttrAwards3);
+    data["stAwards_actual"] = checkNull(reportdata.sttrAwards4);
+
     //detailed research
 
-    data["publications"] = checkNull(reportdata.Q61);
-    data["booksAuthoredgoals"] = checkNull(reportdata.Q61_1_1);
-    data["bookauthoredsactual"] = checkNull(reportdata.Q61_1_2);
+    data["booksAuthoredgoals"] = checkNull(reportdata.publications1);
+    data["bookauthoredsactual"] = checkNull(reportdata.publications2);
 
-    data["bookschaptersgoals"] = checkNull(reportdata.Q61_2_1);
-    data["bookschapteractual"] = checkNull(reportdata.Q61_2_2);
+    data["bookschaptersgoals"] = checkNull(reportdata.publications3);
+    data["bookschapteractual"] = checkNull(reportdata.publications4);
 
-    data["publicationsgoals"] = checkNull(reportdata.Q61_3_1);
-    data["publicationsactual"] = checkNull(reportdata.Q61_3_2);
-    data["listofpublications"] = checkNull(reportdata.Q62);
 
-    data["intellctualgoals"] = checkNull(reportdata.Q63_1_1);
-    data["intellctualactual"] = checkNull(reportdata.Q63_1_2);
+    data["publicationsgoals"] = checkNull(reportdata.publications5);
+    data["publicationsactual"] = checkNull(reportdata.publications6);
 
-    data["patnetsgoals"] = checkNull(reportdata.Q63_2_1);
-    data["patentsactual"] = checkNull(reportdata.Q63_2_2);
-    data["patlicenesedlgoals"] = checkNull(reportdata.Q63_3_1);
-    data["patlicensedactual"] = checkNull(reportdata.Q63_3_2);
 
-    data["patlicgoals"] = checkNull(reportdata.Q63_4_1);
-    data["patlicactuals"] = checkNull(reportdata.Q63_4_2);
+    data["listofpublications"] = checkNull(reportdata.listOfCenter);
 
-    data["licensedexecutedgoals"] = checkNull(reportdata.Q63_5_1);
-    data["licensedexecutedactual"] = checkNull(reportdata.Q63_5_2);
+    data["intellectualgoals"] = checkNull(reportdata.technologyTransfer1);
+    data["intellectualactual"] = checkNull(reportdata.technologyTransfer2);
 
-    data["licensedrevenuegoals"] = checkNull(reportdata.Q63_6_1);
-    data["licensedrevenueactual"] = checkNull(reportdata.Q63_6_2);
+    data["patentsgoals"] = checkNull(reportdata.technologyTransfer3);
+    data["patentsactual"] = checkNull(reportdata.technologyTransfer4);
+    data["patlicenesedlgoals"] = checkNull(reportdata.technologyTransfer5);
+    data["patlicensedactual"] = checkNull(reportdata.technologyTransfer6);
 
-    data["startupcompaniesgoals"] = checkNull(reportdata.Q63_7_1);
-    data["starupcomapnieseactual"] = checkNull(reportdata.Q63_7_2);
 
-    data["listofintelletual"] = checkNull(reportdata.Q64);
+    data["patlicgoals"] = checkNull(reportdata.technologyTransfer7);
+    data["patlicactuals"] = checkNull(reportdata.technologyTransfer8);
 
-    data["yougoaloffy19020"] = checkNull(reportdata.Q65_1);
-    data["actualnumbers"] = checkNull(reportdata.Q65_2);
-    data["listofkeynote"] = checkNull(reportdata.Q66);
-    data["otheractivities"] = checkNull(reportdata.Q67);
+    data["licensedexecutedgoals"] = checkNull(reportdata.technologyTransfer9);
+    data["licensedexecutedactual"] = checkNull(reportdata.technologyTransfer10);
 
-    data["educationandtraining"] = checkNull(reportdata.Q71);
-    data["students_goals_undergraduate"] = checkNull(reportdata.Q71_1_1);
-    data["students_goals_graduate"] = checkNull(reportdata.Q71_1_2);
-    data["students_goals_graduate_phd"] = checkNull(reportdata.Q71_1_4);
-    data["students_goals_phd"] = checkNull(reportdata.Q71_1_5);
+    data["licensedrevenuegoals"] = checkNull(reportdata.technologyTransfer11);
+    data["licensedrevenueactual"] = checkNull(reportdata.technologyTransfer12);
 
-    data["students_actual_undergraduate"] = checkNull(reportdata.Q71_2_1);
-    data["students_actual_graduate"] = checkNull(reportdata.Q71_2_2);
-    data["students_actual_graduate_phd"] = checkNull(reportdata.Q71_2_4);
-    data["students_actual_phd"] = checkNull(reportdata.Q71_2_5);
+    data["startupcompaniesgoals"] = checkNull(reportdata.technologyTransfer13);
+    data["starupcomapnieseactual"] = checkNull(reportdata.technologyTransfer14);
 
-    data["nature_of_mentoring_undergradudate"] = checkNull(reportdata.Q71_3_1);
-    data["nature_of_mentoring_graduate"] = checkNull(reportdata.Q71_3_2);
-    data["nature_of_mentoring_graduate_phd"] = checkNull(reportdata.Q71_3_4);
-    data["nature_of_mentoringl_phd"] = checkNull(reportdata.Q71_3_5);
-    data["noofpartners"] = reportdata.Q141;
+    data["listofintelletual"] = checkNull(reportdata.propertyDisclosures);
+
+    data["yougoaloffy19020"] = checkNull(reportdata.conference1);
+    data["actualnumbers"] = checkNull(reportdata.conference2);
+
+    data["listofkeynote"] = checkNull(reportdata.keynoteAddresses);
+    data["otheractivities"] = checkNull(reportdata.otherActivities);
+
+    data["students_goals_undergraduate"] = checkNull(reportdata.educationAndTraining1);
+    data["students_goals_graduate"] = checkNull(reportdata.educationAndTraining2);
+    data["students_goals_graduate_phd"] = checkNull(reportdata.educationAndTraining3);
+    data["students_goals_phd"] = checkNull(reportdata.educationAndTraining4);
+
+    data["students_actual_undergraduate"] = checkNull(reportdata.educationAndTraining5);
+    data["students_actual_graduate"] = checkNull(reportdata.educationAndTraining6);
+    data["students_actual_graduate_phd"] = checkNull(reportdata.educationAndTraining7);
+    data["students_actual_phd"] = checkNull(reportdata.educationAndTraining8);
+
+    data["nature_of_mentoring_undergradudate"] = checkNull(reportdata.educationAndTraining9);
+    data["nature_of_mentoring_graduate"] = checkNull(reportdata.educationAndTraining10);
+    data["nature_of_mentoring_graduate_phd"] = checkNull(reportdata.educationAndTraining11);
+    data["nature_of_mentoringl_phd"] = checkNull(reportdata.educationAndTraining12);
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -273,7 +266,7 @@ function printResearchAssessment(reportdata, year1, year2) {
     content_research = '<h1 style="text-align: center;">' + data.unit + '</h1><div style="margin-botton:30px;"></div><h1 style="text-align: center;">Annual Assessment Report (' + year1 + '-' + year2 + ')</h1>';
     content_research +=
 
-        '<div style="margin-botton:30px;"></div><h3 style="text-align: center;">Director: ' + reportdata.RecipientFirstName + ' ' + reportdata.RecipientLastName + '</h3>' +
+        '<div style="margin-botton:30px;"></div><h3 style="text-align: center;">Director: ' + reportdata.firstName + ' ' + reportdata.lastName + '</h3>' +
         '<h4>MISSION</h4>' +
         '<p class="mission">' + data.mission + '</p>' +
         '<h4>VISION</h4>' +
@@ -479,42 +472,43 @@ function printResearchAssessment(reportdata, year1, year2) {
     content_research += goalDetailsResearch(reportdata);
 
     achievementdata = [];
-    if (year1 == 2019) {
-        if (reportdata.Q81_4 != '')
-            achievementdata.push(reportdata.Q81_4);
+    if (ids.parentId == "FY2019") {
+        if (reportdata.topAchievements1 != '')
+            data.push(reportdata.topAchievements1);
         else
-            achievementdata.push("N/A");
-        if (reportdata.Q81_5 != '')
-            achievementdata.push(reportdata.Q81_5);
+            data.push("N/A");
+        if (reportdata.topAchievements2 != '')
+            data.push(reportdata.topAchievements2);
         else
-            achievementdata.push("N/A");
-        if (reportdata.Q81_6 != '')
-            achievementdata.push(reportdata.Q81_6);
+            data.push("N/A");
+        if (reportdata.topAchievements3 != '')
+            data.push(reportdata.topAchievements3);
         else
-            achievementdata.push("N/A");
+            data.push("N/A");
     }
     else {
-        if (reportdata.Q81_4 != '')
-            achievementdata.push(reportdata.Q81_4);
+        if (reportdata.topAchievements1 != '')
+            data.push(reportdata.topAchievements1);
         else
-            achievementdata.push("N/A");
-        if (reportdata.Q81_5 != '')
-            achievementdata.push(reportdata.Q81_5);
+            data.push("N/A");
+        if (reportdata.topAchievements2 != '')
+            data.push(reportdata.topAchievements2);
         else
-            achievementdata.push("N/A");
-        if (reportdata.Q81_6 != '')
-            achievementdata.push(reportdata.Q81_6);
+            data.push("N/A");
+        if (reportdata.topAchievements3 != '')
+            data.push(reportdata.topAchievements3);
         else
-            achievementdata.push("N/A");
-        if (reportdata.Q81_7 != '')
-            achievementdata.push(reportdata.Q81_7);
+            data.push("N/A");
+        if (reportdata.topAchievements4 != '')
+            data.push(reportdata.topAchievements4);
         else
-            achievementdata.push("N/A");
-        if (reportdata.Q81_8 != '')
-            achievementdata.push(reportdata.Q81_8);
+            data.push("N/A");
+        if (reportdata.topAchievements5 != '')
+            data.push(reportdata.topAchievements5);
         else
-            achievementdata.push("N/A");
+            data.push("N/A");
     }
+
 
 
     content_research += printTopAchievements(achievementdata);
@@ -522,11 +516,11 @@ function printResearchAssessment(reportdata, year1, year2) {
     content_research += addListOfContacts(data);
 
     otherdata = {};
-    otherdata["opportunities"] = reportdata.Q151;
-    otherdata["challenges"] = reportdata.Q152;
-    otherdata["needs"] = reportdata.Q153;
-    otherdata["strategies"] = reportdata.Q154;
-    otherdata["suggestions"] = reportdata.Q155;
+    otherdata["opportunities"] = reportdata.otherThoughtsToGrowResearch;
+    otherdata["challenges"] = reportdata.bigChallenges;
+    otherdata["needs"] = reportdata.resourceNeeds;
+    otherdata["strategies"] = reportdata.strategicSuggestions;
+    otherdata["suggestions"] = reportdata.otherthoughts;
     content_research += printOtherThoughts(otherdata);
 
     return content_research;
@@ -534,68 +528,61 @@ function printResearchAssessment(reportdata, year1, year2) {
 
 function printResearchPlanning(reportdata, year1, year2) {
     let data = {};
-    data["unit"] = reportdata.ExternalReference;
+    data["unit"] = reportdata.Unit;
 
-    data["mission"] = reportdata.Q31;
-    data["vision"] = reportdata.Q32;
+    data["mission"] = reportdata.mission;
+    data["vision"] = reportdata.vision;
     //  content += addMissionAndVision(ids, data);
-    data["annualBudget"] = reportdata.Q41;
-    data["employeesState"] = checkNull(reportdata.Q42_1_1);
-    data["employeesRF"] = checkNull(reportdata.Q42_1_2);
-    data["fteState"] = checkNull(reportdata.Q42_2_1);
-    data["fteRF"] = checkNull(reportdata.Q42_2_2);
+    data["annualBudget"] = reportdata.annualBudget;
+    data["employeesState"] = checkNull(reportdata.stateHeadcount);
+    data["employeesRF"] = checkNull(reportdata.rfHeadcount);
+    data["fteState"] = checkNull(reportdata.stateNumber);
+    data["fteRF"] = checkNull(reportdata.rfNumber);
     // content += addAnnualBudget(ids, data);
-    data["proposals"] = reportdata.Q51;
-    data["federalApplication"] = checkNull(reportdata.Q51_1_1);
-    data["stateApplication"] = checkNull(reportdata.Q51_1_2);
-    data["privateApplication"] = checkNull(reportdata.Q51_1_4);
+    data["federalApplication"] = checkNull(reportdata.proposals1);
+    data["stateApplication"] = checkNull(reportdata.proposals2);
+    data["privateApplication"] = checkNull(reportdata.proposals3);
 
     addData9 = { 1: data["federalApplication"], 2: data["stateApplication"], 3: data["privateApplication"] };
 
     data["proposal_total"] = add(addData9);
     data["awards"] = reportdata.Q52;
-    data["federalAwards"] = checkNull(reportdata.Q52_1_1);
-    data["stateAwards"] = checkNull(reportdata.Q52_1_2);
-    data["privateAwards"] = checkNull(reportdata.Q52_1_4);
-
+    data["federalAwards"] = checkNull(reportdata.awards1);
+    data["stateAwards"] = checkNull(reportdata.awards2);
+    data["privateAwards"] = checkNull(reportdata.awards3);
     addData11 = { 1: data["federalAwards"], 2: data["stateAwards"], 3: data["privateAwards"] };
 
     data["awrds_total"] = add(addData11);
 
-    data["largeScale"] = checkNull(reportdata.Q53);
-    data["proposal"] = checkNull(reportdata.Q53_1_1);
-    data["lsAwards"] = checkNull(reportdata.Q53_1_2);
+    data["proposal"] = checkNull(reportdata.largeScale1);
+    data["lsAwards"] = checkNull(reportdata.largeScale2);
 
-    data["strr"] = checkNull(reportdata.Q54);
-    data["stProposal"] = checkNull(reportdata.Q54_1_1);
-    data["stAwards"] = checkNull(reportdata.Q54_1_2);
+    data["stProposal"] = checkNull(reportdata.sttrAwards1);
+    data["stAwards"] = checkNull(reportdata.sttrAwards2);
 
-    data["publications"] = checkNull(reportdata.Q55);
-    data["booksAuthored"] = checkNull(reportdata.Q55_1_1);
-    data["booksChapters"] = checkNull(reportdata.Q55_1_2);
-    data["publicationsTable"] = checkNull(reportdata.Q54_1_3);
+    data["booksAuthored"] = checkNull(reportdata.publication1);
+    data["booksChapters"] = checkNull(reportdata.publication2);
+    data["publicationsTable"] = checkNull(reportdata.publication3);
 
 
-    data["technologyTransfer"] = checkNull(reportdata.Q56);
-    data["intellectual"] = checkNull(reportdata.Q56_1_1);
-    data["patentsApplications"] = checkNull(reportdata.Q56_2_1);
-    data["patentsIssued"] = checkNull(reportdata.Q56_3_1);
-    data["patentsLicensed"] = checkNull(reportdata.Q56_4_1);
-    data["licensedExecuted"] = checkNull(reportdata.Q56_5_1);
-    data["licensedRevenue"] = checkNull(reportdata.Q56_6_1);
-    data["startupCompanies"] = checkNull(reportdata.Q56_7_1);
-    data["conference"] = checkNull(reportdata.Q57);
-    data["goals"] = checkNull(reportdata.Q57_1_1);
+    data["intellectual"] = checkNull(reportdata.technologyTransfer1);
+    data["patentsApplications"] = checkNull(reportdata.technologyTransfer2);
+    data["patentsIssued"] = checkNull(reportdata.technologyTransfer3);
+    data["patentsLicensed"] = checkNull(reportdata.technologyTransfer4);
+    data["licensedExecuted"] = checkNull(reportdata.technologyTransfer5);
+    data["licensedRevenue"] = checkNull(reportdata.technologyTransfer6);
+    data["startupCompanies"] = checkNull(reportdata.technologyTransfer7);
 
-    data["education"] = checkNull(reportdata.Q58);
-    data["undergraduate"] = checkNull(reportdata.Q58_1_1);
-    data["graduate_masters"] = checkNull(reportdata.Q58_2_1);
-    data["graduate_phd"] = checkNull(reportdata.Q58_3_1);
-    data["post"] = checkNull(reportdata.Q58_4_1);
+    data["goals"] = checkNull(reportdata.conference);
+
+    data["undergraduate"] = checkNull(reportdata.educationAndTraining1);
+    data["graduate_masters"] = checkNull(reportdata.educationAndTraining2);
+    data["graduate_phd"] = checkNull(reportdata.educationAndTraining3);
+    data["post"] = checkNull(reportdata.educationAndTraining4);
     let period = getPeriod(year1);
     let content_research1 = '<h1 style="text-align: center;">' + data.unit + '</h1><div style="margin-botton:30px;"></div><h1 style="text-align: center;">Planning Report (' + year1 + '-' + year2 + ')</h1>';
     content_research1 +=
-        '<div style="margin-botton:30px;"></div><h3 style="text-align: center;">Director: ' + reportdata.RecipientFirstName + ' ' + reportdata.RecipientLastName + '</h3>' +
+        '<div style="margin-botton:30px;"></div><h3 style="text-align: center;">Director: ' + reportdata.firstName + ' ' + reportdata.lastName + '</h3>' +
         '<h4>MISSION</h4>' +
         '<p class="mission">' + data.mission + '</p>' +
         '<h4>VISION</h4>' +
@@ -790,10 +777,11 @@ let formatPara = function (text) {
 let goalDetailsResearch = function (reportdata, year) {
 
     let content = '';
-    for (var i = 9; i < 14; i++) {
-        let goal = new Goal(i - 8, reportdata["Q" + i + "1"], reportdata["Q" + i + "2"],
-            reportdata["Q" + i + "3"], reportdata["Q" + i + "4"], reportdata["Q" + i + "5"],
-            reportdata["Q" + i + "6"], reportdata["Q" + i + "7"], reportdata["Q" + i + "8"]);
+    for (var i = 1; i < 6; i++) {
+        let goal = new GoalPlan(i, reportdata["goal" + i], reportdata["actions" + i],
+            reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["primaryLeader" + i],
+            reportdata["impactWorkplan" + i], reportdata["collaboratingUnits" + i],
+            reportdata["impactResearchExcellence" + i]);
         content += printSmartGoal(goal, year);
     }
     return content;
@@ -836,10 +824,11 @@ let goalPlanningDetailsAdmin = function (reportdata, year) {
 
     let content = '';
 
-    for (var i = 6; i < 11; i++) {
-        let goal = new GoalPlan(i - 5, reportdata["Q" + i + "1"], reportdata["Q" + i + "2"],
-            reportdata["Q" + i + "3"], reportdata["Q" + i + "4"], reportdata["Q" + i + "5"],
-            reportdata["Q" + i + "6"], reportdata["Q" + i + "7"], reportdata["Q" + i + "8"]);
+    for (var i = 1; i < 6; i++) {
+        let goal = new GoalPlan(i, reportdata["goal" + i], reportdata["actions" + i],
+            reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["primaryLeader" + i],
+            reportdata["impactWorkplan" + i], reportdata["collaboratingUnits" + i],
+            reportdata["impactResearchExcellence" + i]);
         content += printSmartGoalPlan(goal, year);
     }
 
