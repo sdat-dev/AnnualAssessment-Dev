@@ -15,7 +15,9 @@ window.onload = function () {
                         '<fieldset>'+
                             '<legend>Select Period To Print</legend>'+
                             '<select id="period" onchange="changePeriod()">';
-    for (var FY of Object.keys(adminunitsfulldata)){
+    FYs = Object.keys(adminunitsfulldata);
+    FYs.sort();
+    for (var FY of FYs){
         printform += '<option value="'+ FY + '"> '+ FY +' </option>';
     }
     printform += '</select>'+
@@ -23,9 +25,9 @@ window.onload = function () {
             '<fieldset id="units">'+
             '<legend>Select Administrative Units To Print</legend>';
     
-    let currentFY = Object.keys(adminunitsfulldata)[0];
+    let currentFY = FYs[0];
     let adminFYData = adminunitsfulldata[currentFY];
-    let units = getDistinctAttributes(adminFYData.data, "ExternalReference");
+    let units = getDistinctAttributes(adminFYData.data, "Unit");
     let validunits = [];
     for(i =0; i< units.length;i++){
         if(units[i] != "")
@@ -48,7 +50,7 @@ window.onload = function () {
     
     let researchcentersfulldata = responsedata.ResearchCenters;
     let researchCenterFYData = researchcentersfulldata[currentFY];
-    let centers = getDistinctAttributes(researchCenterFYData.data, "ExternalReference");
+    let centers = getDistinctAttributes(researchCenterFYData.data, "Unit");
     let validcenters = [];
     for(i =0; i< centers.length;i++){
         if(centers[i] != "")
@@ -94,7 +96,9 @@ function changePeriod(){
     let adminFYData = data.AdminUnits[period];
 
     let unitoptions = '<legend>Select Administrative Units To Print</legend>';
-    let units = getDistinctAttributes(adminFYData.data, "ExternalReference");
+    let units = [];
+    if(adminFYData != undefined)
+        units = getDistinctAttributes(adminFYData.data, "Unit");
     let validunits = [];
     for(i =0; i< units.length;i++){
         if(units[i] != "")
@@ -117,7 +121,9 @@ function changePeriod(){
     let centeroptions ='<legend>Select Research Centers To Print</legend>';
 
     let researchCenterFYData = data.ResearchCenters[period];
-    let centers = getDistinctAttributes(researchCenterFYData.data, "ExternalReference");
+    let centers = [];
+    if(researchCenterFYData != undefined)
+        centers = getDistinctAttributes(researchCenterFYData.data, "Unit");
     let validcenters = [];
     for(i =0; i< centers.length;i++){
         if(centers[i] != "")
@@ -139,14 +145,21 @@ function changePeriod(){
     var assementlable = document.getElementById("assessment-label");
     var planninglable = document.getElementById("planning-label")
 
-    if(period == 'FY2019-2020'){
-        assementlable.innerText = "Assessment (2019-2020)";
-        planninglable.innerText = "Planning (2020-2021)";
-    }
-    else
-    {
-        assementlable.innerText = "Assessment (2020-2021)";
-        planninglable.innerText = "Planning (2021-2022)";
+    switch (period){
+        case 'FY 19-20':
+            assementlable.innerText = "Assessment (2019-2020)";
+            planninglable.innerText = "Planning (2020-2021)";
+            break;
+        case 'FY 20-21':
+            assementlable.innerText = "Assessment (2020-2021)";
+            planninglable.innerText = "Planning (2021-2022)";
+            break;
+        case 'FY 21-22':
+            assementlable.innerText = "Assessment (2021-2022)";
+            planninglable.innerText = "Planning (2022-2023)";
+          break;
+        default:
+          console.log(`Sorry, we are out of ${period}.`);
     }
 }
 
@@ -192,13 +205,13 @@ function printReport(event) {
                 return d.ExternalReference == units_selected[i];
             })[0];
             if (units_e1[k] == 'assessment') {
-                if(period == 'FY2019-2020')
+                if(period == 'FY 19-20')
                 {
-                    content = printAdminAssessment(unitdata.FY1920,'2019','2020');
+                    content = printAdminAssessment(unitdata["FY 19-20"],'2019','2020');
                 }
                 else
                 {
-                    content = printAdminAssessment(unitdata.FY2021,'2020','2021')
+                    content = printAdminAssessment(unitdata["FY 20-21"],'2020','2021')
                 }
                 if (content !== '') {
                     contenttotal += content;
@@ -212,13 +225,13 @@ function printReport(event) {
                 return d.ExternalReference == units_research_selected[j];
             })[0];
             if (units_e1[k] == 'assessment') {
-                if(period == 'FY2019-2020')
+                if(period == 'FY 19-20')
                 {
-                    content = printResearchAssessment(centerdata.FY1920,'2019','2020');
+                    content = printResearchAssessment(centerdata["FY 19-20"],'2019','2020');
                 }
                 else
                 {
-                    content = printResearchAssessment(centerdata.FY2021,'2020','2021')
+                    content = printResearchAssessment(centerdata["FY 20-21"],'2020','2021')
                 }
                 if (content !== '') {
                     contenttotal += content;
@@ -232,13 +245,13 @@ function printReport(event) {
                 return d.ExternalReference == units_selected[i];
             })[0];
             if (units_e1[k] == 'planning') {
-                if(period == 'FY2019-2020')
+                if(period == 'FY 19-20')
                 {
-                    content = printAdminPlanning(unitdata.FY2021, '2020','2021');
+                    content = printAdminPlanning(unitdata["FY 20-21"], '2020','2021');
                 }
                 else
                 {
-                    content = printAdminPlanning(unitdata.FY2122, '2021','2022');
+                    content = printAdminPlanning(unitdata["FY 21-22"], '2021','2022');
                 }
                 if (content !== '') {
                     contenttotal += content;
@@ -252,13 +265,13 @@ function printReport(event) {
                 return d.ExternalReference == units_research_selected[j];
             })[0];
             if (units_e1[k] == 'planning') {
-                if(period == 'FY2019-2020')
+                if(period == 'FY 19-20')
                 {
-                    content = printResearchPlanning(centerdata.FY2021,'2020','2021');
+                    content = printResearchPlanning(centerdata["FY 20-21"],'2020','2021');
                 }
                 else
                 {
-                    content = printResearchPlanning(centerdata.FY2122,'2021','2022');
+                    content = printResearchPlanning(centerdata["FY 21-22"],'2021','2022');
                 }
                 if (content !== '') {
                     contenttotal += content;
@@ -275,9 +288,9 @@ function printReport(event) {
 }
 
 function getYears(FY){
-    if(FY == 'FY1920'){
+    if(FY == 'FY 19-20'){
         return '2019-2020';
-    } else if(FY == 'FY2021'){
+    } else if(FY == 'FY 20-21'){
         return '2020-2021';
     } else {
         return '2021-2022';

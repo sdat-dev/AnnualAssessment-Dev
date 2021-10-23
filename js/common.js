@@ -1,4 +1,4 @@
-let sidemenuItems = [{"item":"HOME","link":"home.html"},{"item":"ANNUAL ASSESSMENTS","link":"annualassessments.html"},{"item":"ADMINISTRATIVE UNIT REPORTS","link":"#","subItems":[{"item":"FY2019-2020","link":"administrativeunitreports-FY2019-2020.html"},{"item":"FY2020-2021","link":"administrativeunitreports-FY2020-2021.html"}]},{"item":"RESEARCH CENTER REPORTS","link":"#","subItems":[{"item":"FY2019-2020","link":"researchcenterreports-FY2019-2020.html"},{"item":"FY2020-2021","link":"researchcenterreports-FY2020-2021.html"}]},{"item":"STEPS TO COMPLETION","link":"steps-to-completion.html"},{"item":"BENEFITS","link":"benifits.html"},{"item":"PRINT REPORTS","link":"print.html"},{"item":"QUESTIONS?","link":"questions.html"}]
+let sidemenuItems = [{"item":"HOME","link":"home.html"},{"item":"ANNUAL ASSESSMENTS","link":"annualassessments.html"},{"item":"ADMINISTRATIVE UNIT REPORTS","link":"#","subItems":[{"item":"FY 19-20","link":"administrativeunitreports-FY 19-20.html"},{"item":"FY 20-21","link":"administrativeunitreports-FY 20-21.html"},{"item":"FY 21-22","link":"administrativeunitreports-FY 21-22.html"}]},{"item":"RESEARCH CENTER REPORTS","link":"#","subItems":[{"item":"FY 19-20","link":"researchcenterreports-FY 19-20.html"},{"item":"FY 20-21","link":"researchcenterreports-FY 20-21.html"}]},{"item":"STEPS TO COMPLETION","link":"steps-to-completion.html"},{"item":"BENEFITS","link":"benifits.html"},{"item":"PRINT REPORTS","link":"print.html"},{"item":"QUESTIONS?","link":"questions.html"}]
 //SideMenu Start
 //What evet written  before '//SideMenu Start' will be relace with sidemenuItems in automation scripts
 let addsidemenu = function(page, subpage){
@@ -154,25 +154,25 @@ function printAssessmentReport(type){
     let content = '';
     if(type == 'admin')
     {
-        if(reportdata.FY == 'FY2019-2020')
+        if(reportdata.FY == 'FY 19-20')
         {
-            content = printAdminAssessment(unitdata.FY1920,'2019','2020');
+            content = printAdminAssessment(unitdata["FY 19-20"],'2019','2020');
         }
         else
         {
-            content = printAdminAssessment(unitdata.FY2021,'2020','2021')
+            content = printAdminAssessment(unitdata["FY 20-21"],'2020','2021')
         }
        
     }
     else
     {
-        if(reportdata.FY == 'FY2019-2020')
+        if(reportdata.FY == 'FY 19-20')
         {
-            content = printResearchAssessment(unitdata.FY1920,'2019','2020');
+            content = printResearchAssessment(unitdata["FY 19-20"],'2019','2020');
         }
         else
         {
-            content = printResearchAssessment(unitdata.FY2021,'2020','2021')
+            content = printResearchAssessment(unitdata["FY 20-21"],'2020','2021')
         }
     }
     
@@ -190,24 +190,24 @@ function printPlanningReport(type){
     let content = '';
     if(type == 'admin')
     {
-        if(reportdata.FY == 'FY2019-2020')
+        if(reportdata.FY == 'FY 19-20')
         {
-            content = printAdminPlanning(unitdata.FY2021, '2020','2021');
+            content = printAdminPlanning(unitdata["FY 20-21"], '2020','2021');
         }
         else
         {
-            content = printAdminPlanning(unitdata.FY2122, '2021','2022');
+            content = printAdminPlanning(unitdata["FY 21-22"], '2021','2022');
         }       
     }
     else
     {
-        if(reportdata.FY == 'FY2019-2020')
+        if(reportdata.FY == 'FY 19-20')
         {
-            content = printResearchPlanning(unitdata.FY2021,'2020','2021');
+            content = printResearchPlanning(unitdata["FY 20-21"],'2020','2021');
         }
         else
         {
-            content = printResearchPlanning(unitdata.FY2122,'2021','2022');
+            content = printResearchPlanning(unitdata["FY 21-22"],'2021','2022');
         }
     }
     
@@ -220,7 +220,7 @@ function changeReportUnit(){
     var unit = document.getElementById("selectunit").value;
     let reportdata = JSON.parse(localStorage.getItem("data"));
     let unitdata = reportdata.data.filter(d => {
-        return d.ExternalReference == unit;
+        return d.Unit == unit;
     })[0];
     buildReport(unitdata, reportdata.FY);
 }
