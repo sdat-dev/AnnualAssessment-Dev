@@ -36,7 +36,13 @@ let buildReport = function (data, period) {
     let tabheaders = [];
     let tabcontent = [];
     let content = '';
-    if (period == 'FY 20-21') {
+    if (period == 'FY 21-22') {
+        years = ['FY 2021-22', 'FY 2022-23'];
+        tabheaders = ['Assessment FY22 <br><span style="font-size:15px;"> (Year Completed)</span>', 'Planning FY23 <br> <span style="font-size:15px;">(Year Ahead)<span>'];
+        tabcontent.push(addAssessmentReport(data["FY 21-22"], '2021', '2022'));
+        tabcontent.push(addPlanningReport(data["FY 22-23"], '2022', '2023'));
+    }
+    else if (period == 'FY 20-21') {
         years = ['FY 2020-21', 'FY 2021-22'];
         tabheaders = ['Assessment FY21 <br><span style="font-size:15px;"> (Year Completed)</span>', 'Planning FY22 <br> <span style="font-size:15px;">(Year Ahead)<span>'];
         tabcontent.push(addAssessmentReport(data["FY 20-21"], '2020', '2021'));
@@ -316,7 +322,7 @@ let addPlanningReport = function (reportdata, year1, year2) {
         content += '<p><b>Director\'s Name: </b>' + reportdata.firstName + ' ' + reportdata.lastName +
             '<br><b>Director\'s Email: </b>' + reportdata.email +
             '<br><b>Reporting Period: </b>July 1, ' + year1 + ' to June 30, ' + year2 +
-            '<button type="button" style="float:right; background-color: #46166b; color:white ; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 2px; margin-right: 1px;text-align: center; margin: 0 auto;"onclick="printPlanningReport(\'researchcenter\')">Print</button>';
+            '<button type="button" style="float:right; background-color: #46166b; color:white ; padding: 5px 10px 5px 10px; border-radius:5px; text-align: center; margin-left:auto;"onclick="printAssessmentReport(\'admin\')">Print</button></p>';
 
         content += '<div id = "FY' + year1 + '">';
 

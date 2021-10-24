@@ -1,16 +1,10 @@
 
 function printAdminAssessment(reportdata, year1, year2) {
     let data = {};
-    data["unit"] = reportdata["Unit"];
+    data["unit"] = reportdata["unit"];
 
-    if (year1 == '2019') {
-        data["mission"] = reportdata["1819Mission"];
-        data["vision"] = reportdata["1819Vision"];
-    }
-    else {
-        data["mission"] = reportdata.mission;
-        data["vision"] = reportdata.vision;
-    }
+    data["mission"] = reportdata.mission;
+    data["vision"] = reportdata.vision;
 
     data["annualBudget"] = reportdata.annualBudget;
     data["employeesState"] = reportdata.stateHeadcount;
@@ -52,7 +46,7 @@ let goalDetailsAdmin = function (reportdata, year1, year2) {
         let no = i;
         let goal = new Goal(no, reportdata["goal" + i], reportdata["actions" + i],
             reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["actionsImplemented" + i], reportdata["noteworthResults" + i], reportdata["changes" + i]);
-        content += addSmartGoal(ids, goal, year1);
+        content += printSmartGoal(goal, year1);
 
     }
 
@@ -90,7 +84,7 @@ let goalDetailsAdmin = function (reportdata, year1, year2) {
 
 function printAdminPlanning(reportdata, year1, year2) {
     let data = {};
-    data["unit"] = reportdata.Unit
+    data["unit"] = reportdata.unit
     let content = '';
     data["mission"] = reportdata.mission;
     data["vision"] = reportdata.vision;
@@ -124,7 +118,7 @@ function printResearchAssessment(reportdata, year1, year2) {
 
     let data = {};
 
-    data["unit"] = reportdata.Unit;
+    data["unit"] = reportdata.unit;
 
     data["mission"] = reportdata.mission;
     data["vision"] = reportdata.vision;
@@ -528,7 +522,7 @@ function printResearchAssessment(reportdata, year1, year2) {
 
 function printResearchPlanning(reportdata, year1, year2) {
     let data = {};
-    data["unit"] = reportdata.Unit;
+    data["unit"] = reportdata.unit;
 
     data["mission"] = reportdata.mission;
     data["vision"] = reportdata.vision;
