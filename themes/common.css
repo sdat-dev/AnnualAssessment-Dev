@@ -311,7 +311,8 @@ li{
 #selectunit{
     max-width: 75%;
     background-color: lightgrey;
-    border: outset;
+    border: thin;
+    border-radius: 5px;
 }
 
 @media only screen and (max-width: 340px)
