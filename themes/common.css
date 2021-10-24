@@ -313,6 +313,11 @@ li{
     background-color: lightgrey;
     border: thin;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+#selectunit:hover{
+    background-color: darkgray;
 }
 
 @media only screen and (max-width: 340px)
