@@ -466,44 +466,26 @@ function printResearchAssessment(reportdata, year1, year2) {
     content_research += goalDetailsResearch(reportdata);
 
     achievementdata = [];
-    if (ids.parentId == "FY2019") {
-        if (reportdata.topAchievements1 != '')
-            data.push(reportdata.topAchievements1);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements2 != '')
-            data.push(reportdata.topAchievements2);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements3 != '')
-            data.push(reportdata.topAchievements3);
-        else
-            data.push("N/A");
-    }
-    else {
-        if (reportdata.topAchievements1 != '')
-            data.push(reportdata.topAchievements1);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements2 != '')
-            data.push(reportdata.topAchievements2);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements3 != '')
-            data.push(reportdata.topAchievements3);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements4 != '')
-            data.push(reportdata.topAchievements4);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements5 != '')
-            data.push(reportdata.topAchievements5);
-        else
-            data.push("N/A");
-    }
-
-
+    if (reportdata.topAchievements1 != 'false' && reportdata.noteworthResults1 != '')
+        achievementdata.push(reportdata.noteworthResults1);
+    if (reportdata.topAchievements2 != 'false' && reportdata.noteworthResults2 != '')
+        achievementdata.push(reportdata.noteworthResults2);
+    if (reportdata.topAchievements3 != 'false' && reportdata.noteworthResults3 != '')
+        achievementdata.push(reportdata.noteworthResults3);
+    if (reportdata.topAchievements4 != 'false' && reportdata.noteworthResults4 != '')
+        achievementdata.push(reportdata.noteworthResults4);
+    if (reportdata.topAchievements5 != 'false' && reportdata.noteworthResults5 != '')
+        achievementdata.push(reportdata.noteworthResults5);
+    if (reportdata.achievement1 != '')
+        achievementdata.push(reportdata.achievement1);
+    if (reportdata.achievement2 != '')
+        achievementdata.push(reportdata.achievement2);
+    if (reportdata.achievement3 != '')
+        achievementdata.push(reportdata.achievement3);
+    if (reportdata.achievement4 != '')
+        achievementdata.push(reportdata.achievement4);
+    if (reportdata.achievement5 != '')
+        achievementdata.push(reportdata.achievement5);
 
     content_research += printTopAchievements(achievementdata);
     content_research += '<br><br>';
