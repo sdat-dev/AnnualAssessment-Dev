@@ -202,7 +202,7 @@ function printReport(event) {
         for(var i = 0; i< units_selected.length; i++)
         {
             var unitdata = data.AdminUnits[period].data.filter(d => {
-                return d.ExternalReference == units_selected[i];
+                return d.Unit == units_selected[i];
             })[0];
             if (units_e1[k] == 'assessment') {
                 if(period == 'FY 19-20')
@@ -222,7 +222,7 @@ function printReport(event) {
         for(var j = 0; j< units_research_selected.length; j++)
         {
             var centerdata =data.ResearchCenters[period].data.filter(d => {
-                return d.ExternalReference == units_research_selected[j];
+                return d.Unit == units_research_selected[j];
             })[0];
             if (units_e1[k] == 'assessment') {
                 if(period == 'FY 19-20')
@@ -242,7 +242,7 @@ function printReport(event) {
         for(var i = 0; i< units_selected.length; i++)
         {
             var unitdata = data.AdminUnits[period].data.filter(d => {
-                return d.ExternalReference == units_selected[i];
+                return d.Unit == units_selected[i];
             })[0];
             if (units_e1[k] == 'planning') {
                 if(period == 'FY 19-20')
@@ -262,7 +262,7 @@ function printReport(event) {
         for(var j = 0; j< units_research_selected.length; j++)
         {
             var centerdata =data.ResearchCenters[period].data.filter(d => {
-                return d.ExternalReference == units_research_selected[j];
+                return d.Unit == units_research_selected[j];
             })[0];
             if (units_e1[k] == 'planning') {
                 if(period == 'FY 19-20')
