@@ -38,19 +38,19 @@ let buildReport = function (data, period) {
     let content = '';
     if (period == 'FY 21-22') {
         years = ['FY 2021-22', 'FY 2022-23'];
-        tabheaders = ['Assessment FY22 <br><span style="font-size:15px;"> (Year Completed)</span>', 'Planning FY23 <br> <span style="font-size:15px;">(Year Ahead)<span>'];
+        tabheaders = ['Assessment FY 21-22 <br><span style="font-size:15px;"> (Year Completed)</span>', 'Planning FY 22-23 <br> <span style="font-size:15px;">(Year Ahead)<span>'];
         tabcontent.push(addAssessmentReport(data["FY 21-22"], '2021', '2022'));
         tabcontent.push(addPlanningReport(data["FY 22-23"], '2022', '2023'));
     }
     else if (period == 'FY 20-21') {
         years = ['FY 2020-21', 'FY 2021-22'];
-        tabheaders = ['Assessment FY21 <br><span style="font-size:15px;"> (Year Completed)</span>', 'Planning FY22 <br> <span style="font-size:15px;">(Year Ahead)<span>'];
+        tabheaders = ['Assessment FY 20-21 <br><span style="font-size:15px;"> (Year Completed)</span>', 'Planning FY 21-22 <br> <span style="font-size:15px;">(Year Ahead)<span>'];
         tabcontent.push(addAssessmentReport(data["FY 20-21"], '2020', '2021'));
         tabcontent.push(addPlanningReport(data["FY 21-22"], '2021', '2022'));
     }
     else if (period == 'FY 19-20') {
         years = ['FY 2019-20', 'FY 2020-21'];
-        tabheaders = ['Assessment FY20 <br><span style="font-size:15px;"> (Year Completed)</span>', 'Planning FY21 <br> <span style="font-size:15px;">(Year Ahead)<span>'];
+        tabheaders = ['Assessment FY 19-20 <br><span style="font-size:15px;"> (Year Completed)</span>', 'Planning FY 20-21 <br> <span style="font-size:15px;">(Year Ahead)<span>'];
         tabcontent.push(addAssessmentReport(data["FY 19-20"], '2019', '2020'));
         tabcontent.push(addPlanningReport(data["FY 20-21"], '2020', '2021'));
     }
