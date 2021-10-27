@@ -45,22 +45,22 @@ let goalDetailsAdmin = function (reportdata, year1, year2) {
 
         let no = i;
         let goal = new Goal(no, reportdata["goal" + i], reportdata["actions" + i],
-            reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["actionsImplemented" + i], reportdata["noteworthResults" + i], reportdata["changes" + i]);
+            reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["actionsImplemented" + i], reportdata["noteworthyResults" + i], reportdata["changes" + i]);
         content += printSmartGoal(goal, year1);
 
     }
 
     data = [];
-    if (reportdata.topAchievements1 != 'false' && reportdata.noteworthResults1 != '')
-        data.push(reportdata.noteworthResults1);
-    if (reportdata.topAchievements2 != 'false' && reportdata.noteworthResults2 != '')
-        data.push(reportdata.noteworthResults2);
-    if (reportdata.topAchievements3 != 'false' && reportdata.noteworthResults3 != '')
-        data.push(reportdata.noteworthResults3);
-    if (reportdata.topAchievements4 != 'false' && reportdata.noteworthResults4 != '')
-        data.push(reportdata.noteworthResults4);
-    if (reportdata.topAchievements5 != 'false' && reportdata.noteworthResults5 != '')
-        data.push(reportdata.noteworthResults5);
+    if (reportdata.topAchievements1 != 'false' && reportdata.noteworthyResults1 != '')
+        data.push(reportdata.noteworthyResults1);
+    if (reportdata.topAchievements2 != 'false' && reportdata.noteworthyResults2 != '')
+        data.push(reportdata.noteworthyResults2);
+    if (reportdata.topAchievements3 != 'false' && reportdata.noteworthyResults3 != '')
+        data.push(reportdata.noteworthyResults3);
+    if (reportdata.topAchievements4 != 'false' && reportdata.noteworthyResults4 != '')
+        data.push(reportdata.noteworthyResults4);
+    if (reportdata.topAchievements5 != 'false' && reportdata.noteworthyResults5 != '')
+        data.push(reportdata.noteworthyResults5);
     if (reportdata.achievement1 != '')
         data.push(reportdata.achievement1);
     if (reportdata.achievement2 != '')
@@ -466,16 +466,16 @@ function printResearchAssessment(reportdata, year1, year2) {
     content_research += goalDetailsResearch(reportdata);
 
     achievementdata = [];
-    if (reportdata.topAchievements1 != 'false' && reportdata.noteworthResults1 != '')
-        achievementdata.push(reportdata.noteworthResults1);
-    if (reportdata.topAchievements2 != 'false' && reportdata.noteworthResults2 != '')
-        achievementdata.push(reportdata.noteworthResults2);
-    if (reportdata.topAchievements3 != 'false' && reportdata.noteworthResults3 != '')
-        achievementdata.push(reportdata.noteworthResults3);
-    if (reportdata.topAchievements4 != 'false' && reportdata.noteworthResults4 != '')
-        achievementdata.push(reportdata.noteworthResults4);
-    if (reportdata.topAchievements5 != 'false' && reportdata.noteworthResults5 != '')
-        achievementdata.push(reportdata.noteworthResults5);
+    if (reportdata.topAchievements1 != 'false' && reportdata.noteworthyResults1 != '')
+        achievementdata.push(reportdata.noteworthyResults1);
+    if (reportdata.topAchievements2 != 'false' && reportdata.noteworthyResults2 != '')
+        achievementdata.push(reportdata.noteworthyResults2);
+    if (reportdata.topAchievements3 != 'false' && reportdata.noteworthyResults3 != '')
+        achievementdata.push(reportdata.noteworthyResults3);
+    if (reportdata.topAchievements4 != 'false' && reportdata.noteworthyResults4 != '')
+        achievementdata.push(reportdata.noteworthyResults4);
+    if (reportdata.topAchievements5 != 'false' && reportdata.noteworthyResults5 != '')
+        achievementdata.push(reportdata.noteworthyResults5);
     if (reportdata.achievement1 != '')
         achievementdata.push(reportdata.achievement1);
     if (reportdata.achievement2 != '')
