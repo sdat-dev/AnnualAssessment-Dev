@@ -146,12 +146,18 @@ let addAssessmentReport = function (reportdata, year1, year2) {
     data["privateAwardsgoals"] = checkNull(reportdata.awards2);
     data["privateAwardsactual"] = checkNull(reportdata.awards5);
 
-    addData2 = { 1: data["federalAwardsgoals"], 2: data["stateAwardsgoals"], 3: data["privateAwardsgoals"] };
-    addData3 = { 1: data["federalAwardsactual"], 2: data["stateAwardsactual"], 3: data["privateAwardsactual"] };
+    var federalAwardsgoals = parseInt(data["federalAwardsgoals"], 10);
+    var federalAwardsactual = parseInt(data["federalAwardsactual"], 10);
+    var stateAwardsgoals = parseInt(data["stateAwardsgoals"], 10);
+    var stateAwardsactual = parseInt(data["stateAwardsactual"], 10);
+    var privateAwardsgoals = parseInt(data["privateAwardsgoals"], 10);
+    var privateAwardsactual = parseInt(data["privateAwardsactual"], 10);
 
+    addData2 = federalAwardsgoals + stateAwardsgoals + privateAwardsgoals;
+    addData3 = federalAwardsactual + stateAwardsactual + privateAwardsactual;
 
-    data["awrds_total_goals"] = add(addData2);
-    data["awrds_total_actual"] = add(addData3);
+    data["awrds_total_goals"] = addData2;
+    data["awrds_total_actual"] = addData3;
 
     //data["largeScale"] = checkNull(reportdata.Q53);                         //Need Check
     data["proposal_goals"] = checkNull(reportdata.largeScale1);
