@@ -122,11 +122,19 @@ let addAssessmentReport = function (reportdata, year1, year2) {
     data["privateApplicationgoals"] = checkNull(reportdata.porposals2);
     data["privateApplicationactual"] = checkNull(reportdata.porposals5);
 
-    addData = { 1: data["federalApplicationgoals"], 2: data["stateApplicationgoals"], 3: data["privateApplicationgoals"] };
-    addData1 = { 1: data["federalApplicationactual"], 2: data["stateApplicationactual"], 3: data["stateApplicationactual"] };
+    var federalApplicationgoals = parseInt(data["federalApplicationgoals"], 10);
+    var federalApplicationactual = parseInt(data["federalApplicationactual"], 10);
+    var stateApplicationgoals = parseInt(data["stateApplicationgoals"], 10);
+    var stateApplicationactual = parseInt(data["stateApplicationactual"], 10);
+    var privateApplicationgoals = parseInt(data["privateApplicationgoals"], 10);
+    var privateApplicationactual = parseInt(data["privateApplicationactual"], 10);
 
-    data["proposal_total_goals"] = add(addData);
-    data["proposal_total_actual"] = add(addData1);
+
+    addData = federalApplicationgoals + stateApplicationgoals + privateApplicationgoals;
+    addData1 = federalApplicationactual + stateApplicationactual + privateApplicationactual;
+
+    data["proposal_total_goals"] = addData;
+    data["proposal_total_actual"] = addData1;
 
     //data["awards"] = reportdata.Q52;                                        //Need Check
     data["federalAwardsgoals"] = checkNull(reportdata.awards1);
@@ -634,7 +642,6 @@ let addResearceAnnualBudget = function (ids, data) {
 
 let adddetailedActivity = function (ids, data, year) {
     let period = getPeriod(year);
-    let proposal_total_actual = data.federalApplicationactual + data.stateApplicationactual + data.privateApplicationactual;
     let detailedActivity = '<h4> PROPOSALS</h4>' +
         '<div class="annual-budget">' +
         '<h4> Number of Research Proposals Submitted to Extramural Sponsors</h4>' +
@@ -650,7 +657,7 @@ let adddetailedActivity = function (ids, data, year) {
         data.privateApplicationactual + '</td></tr>' +
 
         '<tr><th class="border_right  padding_bottom padding_top">Total</th><td>' + data.proposal_total_goals + '</td><td>' +
-        proposal_total_actual + '</td></tr>' +
+        data.proposal_total_actual + '</td></tr>' +
         '</tbody></table></div>' +
         '</br>' +
         '</br>' +
