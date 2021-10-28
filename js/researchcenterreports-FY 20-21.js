@@ -6,18 +6,18 @@ window.onload = function () {
         let responsedata = responses[0].data;
         localStorage.clear();
         localStorage.setItem("data", JSON.stringify(responsedata));
-        
+
         let units = getDistinctAttributes(responsedata.data, "Unit");
         let validunits = [];
-        for(i =0; i< units.length;i++){
-            if(units[i] != "")
+        for (i = 0; i < units.length; i++) {
+            if (units[i] != "")
                 validunits.push(units[i]);
         }
         let headercontent = ' <select id="selectunit" onchange="changeReportUnit()">';
-        for(i = 0; i < validunits.length; i++){
-            headercontent = headercontent + '<option value="'+ validunits[i]+'">'+ validunits[i] +'</option>';
+        for (i = 0; i < validunits.length; i++) {
+            headercontent = headercontent + '<option value="' + validunits[i] + '">' + validunits[i] + '</option>';
         }
-        headercontent = headercontent + '</select> '+ responsedata.FY;
+        headercontent = headercontent + '</select> ' + responsedata.FY;
         let contentHeadr = document.getElementsByClassName('report-header')[0];
         contentHeadr.innerHTML = headercontent;
 
@@ -76,7 +76,7 @@ let getIds = function (year) {
 let addAssessmentReport = function (reportdata, year1, year2) {
 
     let content = '';
-    if(reportdata == undefined)
+    if (reportdata == undefined)
         return content;
     content += '<p><b>Director\'s Name: </b>' + reportdata.firstName + ' ' + reportdata.lastName +
         '<br><b>Director\'s Email: </b>' + reportdata.email +
@@ -233,7 +233,7 @@ let addAssessmentReport = function (reportdata, year1, year2) {
 
     for (var i = 1; i < 6; i++) {                                                  //Need Check
         ids = getIds('FY' + year1);
-        let goal = new Goal(i , reportdata["goal" + i], reportdata["actions" + i],
+        let goal = new Goal(i, reportdata["goal" + i], reportdata["actions" + i],
             reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["actionsImplemented" + i],
             reportdata["noteworthyResults" + i], reportdata["changes" + i]);
         content += addSmartGoal(ids, goal, year1);
@@ -350,18 +350,25 @@ let addPlanningReport = function (reportdata, year1, year2) {
         data["stateApplication"] = checkNull(reportdata.proposals2);
         data["privateApplication"] = checkNull(reportdata.proposals3);
 
-        addData5 = { 1: data["federalApplication"], 2: data["stateApplication"], 3: data["privateApplication"] };
+        var federalApplication = parseInt(data["federalApplication"], 10);
+        var stateApplication = parseInt(data["stateApplication"], 10);
+        var privateApplication = parseInt(data["privateApplication"], 10);
 
-        data["proposal_total"] = add(addData5);
+        addData5 = federalApplication + stateApplication + privateApplication;
+
+        data["proposal_total"] = addData5;
         //data["awards"] = reportdata.Q52;                                  //Need Check
         data["federalAwards"] = checkNull(reportdata.awards1);
         data["stateAwards"] = checkNull(reportdata.awards2);
         data["privateAwards"] = checkNull(reportdata.awards3);
 
-        addData6 = { 1: data["federalAwards"], 2: data["stateAwards"], 3: data["privateAwards"] };
+        var federalAwards = parseInt(data["federalAwards"], 10);
+        var stateAwards = parseInt(data["stateAwards"], 10);
+        var privateAwards = parseInt(data["privateAwards"], 10);
 
-        data["awrds_total"] = add(addData6);
+        addData6 = federalAwards + stateAwards + privateAwards;
 
+        data["awrds_total"] = addData6;
         //data["largeScale"] = checkNull(reportdata.Q53);                   //Need Check
         data["proposal"] = checkNull(reportdata.largeScale1);
         data["lsAwards"] = checkNull(reportdata.largeScale2);
