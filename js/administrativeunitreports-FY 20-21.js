@@ -120,13 +120,12 @@ let addAssessmentReport = function (reportdata, year1, year2) {
             //     break;
             // }
             ids = getIds('FY' + year1);
-            let no = i;
             // if (year1 == 2019) {
             //     let goal = new Goal(no, reportdata["1819Goal" + no], reportdata["1819Activities" + no],
             //         reportdata["1819Metrics" + no], reportdata["1819Timeframe" + no], reportdata["Q" + i + "2"], reportdata["Q" + i + "3"], reportdata["Q" + i + "4"]);
             //     content += addSmartGoal(ids, goal, year1);
             // }
-            let goal = new Goal(no, reportdata["goal" + i], reportdata["actions" + i],
+            let goal = new Goal(i, reportdata["goal" + i], reportdata["actions" + i],
                 reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["actionsImplemented" + i], reportdata["noteworthyResults" + i], reportdata["changes" + i]);
             content += addSmartGoal(ids, goal, year1);
 
@@ -274,7 +273,7 @@ let addPlanningReport = function (reportdata, year1, year2) {
 
         for (var i = 1; i <= 5; i++) {
             ids = getIds('FY' + year2);
-            let goal = new GoalPlan(reportdata["goal" + i], reportdata["actions" + i],
+            let goal = new GoalPlan(i, reportdata["goal" + i], reportdata["actions" + i],
                 reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["primaryLeader" + i],
                 reportdata["impactWorkplan" + i], reportdata["collaboratingUnits" + i], reportdata["impactResearchExcellence" + i]);
             content += addSmartGoalPlan(ids, goal, year1);
