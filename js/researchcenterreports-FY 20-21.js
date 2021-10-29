@@ -97,19 +97,26 @@ let addAssessmentReport = function (reportdata, year1, year2) {
     data["employeesRF"] = checkNull(reportdata.rfHeadcount);
     data["fteState"] = checkNull(reportdata.stateNumber);
     data["fteRF"] = checkNull(reportdata.rfNumber);
-    data["nameOfadditionalsource1"] = checkNull(reportdata.otherRevenue1);
+    data["nameOfadditionalsource1"] = reportdata.otherRevenue1;
     data["nameOfadditionalsource11"] = checkNull(reportdata.otherRevenue2);
 
-    data["nameOfadditionalsource2"] = checkNull(reportdata.otherRevenue3);
+    data["nameOfadditionalsource2"] = reportdata.otherRevenue3;
     data["nameOfadditionalsource21"] = checkNull(reportdata.otherRevenue4);
 
-    data["nameOfadditionalsource3"] = checkNull(reportdata.otherRevenue5);
+    data["nameOfadditionalsource3"] = reportdata.otherRevenue5;
     data["nameOfadditionalsource31"] = checkNull(reportdata.otherRevenue6);
 
-    addTotal3 = { 1: data["nameOfadditionalsource1"], 2: data["nameOfadditionalsource2"], 3: data["nameOfadditionalsource3"] };
-    data["total3"] = add(addTotal3);                         //Need Check
-    data["total33"] = add(addTotal3);                        //Need Check
-    content += addResearceAnnualBudget(ids, data);
+    additionalSource1 = (data.nameOfadditionalsource1 == '' ? '0' : data.nameOfadditionalsource1);
+    additionalSource2 = (data.nameOfadditionalsource2 == '' ? '0' : data.nameOfadditionalsource2);
+    additionalSource3 = (data.nameOfadditionalsource3 == '' ? '0' : data.nameOfadditionalsource3);
+
+    var nameOfadditionalsource1 = parseInt(additionalSource1);
+    var nameOfadditionalsource2 = parseInt(additionalSource2);
+    var nameOfadditionalsource3 = parseInt(additionalSource3);
+    
+    addTotal3 = nameOfadditionalsource1 + nameOfadditionalsource2 + nameOfadditionalsource3;
+    data["total3"] = addTotal3;
+    content += addResearchAnnualBudget(ids, data);
 
     ids = getIds('FY' + year1);
     data = {};
@@ -601,12 +608,12 @@ let addAnnualBudget = function (ids, data) {
 }
 
 
-let addResearceAnnualBudget = function (ids, data) {
+let addResearchAnnualBudget = function (ids, data) {
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
     });
-    let totalBudget = formatter.format(data.nameOfadditionalsource1 + data.nameOfadditionalsource2 + data.nameOfadditionalsource3);
+    let totalBudget = formatter.format(data["total3"]);
     let currencyFormat1 = formatter.format(data.nameOfadditionalsource1);
     let currencyFormat2 = formatter.format(data.nameOfadditionalsource2);
     let currencyFormat3 = formatter.format(data.nameOfadditionalsource3);
@@ -636,7 +643,7 @@ let addResearceAnnualBudget = function (ids, data) {
         currencyFormat2 + '</td></tr>' +
         '<th class="border_right padding_bottom padding_top">Name of Additional Source 3 </th><td>' + data.nameOfadditionalsource31 + '</td><td>' +
         currencyFormat3 + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Total </th><td>' + data.total3 + '</td><td>' +
+        '<th class="border_right padding_bottom padding_top">Total </th><td>' + "N/A" + '</td><td>' +
         totalBudget + '</td></tr>' +
         '</tbody></table></div>';
 
