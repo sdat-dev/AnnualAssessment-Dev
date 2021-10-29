@@ -93,157 +93,130 @@ let addAssessmentReport = function (reportdata, year1, year2) {
     ids = getIds('FY' + year1);
     data = {};
     data["annualBudget"] = reportdata.annualBudget;
-    data["employeesState"] = checkNull(reportdata.stateHeadcount);
-    data["employeesRF"] = checkNull(reportdata.rfHeadcount);
-    data["fteState"] = checkNull(reportdata.stateNumber);
-    data["fteRF"] = checkNull(reportdata.rfNumber);
-    data["nameOfadditionalsource1"] = checkNull(reportdata.otherRevenue1);
-    data["nameOfadditionalsource11"] = checkNull(reportdata.otherRevenue2);
+    data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
+    data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
+    data["fteState"] = checkNull(reportdata.stateNumber, true);
+    data["fteRF"] = checkNull(reportdata.rfNumber, true);
+    data["additionalAmount1"] = checkNull(reportdata.additionalAmount1, true);
+    data["additionalSource1"] = checkNull(reportdata.additionalSource1);
+    data["additionalAmount2"] = checkNull(reportdata.additionalAmount2, true);
+    data["additionalSource2"] = checkNull(reportdata.additionalSource2);
+    data["additionalAmount3"] = checkNull(reportdata.additionalAmount3, true);
+    data["additionalSource3"] = checkNull(reportdata.additionalSource3);
 
-    data["nameOfadditionalsource2"] = checkNull(reportdata.otherRevenue3);
-    data["nameOfadditionalsource21"] = checkNull(reportdata.otherRevenue4);
-
-    data["nameOfadditionalsource3"] = checkNull(reportdata.otherRevenue5);
-    data["nameOfadditionalsource31"] = checkNull(reportdata.otherRevenue6);
-
-    addTotal3 = { 1: data["nameOfadditionalsource1"], 2: data["nameOfadditionalsource2"], 3: data["nameOfadditionalsource3"] };
-    data["total3"] = add(addTotal3);                         //Need Check
-    data["total33"] = add(addTotal3);                        //Need Check
-    content += addResearceAnnualBudget(ids, data);
+    var amount1 = parseInt(data.additionalAmount1);
+    var amount2 = parseInt(data.additionalAmount2);
+    var amount3 = parseInt(data.additionalAmount3);
+    
+    addTotal3 = amount1 + amount2 + amount3;
+    data["total"] = addTotal3;
+    content += addResearchAnnualBudget(ids, data);
 
     ids = getIds('FY' + year1);
     data = {};
-    addData = {};
-    //data["proposals"] = reportdata.Q51;                                     //Need Check
-    data["federalApplicationgoals"] = checkNull(reportdata.porposals1);
-    data["federalApplicationactual"] = checkNull(reportdata.porposals4);
-    data["stateApplicationgoals"] = checkNull(reportdata.porposals3);
-    data["stateApplicationactual"] = checkNull(reportdata.porposals6);
-    data["privateApplicationgoals"] = checkNull(reportdata.porposals2);
-    data["privateApplicationactual"] = checkNull(reportdata.porposals5);
+    data["federalApplicationsGoal"] = checkNull(reportdata.federalApplicationsGoal, true);
+    data["federalApplicationsActual"] = checkNull(reportdata.federalApplicationsActual, true);
+    data["stateApplicationsGoal"] = checkNull(reportdata.stateApplicationsGoal, true);
+    data["stateApplicationsActual"] = checkNull(reportdata.stateApplicationsActual, true);
+    data["privateApplicationsGoal"] = checkNull(reportdata.privateApplicationsGoal, true);
+    data["privateApplicationsActual"] = checkNull(reportdata.privateApplicationsActual, true);
 
-    var federalApplicationgoals = parseInt(data["federalApplicationgoals"], 10);
-    var federalApplicationactual = parseInt(data["federalApplicationactual"], 10);
-    var stateApplicationgoals = parseInt(data["stateApplicationgoals"], 10);
-    var stateApplicationactual = parseInt(data["stateApplicationactual"], 10);
-    var privateApplicationgoals = parseInt(data["privateApplicationgoals"], 10);
-    var privateApplicationactual = parseInt(data["privateApplicationactual"], 10);
+    var federalGoals = parseInt(data.federalApplicationsGoal);
+    var federalActual = parseInt(data.federalApplicationsActual);
+    var stateGoals = parseInt(data.stateApplicationsGoal);
+    var stateActual = parseInt(data.stateApplicationsActual);
+    var privateGoals = parseInt(data.privateApplicationsGoal);
+    var privateActual = parseInt(data.privateApplicationsActual);
 
 
-    addData = federalApplicationgoals + stateApplicationgoals + privateApplicationgoals;
-    addData1 = federalApplicationactual + stateApplicationactual + privateApplicationactual;
+    var totalGoals = federalGoals + stateGoals + privateGoals;
+    var totalActual = federalActual + stateActual + privateActual;
 
-    data["proposal_total_goals"] = addData;
-    data["proposal_total_actual"] = addData1;
+    data["proposal_total_goals"] = totalGoals;
+    data["proposal_total_actual"] = totalActual;
 
-    //data["awards"] = reportdata.Q52;                                        //Need Check
-    data["federalAwardsgoals"] = checkNull(reportdata.awards1);
-    data["federalAwardsactual"] = checkNull(reportdata.awards4);
+    data["federalAwardsGoal"] = checkNull(reportdata.federalAwardsGoal, true);
+    data["federalAwardsActual"] = checkNull(reportdata.federalAwardsActual, true);
+    data["stateAwardsGoal"] = checkNull(reportdata.stateAwardsGoal, true);
+    data["stateAwardsActual"] = checkNull(reportdata.stateAwardsActual, true);
+    data["privateAwardsGoal"] = checkNull(reportdata.privateAwardsGoal, true);
+    data["privateAwardsActual"] = checkNull(reportdata.privateAwardsActual, true);
 
-    data["stateAwardsgoals"] = checkNull(reportdata.awards3);
-    data["stateAwardsactual"] = checkNull(reportdata.awards6);
+    federalGoals = parseInt(data["federalAwardsGoal"], 10);
+    federalActual = parseInt(data["federalAwardsActual"], 10);
+    stateGoals = parseInt(data["stateAwardsGoal"], 10);
+    stateActual = parseInt(data["stateAwardsActual"], 10);
+    privateGoals = parseInt(data["privateAwardsGoal"], 10);
+    privateActual = parseInt(data["privateAwardsActual"], 10);
 
-    data["privateAwardsgoals"] = checkNull(reportdata.awards2);
-    data["privateAwardsactual"] = checkNull(reportdata.awards5);
+    totalGoals = federalGoals + stateGoals + privateGoals;
+    totalActual = federalActual + stateActual + privateActual;
 
-    var federalAwardsgoals = parseInt(data["federalAwardsgoals"], 10);
-    var federalAwardsactual = parseInt(data["federalAwardsactual"], 10);
-    var stateAwardsgoals = parseInt(data["stateAwardsgoals"], 10);
-    var stateAwardsactual = parseInt(data["stateAwardsactual"], 10);
-    var privateAwardsgoals = parseInt(data["privateAwardsgoals"], 10);
-    var privateAwardsactual = parseInt(data["privateAwardsactual"], 10);
+    data["awards_goal_total"] = totalGoals;
+    data["awards_actual_total"] = totalActual;
 
-    addData2 = federalAwardsgoals + stateAwardsgoals + privateAwardsgoals;
-    addData3 = federalAwardsactual + stateAwardsactual + privateAwardsactual;
+    data["lsProposalsGoal"] = checkNull(reportdata.lsProposalsGoal, true);
+    data["lsProposalsActual"] = checkNull(reportdata.lsProposalsActual, true);
+    data["lsAwardsGoal"] = checkNull(reportdata.lsAwardsGoal, true);
+    data["lsAwardsActual"] = checkNull(reportdata.lsAwardsActual, true);
 
-    data["awrds_total_goals"] = addData2;
-    data["awrds_total_actual"] = addData3;
+    data["sttrProposalsGoal"] = checkNull(reportdata.sttrProposalsGoal, true);
+    data["sttrProposalsActual"] = checkNull(reportdata.sttrProposalsActual, true);
+    data["sttrAwardssGoal"] = checkNull(reportdata.sttrAwardssGoal, true);
+    data["sttrAwardsActual"] = checkNull(reportdata.sttrAwardsActual, true);
 
-    //data["largeScale"] = checkNull(reportdata.Q53);                         //Need Check
-    data["proposal_goals"] = checkNull(reportdata.largeScale1);
-    data["proposal_actual"] = checkNull(reportdata.largeScale2);
-    data["lsAwards_goals"] = checkNull(reportdata.largeScale3);
-    data["lsAwards_actual"] = checkNull(reportdata.largeScale4);
-
-    //data["strr"] = checkNull(reportdata.Q54);                               //Need Check
-
-    data["stProposal_goals"] = checkNull(reportdata.sttrAwards1);
-    data["stProposal_actual"] = checkNull(reportdata.sttrAwards2);
-
-    data["stAwards_goals"] = checkNull(reportdata.sttrAwards3);
-    data["stAwards_actual"] = checkNull(reportdata.sttrAwards4);
-
-    content += adddetailedActivity(ids, data, year1);
+    content += addAppsProposalsAwards(ids, data, year1);
     //detailed research
 
     ids = getIds('FY' + year1);
     data = {};
-    //data["publications"] = checkNull(reportdata.Q61);                       //Need Check
-    data["booksAuthoredgoals"] = checkNull(reportdata.publications1);
-    data["bookauthoredsactual"] = checkNull(reportdata.publications2);
+    data["booksAuthoredGoal"] = checkNull(reportdata.booksAuthoredGoal, true);
+    data["booksAuthoredActual"] = checkNull(reportdata.booksAuthoredActual, true);
+    data["bookChaptersGoal"] = checkNull(reportdata.bookChaptersGoal, true);
+    data["bookChaptersActual"] = checkNull(reportdata.bookChaptersActual, true);
+    data["publicationsGoal"] = checkNull(reportdata.publicationsGoal, true);
+    data["publicationsActual"] = checkNull(reportdata.publicationsActual, true);
+    data["listOfPublications"] = checkNull(reportdata.listOfPublications, true);
 
-    data["bookschaptersgoals"] = checkNull(reportdata.publications3);
-    data["bookschapteractual"] = checkNull(reportdata.publications4);
+    data["intellectualPropertiesGoal"] = checkNull(reportdata.intellectualPropertiesGoal, true);
+    data["intellectualPropertiesActual"] = checkNull(reportdata.intellectualPropertiesActual, true);
+    data["patentAppsGoal"] = checkNull(reportdata.patentAppsGoal, true);
+    data["patentAppsActual"] = checkNull(reportdata.patentAppsActual, true);
+    data["patentsIssuedGoal"] = checkNull(reportdata.patentsIssuedGoal, true);
+    data["patentsIssuedActual"] = checkNull(reportdata.patentsIssuedActual, true);
+    data["patentsLicenesedGoal"] = checkNull(reportdata.patentsLicenesedGoal, true);
+    data["patentsLicenesedActual"] = checkNull(reportdata.patentsLicenesedActual, true);
+    data["licensesExecutedGoal"] = checkNull(reportdata.licensesExecutedGoal, true);
+    data["licensesExecutedActual"] = checkNull(reportdata.licensesExecutedActual, true);
+    data["licensedRevenueGoal"] = checkNull(reportdata.licensedRevenueGoal, true);
+    data["licensedRevenueActual"] = checkNull(reportdata.licensedRevenueActual, true);
+    data["startupCompaniesGoal"] = checkNull(reportdata.startupCompaniesGoal, true);
+    data["startupComapniesActual"] = checkNull(reportdata.startupComapniesActual, true);
 
+    data["listofIntellectualProperties"] = checkNull(reportdata.listofIntellectualProperties);
 
-    data["publicationsgoals"] = checkNull(reportdata.publications5);
-    data["publicationsactual"] = checkNull(reportdata.publications6);
+    data["conferencesGoal"] = checkNull(reportdata.conferencesGoal, true);
+    data["conferencesActual"] = checkNull(reportdata.conferencesActual, true);
 
-
-    data["listofpublications"] = checkNull(reportdata.listOfCenter);
-
-    data["intellectualgoals"] = checkNull(reportdata.technologyTransfer1);
-    data["intellectualactual"] = checkNull(reportdata.technologyTransfer2);
-
-    data["patentsgoals"] = checkNull(reportdata.technologyTransfer3);
-    data["patentsactual"] = checkNull(reportdata.technologyTransfer4);
-    data["patlicenesedlgoals"] = checkNull(reportdata.technologyTransfer5);
-    data["patlicensedactual"] = checkNull(reportdata.technologyTransfer6);
-
-
-    data["patlicgoals"] = checkNull(reportdata.technologyTransfer7);
-    data["patlicactuals"] = checkNull(reportdata.technologyTransfer8);
-
-    data["licensedexecutedgoals"] = checkNull(reportdata.technologyTransfer9);
-    data["licensedexecutedactual"] = checkNull(reportdata.technologyTransfer10);
-
-    data["licensedrevenuegoals"] = checkNull(reportdata.technologyTransfer11);
-    data["licensedrevenueactual"] = checkNull(reportdata.technologyTransfer12);
-
-    data["startupcompaniesgoals"] = checkNull(reportdata.technologyTransfer13);
-    data["starupcomapnieseactual"] = checkNull(reportdata.technologyTransfer14);
-
-    data["listofintelletual"] = checkNull(reportdata.propertyDisclosures);
-
-    data["yougoaloffy19020"] = checkNull(reportdata.conference1);
-    data["actualnumbers"] = checkNull(reportdata.conference2);
-
-    data["listofkeynote"] = checkNull(reportdata.keynoteAddresses);
-
-    data["otheractivities"] = checkNull(reportdata.otherActivities);
-
-    content += addresearchActivity(ids, data, year1);
-    //****** */
+    data["keynoteAddresses"] = checkNull(reportdata.keynoteAddresses);
+    data["otherActivities"] = checkNull(reportdata.otherActivities);
+    content += addResearchActivity(ids, data, year1);
 
     ids = getIds('FY' + year1);
     data = {};
-    //data["educationandtraining"] = checkNull(reportdata.Q71);                       //Needs Check
-    data["students_goals_undergraduate"] = checkNull(reportdata.educationAndTraining1);
-    data["students_goals_graduate"] = checkNull(reportdata.educationAndTraining2);
-    data["students_goals_graduate_phd"] = checkNull(reportdata.educationAndTraining3);
-    data["students_goals_phd"] = checkNull(reportdata.educationAndTraining4);
-
-    data["students_actual_undergraduate"] = checkNull(reportdata.educationAndTraining5);
-    data["students_actual_graduate"] = checkNull(reportdata.educationAndTraining6);
-    data["students_actual_graduate_phd"] = checkNull(reportdata.educationAndTraining7);
-    data["students_actual_phd"] = checkNull(reportdata.educationAndTraining8);
-
-    data["nature_of_mentoring_undergradudate"] = checkNull(reportdata.educationAndTraining9);
-    data["nature_of_mentoring_graduate"] = checkNull(reportdata.educationAndTraining10);
-    data["nature_of_mentoring_graduate_phd"] = checkNull(reportdata.educationAndTraining11);
-    data["nature_of_mentoringl_phd"] = checkNull(reportdata.educationAndTraining12);
+    data["undergraduateStudentsGoal"] = checkNull(reportdata.undergraduateStudentsGoal, true);
+    data["graduateStudentsGoal"] = checkNull(reportdata.graduateStudentsGoal, true);
+    data["graduatePhdStudentsGoal"] = checkNull(reportdata.graduatePhdStudentsGoal, true);
+    data["phdStudentsGoal"] = checkNull(reportdata.phdStudentsGoal, true);
+    data["undergraduateStudentsActual"] = checkNull(reportdata.undergraduateStudentsActual, true);
+    data["graduateStudentsActual"] = checkNull(reportdata.graduateStudentsActual, true);
+    data["graduatePhdStudentsActual"] = checkNull(reportdata.graduatePhdStudentsActual, true);
+    data["phdStudentsActual"] = checkNull(reportdata.phdStudentsActual, true);
+    data["natureOfMentoringUndergradudate"] = checkNull(reportdata.natureOfMentoringUndergradudate);
+    data["natureOfMentoringGraduate"] = checkNull(reportdata.natureOfMentoringGraduate);
+    data["natureOfMentoringGraduatePhd"] = checkNull(reportdata.natureOfMentoringGraduatePhd);
+    data["natureOfMentoringPhd"] = checkNull(reportdata.natureOfMentoringPhd);
     content += addEducation(ids, data);
-
 
     for (var i = 1; i < 6; i++) {                                                  //Need Check
         ids = getIds('FY' + year1);
@@ -253,64 +226,41 @@ let addAssessmentReport = function (reportdata, year1, year2) {
         content += addSmartGoal(ids, goal, year1);
     }
 
-
-
-    // for (var i = 9; i < 14; i++) {
-    //     ids = getIds('FY' + year1);
-    //     let goal = new Goal(i - 8, reportdata["Q" + i + "1"], reportdata["Q" + i + "2"],
-    //         reportdata["Q" + i + "3"], reportdata["Q" + i + "4"], reportdata["Q" + i + "5"],
-    //         reportdata["Q" + i + "6"], reportdata["Q" + i + "7"]);
-    //     content += addSmartGoal(ids, goal, year1);
-    // }
-
     ids = getIds('FY' + year1);                                                     //Need Check
     data = [];
-    if (ids.parentId == "FY2019") {
-        if (reportdata.topAchievements1 != '')
-            data.push(reportdata.topAchievements1);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements2 != '')
-            data.push(reportdata.topAchievements2);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements3 != '')
-            data.push(reportdata.topAchievements3);
-        else
-            data.push("N/A");
-    }
-    else {
-        if (reportdata.topAchievements1 != '')
-            data.push(reportdata.topAchievements1);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements2 != '')
-            data.push(reportdata.topAchievements2);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements3 != '')
-            data.push(reportdata.topAchievements3);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements4 != '')
-            data.push(reportdata.topAchievements4);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements5 != '')
-            data.push(reportdata.topAchievements5);
-        else
-            data.push("N/A");
-    }
+    if (reportdata.topAchievements1 != '')
+        data.push(reportdata.topAchievements1);
+    else
+        data.push("N/A");
+    if (reportdata.topAchievements2 != '')
+        data.push(reportdata.topAchievements2);
+    else
+        data.push("N/A");
+    if (reportdata.topAchievements3 != '')
+        data.push(reportdata.topAchievements3);
+    else
+        data.push("N/A");
+    if (reportdata.topAchievements4 != '')
+        data.push(reportdata.topAchievements4);
+    else
+        data.push("N/A");
+    if (reportdata.topAchievements5 != '')
+        data.push(reportdata.topAchievements5);
+    else
+        data.push("N/A");
 
     content += addTopAchievements(ids, data);
 
     ids = getIds('FY' + year1);
+    if (reportdata.hasOwnProperty("otherAchievements"))
+        content += addOtherAchievements(ids, reportdata.otherAchievements);
+
+    ids = getIds('FY' + year1);
     data = {};
-    data["noofpartners"] = reportdata.partnersAffiliates;
+    data["noofpartners"] = reportdata.noofpartners;
     if (reportdata.hasOwnProperty("partners"))
         data["partners"] = reportdata.partners;
-
-    content += addList_partners(ids, data);
+    content += addPartners(ids, data);
 
     ids = getIds('FY' + year1);
     data = {};
@@ -601,15 +551,15 @@ let addAnnualBudget = function (ids, data) {
 }
 
 
-let addResearceAnnualBudget = function (ids, data) {
+let addResearchAnnualBudget = function (ids, data) {
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
     });
-    let totalBudget = formatter.format(data.nameOfadditionalsource1 + data.nameOfadditionalsource2 + data.nameOfadditionalsource3);
-    let currencyFormat1 = formatter.format(data.nameOfadditionalsource1);
-    let currencyFormat2 = formatter.format(data.nameOfadditionalsource2);
-    let currencyFormat3 = formatter.format(data.nameOfadditionalsource3);
+    let totalBudget = formatter.format(data["total"]);
+    let currencyFormat1 = formatter.format(data.additionalAmount1);
+    let currencyFormat2 = formatter.format(data.additionalAmount2);
+    let currencyFormat3 = formatter.format(data.additionalAmount3);
 
 
     let financialbudgetContent = '<h4> ANNUAL BUDGET </h4>' +
@@ -630,23 +580,21 @@ let addResearceAnnualBudget = function (ids, data) {
         '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
         '<th class="border_bottom" width="36.5%">Funding Source</th><th class="border_bottom" width="36.5%">Amount</th></tr></thead>' +
         '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">Name of Additional Source 1 </th><td>' + data.nameOfadditionalsource11 + '</td><td>' +
+        '<th class="border_right padding_bottom padding_top">Name of Additional Source 1 </th><td>' + data.additionalSource1 + '</td><td>' +
         currencyFormat1 + '</td></tr>' +
-        '<tr><th class="border_right">Name of Additional Source 2</th><td>' + data.nameOfadditionalsource21 + '</td><td>' +
+        '<tr><th class="border_right">Name of Additional Source 2</th><td>' + data.additionalSource2 + '</td><td>' +
         currencyFormat2 + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Name of Additional Source 3 </th><td>' + data.nameOfadditionalsource31 + '</td><td>' +
+        '<th class="border_right padding_bottom padding_top">Name of Additional Source 3 </th><td>' + data.additionalSource3 + '</td><td>' +
         currencyFormat3 + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Total </th><td>' + data.total3 + '</td><td>' +
+        '<th class="border_right padding_bottom padding_top">Total </th><td>' + " " + '</td><td>' +
         totalBudget + '</td></tr>' +
         '</tbody></table></div>';
-
-
 
     return generateAccordionElem(1, ids.collapseId, ids.headerId, ids.parentId, ids.childId, "Financial Summary Budget", financialbudgetContent);
 }
 
 
-let adddetailedActivity = function (ids, data, year) {
+let addAppsProposalsAwards = function (ids, data, year) {
     let period = getPeriod(year);
     let detailedActivity = '<h4> PROPOSALS</h4>' +
         '<div class="annual-budget">' +
@@ -654,14 +602,12 @@ let adddetailedActivity = function (ids, data, year) {
         '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
         '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
         '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">Federal Applications</th><td>' + data.federalApplicationgoals + '</td><td>' +
-        data.federalApplicationactual + '</td></tr>' +
-        '<tr><th class="border_right  padding_bottom padding_top ">State Applications</th><td>' + data.stateApplicationgoals + '</td><td>' +
-        data.stateApplicationactual + '</td></tr>' +
-
-        '<tr><th class="border_right  padding_bottom padding_top ">Private/Other Sponsors Applications</th><td>' + data.privateApplicationgoals + '</td><td>' +
-        data.privateApplicationactual + '</td></tr>' +
-
+        '<th class="border_right padding_bottom padding_top">Federal Applications</th><td>' + data.federalApplicationsGoal + '</td><td>' +
+        data.federalApplicationsActual + '</td></tr>' +
+        '<tr><th class="border_right  padding_bottom padding_top ">State Applications</th><td>' + data.stateApplicationsGoal + '</td><td>' +
+        data.stateApplicationsActual + '</td></tr>' +
+        '<tr><th class="border_right  padding_bottom padding_top ">Private/Other Sponsors Applications</th><td>' + data.privateApplicationsGoal + '</td><td>' +
+        data.privateApplicationsActual + '</td></tr>' +
         '<tr><th class="border_right  padding_bottom padding_top">Total</th><td>' + data.proposal_total_goals + '</td><td>' +
         data.proposal_total_actual + '</td></tr>' +
         '</tbody></table></div>' +
@@ -674,52 +620,53 @@ let adddetailedActivity = function (ids, data, year) {
         '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
         '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
         '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">Federals Awards </th><td>' + data.federalAwardsgoals + '</td><td>' +
-        data.federalAwardsactual + '</td></tr>' +
-        '<tr><th class="border_right">State Awards </th><td>' + data.stateAwardsgoals + '</td><td>' +
-        data.stateAwardsactual + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Private Awards </th><td>' + data.privateAwardsgoals + '</td><td>' +
-        data.privateAwardsactual + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Total </th><td>' + data.awrds_total_goals + '</td><td>' +
-        data.awrds_total_actual + '</td></tr>' +
+        '<th class="border_right padding_bottom padding_top">Federals Awards </th><td>' + data.federalAwardsGoal + '</td><td>' +
+        data.federalAwardsActual + '</td></tr>' +
+        '<tr><th class="border_right">State Awards </th><td>' + data.stateAwardsGoal + '</td><td>' +
+        data.stateAwardsActual + '</td></tr>' +
+        '<th class="border_right padding_bottom padding_top">Private Awards </th><td>' + data.privateAwardsGoal + '</td><td>' +
+        data.privateAwardsActual + '</td></tr>' +
+        '<th class="border_right padding_bottom padding_top">Total </th><td>' + data.awards_goal_total + '</td><td>' +
+        data.awards_actual_total + '</td></tr>' +
         '</tbody></table></div>' +
+        '</br>' +
+        '</br>' +
 
-        '</br>' +
-        '</br>' +
         '<h4> LARGE SCALE PROPOSALS/AWARDS</h4>' +
-
         '<div class="annual-budget">' +
         '<h4> Number of Large Scale Proposals/Awards </h4>' +
         '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
         '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
         '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">#Proposals </th><td>' + data.proposal_goals + '</td><td>' +
-        data.proposal_actual + '</td></tr>' +
-        '<tr><th class="border_right">#Awards </th><td>' + data.lsAwards_goals + '</td><td>' +
-        data.lsAwards_actual + '</td></tr>' +
+        '<th class="border_right padding_bottom padding_top">#Proposals </th><td>' + data.lsProposalsGoal + '</td><td>' +
+        data.lsProposalsActual + '</td></tr>' +
+        '<tr><th class="border_right">#Awards </th><td>' + data.lsAwardsGoal + '</td><td>' +
+        data.lsAwardsActual + '</td></tr>' +
         '</tbody></table></div>' +
         '</br>' +
         '</br>' +
 
         '<h4>STTR/SBIR PROPOSALS/AWARDS</h4>' +
-
-
         '<div class="annual-budget">' +
         '<h4>Numbers of STTR/SBIR Proposals/Awards</h4>' +
         '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
         '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
         '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">#Proposals </th><td>' + data.stProposal_goals + '</td><td>' +
-        data.stProposal_actual + '</td></tr>' +
-        '<tr><th class="border_right">#Awards </th><td>' + data.stAwards_goals + '</td><td>' +
-        data.stAwards_actual + '</td></tr>' +
+        '<th class="border_right padding_bottom padding_top">#Proposals </th><td>' + data.sttrProposalsGoal + '</td><td>' +
+        data.sttrProposalsActual + '</td></tr>' +
+        '<tr><th class="border_right">#Awards </th><td>' + data.sttrAwardssGoal + '</td><td>' +
+        data.sttrAwardsActual + '</td></tr>' +
         '</tbody></table></div>';
     return generateAccordionElem(1, ids.collapseId, ids.headerId, ids.parentId, ids.childId, "Detailed Activity Report Proposal and Awards", detailedActivity);
 }
 
 
-let addresearchActivity = function (ids, data, year) {
+let addResearchActivity = function (ids, data, year) {
 
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
     let period = getPeriod(year);
     let researchActivity = '<h4> PUBLICATIONS </h4>' +
         '<div class="annual-budget">' +
@@ -727,28 +674,21 @@ let addresearchActivity = function (ids, data, year) {
         '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
         '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
         '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">Books Authored/Edited </th><td>' + data.booksAuthoredgoals + '</td><td>' +
-        data.bookauthoredsactual + '</td></tr>' +
-        '<tr><th class="border_right  padding_bottom padding_top">Books Chapters Authored/Edited  </th><td>' + data.bookschaptersgoals + '</td><td>' +
-        data.bookschapteractual + '</td></tr>' +
-
-        '<tr><th class="border_right padding_bottom padding_top ">Publications</th><td>' + data.publicationsgoals + '</td><td>' +
-        data.publicationsactual + '</td></tr>' +
-
+        '<th class="border_right padding_bottom padding_top">Books Authored/Edited </th><td>' + data.booksAuthoredGoal + '</td><td>' +
+        data.booksAuthoredActual + '</td></tr>' +
+        '<tr><th class="border_right  padding_bottom padding_top">Books Chapters Authored/Edited  </th><td>' + data.bookChaptersGoal + '</td><td>' +
+        data.bookChaptersActual + '</td></tr>' +
+        '<tr><th class="border_right padding_bottom padding_top ">Publications</th><td>' + data.publicationsGoal + '</td><td>' +
+        data.publicationsActual + '</td></tr>' +
         '</tbody></table></div>' +
         '</br>' +
         '</br>' +
 
-
         '<h4>List of Publications by Center/Institute/Lab in the past FY</h4>' +
-
-        '<div class="annual-budget">' + formatPara(data.listofpublications) +
+        '<div class="annual-budget">' + formatPara(data.listOfPublications) +
         '</div>' +
-
         '</br>' +
         '</br>' +
-
-
 
         '<h4> TECHNOLOGY TRANSFER/COMMERCIALIZATION </h4>' +
         '<div class="annual-budget">' +
@@ -756,65 +696,50 @@ let addresearchActivity = function (ids, data, year) {
         '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
         '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
         '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">Intellectual Property Disclosures </th><td>' + data.intellectualgoals + '</td><td>' +
-        data.intellectualactual + '</td></tr>' +
-        '<tr><th class="border_right  padding_bottom padding_top">Patents Applications </th><td>' + data.patentsgoals + '</td><td>' +
-        data.patentsactual + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Patents Issued  </th><td>' + data.patlicenesedlgoals + '</td><td>' +
-        data.patlicensedactual + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Patents Licensed </th><td>' + data.patlicgoals + '</td><td>' +
-        data.patlicactuals + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">License Executed </th><td>' + data.licensedexecutedgoals + '</td><td>' +
-        data.licensedexecutedactual + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">License Revenue </th><td>' + data.licensedrevenuegoals + '</td><td>' +
-        data.licensedrevenueactual + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Start-up Companies </th><td>' + data.startupcompaniesgoals + '</td><td>' +
-        data.starupcomapnieseactual + '</td></tr>' +
+        '<th class="border_right padding_bottom padding_top">Intellectual Property Disclosures </th><td>' + data.intellectualPropertiesGoal + '</td><td>' +
+        data.intellectualPropertiesActual + '</td></tr>' +
+        '<tr><th class="border_right  padding_bottom padding_top">Patents Applications </th><td>' + data.patentAppsGoal + '</td><td>' +
+        data.patentAppsActual + '</td></tr>' +
+        '<th class="border_right padding_bottom padding_top">Patents Issued  </th><td>' + data.patentsIssuedGoal + '</td><td>' +
+        data.patentsIssuedActual + '</td></tr>' +
+        '<th class="border_right padding_bottom padding_top">Patents Licensed </th><td>' + data.patentsLicenesedGoal + '</td><td>' +
+        data.patentsLicenesedActual + '</td></tr>' +
+        '<th class="border_right padding_bottom padding_top">License Executed </th><td>' + data.licensesExecutedGoal + '</td><td>' +
+        data.licensesExecutedActual + '</td></tr>' +
+        '<th class="border_right padding_bottom padding_top">License Revenue </th><td>' + (isNaN(data.licensedRevenueGoal) ? data.licensedRevenueGoal : formatter.format(data.licensedRevenueGoal)) + '</td><td>' +
+        (isNaN(data.licensedRevenueActual)? data.licensedRevenueActual : formatter.format(data.licensedRevenueActual)) + '</td></tr>' +
+        '<th class="border_right padding_bottom padding_top">Start-up Companies </th><td>' + data.startupCompaniesGoal + '</td><td>' +
+        data.startupComapniesActual + '</td></tr>' +
         '</tbody></table></div>' +
-
         '</br>' +
         '</br>' +
-
-
 
         '<h4>List of Intellectual Property/Technology Transfer/Commercialization in the Past FY </h4>' +
-
-        '<div class="annual-budget"><p>' + formatPara(data.listofintelletual) + '</p>' +
+        '<div class="annual-budget"><p>' + formatPara(data.listofIntellectualProperties) + '</p>' +
         '</div>' +
-
         '<br/>' +
-
         '<br/>' +
-
-
 
         '<h4> CONFERENCE/SEMINAR PRESENTATIONS</h4>' +
-
         '<div class="annual-budget">' +
         '<h4> Numbers of all Keynote Address or Plenary Invited Presentations</h4>' +
         '<table width="100%">' +
         '<tbody><tr>' +
-        '<th class="padding_bottom padding_top">Your Goals for FY ' + period + ' </th><td>' + data.yougoaloffy19020 + '</td></tr>' +
-        '<tr><th class="">Actual Numbers </th><td>' + data.actualnumbers + '</td>' +
+        '<th class="padding_bottom padding_top">Your Goals for FY ' + period + ' </th><td>' + data.conferencesGoal + '</td></tr>' +
+        '<tr><th class="">Actual Numbers </th><td>' + data.conferencesActual + '</td>' +
         '</tbody></table></div>' +
         '<br/>' +
-
         '<br/>' +
 
-
         '<h4> List of all Keynote Address or Plenary Invited Presentations </h4>' +
-
-        '<div class="annual-budget"><p>' + formatPara(data.listofkeynote) + '</p>' +
-
+        '<div class="annual-budget"><p>' + formatPara(data.keynoteAddresses) + '</p>' +
         '</div>' +
         '<br/>' +
         '<br/>' +
 
         '<h4> OTHER ACTIVITIES</h4>' +
-
         '<h4>List of Scholarly Activity:</h4>' +
-
-        '<div class="annual-budget"><p>' + formatPara(data.otheractivities) + '</p>' +
+        '<div class="annual-budget"><p>' + formatPara(data.otherActivities) + '</p>' +
         '</div>';
     return generateAccordionElem(1, ids.collapseId, ids.headerId, ids.parentId, ids.childId, "Detailed Activity Report Research and Scholarly Activities", researchActivity);
 }
@@ -829,27 +754,27 @@ let addEducation = function (ids, data, year) {
         '<th class="border_bottom" width=25%">Graduate - PhD </th>' +
         '<th class="border_bottom" width="25%">Postdoctoral </th>' +
         '</tr></thead>' +
-        '<tbody><tr><th class="border_right padding_bottom padding_top">#Students - Your Goal for FY ' + period + '</th><td>' + data.students_goals_undergraduate + '</td>' +
-        '<td>' + data.students_goals_graduate + '</td> ' +
-        '<td>' + data.students_goals_graduate_phd + '</td> ' +
-        '<td>' + data.students_goals_phd + '</td> ' +
+        '<tbody><tr><th class="border_right padding_bottom padding_top">#Students - Your Goal for FY ' + period + '</th><td>' + data.undergraduateStudentsGoal + '</td>' +
+        '<td>' + data.graduateStudentsGoal + '</td> ' +
+        '<td>' + data.graduatePhdStudentsGoal + '</td> ' +
+        '<td>' + data.phdStudentsGoal + '</td> ' +
         '</tr>' +
-        '<tr><th class="border_right padding_bottom padding_top">#Students - Actual Numbers</th><td>' + data.students_actual_undergraduate + '</td>' +
-        '<td>' + data.students_actual_graduate + '</td> ' +
-        '<td>' + data.students_actual_graduate_phd + '</td> ' +
-        '<td>' + data.students_actual_phd + '</td> ' +
+        '<tr><th class="border_right padding_bottom padding_top">#Students - Actual Numbers</th><td>' + data.undergraduateStudentsActual + '</td>' +
+        '<td>' + data.graduateStudentsActual + '</td> ' +
+        '<td>' + data.graduatePhdStudentsActual + '</td> ' +
+        '<td>' + data.phdStudentsActual + '</td> ' +
         '</tr>' +
-        '<tr><th class="border_right padding_bottom padding_top"> Nature of Mentoring</th><td>' + data.nature_of_mentoring_undergradudate + '</td>' +
-        '<td>' + data.nature_of_mentoring_graduate + '</td> ' +
-        '<td>' + data.nature_of_mentoring_graduate_phd + '</td> ' +
-        '<td>' + data.nature_of_mentoringl_phd + '</td> ' +
+        '<tr><th class="border_right padding_bottom padding_top"> Nature of Mentoring</th><td>' + data.natureOfMentoringUndergradudate + '</td>' +
+        '<td>' + data.natureOfMentoringGraduate + '</td> ' +
+        '<td>' + data.natureOfMentoringGraduatePhd + '</td> ' +
+        '<td>' + data.natureOfMentoringPhd + '</td> ' +
         '</tr>' +
         '</tbody></table></div>';
     return generateAccordionElem(1, ids.collapseId, ids.headerId, ids.parentId, ids.childId, "Education And Training", eduContent);
 }
 
 
-let addList_partners = function (ids, data) {
+let addPartners = function (ids, data) {
     let content =
         '<h4> LIST OF PARTNERS/AFFILIATES</h4>' +
 
@@ -930,6 +855,17 @@ let addTopAchievements = function (ids, data) {
     }
     achievements += "</div>";
     return generateAccordionElem(1, ids.collapseId, ids.headerId, ids.parentId, ids.childId, "Top 3-5 Achievements", achievements);
+}
+
+let addOtherAchievements = function (ids, achievements) {
+    let content = '<div class="achievements">';
+    for (var i = 0; i < achievements.length; i++) {
+        content += '<p><b>Achievement ' + (i + 1) + ': </b><p>';
+        content += formatText(achievements[i].Achievement);
+    }
+    content += "</div>";
+
+    return generateAccordionElem(1, ids.collapseId, ids.headerId, ids.parentId, ids.childId, "Other Achievements", content);
 }
 
 let addOtherThoughts = function (ids, data) {

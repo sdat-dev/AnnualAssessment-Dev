@@ -1,7 +1,7 @@
 
 function printAdminAssessment(reportdata, year1, year2) {
     let data = {};
-    data["unit"] = reportdata["Unit"];
+    data["unit"] = reportdata["unit"];
 
     data["mission"] = reportdata.mission;
     data["vision"] = reportdata.vision;
@@ -65,7 +65,8 @@ function printAdminAssessment(reportdata, year1, year2) {
         data.push(reportdata.achievement5);
     content += printTopAchievements(data);
 
-    content += printOtherAchievements(reportdata)
+    if (reportdata.hasOwnProperty("otherAchievements"))
+        content += printOtherAchievements(reportdata)
 
     data = {};
     data["opportunities"] = reportdata.bigOpportunities;
@@ -81,7 +82,7 @@ function printAdminAssessment(reportdata, year1, year2) {
 
 function printAdminPlanning(reportdata, year1, year2) {
     let data = {};
-    data["unit"] = reportdata.Unit
+    data["unit"] = reportdata.unit
     let content = '';
     data["mission"] = reportdata.mission;
     data["vision"] = reportdata.vision;
@@ -114,380 +115,353 @@ function printAdminPlanning(reportdata, year1, year2) {
 function printResearchAssessment(reportdata, year1, year2) {
 
     let data = {};
-
-    data["unit"] = reportdata.Unit;
-
-    data["mission"] = reportdata.mission;
-    data["vision"] = reportdata.vision;
-
-    data["annualBudget"] = reportdata.annualBudget;
-    data["employeesState"] = checkNull(reportdata.stateHeadcount);
-    data["employeesRF"] = checkNull(reportdata.rfHeadcount);
-    data["fteState"] = checkNull(reportdata.stateNumber);
-    data["fteRF"] = checkNull(reportdata.rfNumber);
-    data["nameOfadditionalsource1"] = checkNull(reportdata.otherRevenue1);
-    data["nameOfadditionalsource11"] = checkNull(reportdata.otherRevenue2);
-
-    data["nameOfadditionalsource2"] = checkNull(reportdata.otherRevenue3);
-    data["nameOfadditionalsource21"] = checkNull(reportdata.otherRevenue4);
-
-    data["nameOfadditionalsource3"] = checkNull(reportdata.otherRevenue5);
-    data["nameOfadditionalsource31"] = checkNull(reportdata.otherRevenue6);
-
-    addTotal3 = { 1: data["nameOfadditionalsource1"], 2: data["nameOfadditionalsource2"], 3: data["nameOfadditionalsource3"] };
-
-    data["total3"] = checkNull(addTotal3);
-    data["total33"] = checkNull(addTotal3);
-
-    addData = {};
-    data["federalApplicationgoals"] = checkNull(reportdata.porposals1);
-    data["federalApplicationactual"] = checkNull(reportdata.porposals4);
-    data["stateApplicationgoals"] = checkNull(reportdata.porposals3);
-    data["stateApplicationactual"] = checkNull(reportdata.porposals6);
-    data["privateApplicationgoals"] = checkNull(reportdata.porposals2);
-    data["privateApplicationactual"] = checkNull(reportdata.porposals5);
-
-    addData = { 1: data["federalApplicationgoals"], 2: data["stateApplicationgoals"], 3: data["privateApplicationgoals"] };
-    addData1 = { 1: data["federalApplicationactual"], 2: data["stateApplicationactual"], 3: data["stateApplicationactual"] };
-
-    data["proposal_total_goals"] = add(addData);
-    data["proposal_total_actual"] = add(addData1);
-
-    data["awards"] = reportdata.Q52;
-    data["federalAwardsgoals"] = checkNull(reportdata.awards1);
-    data["federalAwardsactual"] = checkNull(reportdata.awards4);
-
-    data["stateAwardsgoals"] = checkNull(reportdata.awards3);
-    data["stateAwardsactual"] = checkNull(reportdata.awards6);
-
-    data["privateAwardsgoals"] = checkNull(reportdata.awards2);
-    data["privateAwardsactual"] = checkNull(reportdata.awards5);
-
-    addData2 = { 1: data["federalAwardsgoals"], 2: data["stateAwardsgoals"], 3: data["privateAwardsgoals"] };
-    addData3 = { 1: data["federalAwardsactual"], 2: data["stateAwardsactual"], 3: data["privateAwardsactual"] };
-
-    data["awrds_total_goals"] = add(addData2);
-    data["awrds_total_actual"] = add(addData3);
-
-    data["largeScale"] = checkNull(reportdata.Q53);
-    data["proposal_goals"] = checkNull(reportdata.largeScale1);
-    data["proposal_actual"] = checkNull(reportdata.largeScale2);
-    data["lsAwards_goals"] = checkNull(reportdata.largeScale3);
-    data["lsAwards_actual"] = checkNull(reportdata.largeScale4);
-
-    data["strr"] = checkNull(reportdata.Q54);
-
-    data["stProposal_goals"] = checkNull(reportdata.sttrAwards1);
-    data["stProposal_actual"] = checkNull(reportdata.sttrAwards2);
-
-    data["stAwards_goals"] = checkNull(reportdata.sttrAwards3);
-    data["stAwards_actual"] = checkNull(reportdata.sttrAwards4);
-
-    //detailed research
-
-    data["booksAuthoredgoals"] = checkNull(reportdata.publications1);
-    data["bookauthoredsactual"] = checkNull(reportdata.publications2);
-
-    data["bookschaptersgoals"] = checkNull(reportdata.publications3);
-    data["bookschapteractual"] = checkNull(reportdata.publications4);
-
-
-    data["publicationsgoals"] = checkNull(reportdata.publications5);
-    data["publicationsactual"] = checkNull(reportdata.publications6);
-
-
-    data["listofpublications"] = checkNull(reportdata.listOfCenter);
-
-    data["intellectualgoals"] = checkNull(reportdata.technologyTransfer1);
-    data["intellectualactual"] = checkNull(reportdata.technologyTransfer2);
-
-    data["patentsgoals"] = checkNull(reportdata.technologyTransfer3);
-    data["patentsactual"] = checkNull(reportdata.technologyTransfer4);
-    data["patlicenesedlgoals"] = checkNull(reportdata.technologyTransfer5);
-    data["patlicensedactual"] = checkNull(reportdata.technologyTransfer6);
-
-
-    data["patlicgoals"] = checkNull(reportdata.technologyTransfer7);
-    data["patlicactuals"] = checkNull(reportdata.technologyTransfer8);
-
-    data["licensedexecutedgoals"] = checkNull(reportdata.technologyTransfer9);
-    data["licensedexecutedactual"] = checkNull(reportdata.technologyTransfer10);
-
-    data["licensedrevenuegoals"] = checkNull(reportdata.technologyTransfer11);
-    data["licensedrevenueactual"] = checkNull(reportdata.technologyTransfer12);
-
-    data["startupcompaniesgoals"] = checkNull(reportdata.technologyTransfer13);
-    data["starupcomapnieseactual"] = checkNull(reportdata.technologyTransfer14);
-
-    data["listofintelletual"] = checkNull(reportdata.propertyDisclosures);
-
-    data["yougoaloffy19020"] = checkNull(reportdata.conference1);
-    data["actualnumbers"] = checkNull(reportdata.conference2);
-
-    data["listofkeynote"] = checkNull(reportdata.keynoteAddresses);
-    data["otheractivities"] = checkNull(reportdata.otherActivities);
-
-    data["students_goals_undergraduate"] = checkNull(reportdata.educationAndTraining1);
-    data["students_goals_graduate"] = checkNull(reportdata.educationAndTraining2);
-    data["students_goals_graduate_phd"] = checkNull(reportdata.educationAndTraining3);
-    data["students_goals_phd"] = checkNull(reportdata.educationAndTraining4);
-
-    data["students_actual_undergraduate"] = checkNull(reportdata.educationAndTraining5);
-    data["students_actual_graduate"] = checkNull(reportdata.educationAndTraining6);
-    data["students_actual_graduate_phd"] = checkNull(reportdata.educationAndTraining7);
-    data["students_actual_phd"] = checkNull(reportdata.educationAndTraining8);
-
-    data["nature_of_mentoring_undergradudate"] = checkNull(reportdata.educationAndTraining9);
-    data["nature_of_mentoring_graduate"] = checkNull(reportdata.educationAndTraining10);
-    data["nature_of_mentoring_graduate_phd"] = checkNull(reportdata.educationAndTraining11);
-    data["nature_of_mentoringl_phd"] = checkNull(reportdata.educationAndTraining12);
+    let content_research = '';
+    let period = getPeriod(year1);
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
     });
-    let totalBudget = formatter.format(data.nameOfadditionalsource1 + data.nameOfadditionalsource2 + data.nameOfadditionalsource3);
-    let currencyFormat1 = formatter.format(data.nameOfadditionalsource1);
-    let currencyFormat2 = formatter.format(data.nameOfadditionalsource2);
-    let currencyFormat3 = formatter.format(data.nameOfadditionalsource3);
-    let proposal_total_actual = data.federalApplicationactual + data.stateApplicationactual + data.privateApplicationactual;
-    if (reportdata.hasOwnProperty("partners"))
-        data["partners"] = reportdata.partners;
-    let content_research = '';
-    let period = getPeriod(year1);
+
+    data["unit"] = reportdata.unit;
     content_research = '<h1 style="text-align: center;">' + data.unit + '</h1><div style="margin-botton:30px;"></div><h1 style="text-align: center;">Annual Assessment Report (' + year1 + '-' + year2 + ')</h1>';
-    content_research +=
 
-        '<div style="margin-botton:30px;"></div><h3 style="text-align: center;">Director: ' + reportdata.firstName + ' ' + reportdata.lastName + '</h3>' +
-        '<h4>MISSION</h4>' +
-        '<p class="mission">' + data.mission + '</p>' +
-        '<h4>VISION</h4>' +
-        '<p class="vision">' + data.vision + '</p>' +
+    data["mission"] = reportdata.mission;
+    data["vision"] = reportdata.vision;
+    
+    content_research += '<div style="margin-botton:30px;"></div><h3 style="text-align: center;">Director: ' + reportdata.firstName + ' ' + reportdata.lastName + '</h3>' +
+    '<h4>MISSION</h4>' +
+    '<p class="mission">' + data.mission + '</p>' +
+    '<h4>VISION</h4>' +
+    '<p class="vision">' + data.vision + '</p>';
 
-        '<h4> ANNUAL BUDGET </h4>' +
-        '<div class="annual-budget"><p>' + data.annualBudget + '</p>' +
-        '<h4> Number of State and RF Employees/FTEs.</h4>' +
-        '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
-        '<th class="border_bottom" width="36.5%">State</th><th class="border_bottom" width="36.5%">RF</th></tr></thead>' +
-        '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">#Employees (Headcounts)</th><td style=" text-align: center;">' + data.employeesState + '</td><td style=" text-align: center;">' +
-        data.employeesRF + '</td></tr>' +
-        '<tr><th class="border_right">#FTEs</th><td style=" text-align: center;">' + data.fteState + '</td><td style=" text-align: center;">' +
-        data.fteRF + '</td></tr>' +
-        '</tbody></table></div>' +
-        '</br>' +
-        '</br>' +
+    data["annualBudget"] = reportdata.annualBudget;
+    data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
+    data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
+    data["fteState"] = checkNull(reportdata.stateNumber, true);
+    data["fteRF"] = checkNull(reportdata.rfNumber, true);
+    data["additionalAmount1"] = checkNull(reportdata.additionalAmount1, true);
+    data["additionalSource1"] = checkNull(reportdata.additionalSource1);
+    data["additionalAmount2"] = checkNull(reportdata.additionalAmount2, true);
+    data["additionalSource2"] = checkNull(reportdata.additionalSource2);
+    data["additionalAmount3"] = checkNull(reportdata.additionalAmount3, true);
+    data["additionalSource3"] = checkNull(reportdata.additionalSource3);
 
-        '<div class="annual-budget"> ' +
-        '<h4> Source of Other Revenue Generated</h4>' +
-        '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
-        '<th class="border_bottom" width="36.5%">Funding Source</th><th class="border_bottom" width="36.5%">Amount</th></tr></thead>' +
-        '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">Name of Additional Source 1 </th><td style=" text-align: center;">' + data.nameOfadditionalsource11 + '</td><td style=" text-align: center;">' +
-        currencyFormat1 + '</td></tr>' +
-        '<tr><th class="border_right">Name of Additional Source 2</th><td style=" text-align: center;">' + data.nameOfadditionalsource21 + '</td><td style=" text-align: center;">' +
-        currencyFormat2 + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Name of Additional Source 3 </th><td style=" text-align: center;">' + data.nameOfadditionalsource31 + '</td><td style=" text-align: center;">' +
-        currencyFormat3 + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Total </th><td style=" text-align: center;">' + data.total3 + '</td><td style=" text-align: center;">' +
-        totalBudget + '</td></tr>' +
-        '</tbody></table></div>' +
+    addTotal3 = { 1: data["additionalAmount1"], 
+                  2: data["additionalAmount2"],
+                  3: data["additionalAmount3"]};
+    data["total"] = add(addTotal3);
 
-        '<h4> PROPOSALS</h4>' +
-        '<div class="annual-budget">' +
-        '<h4> Number of Research Proposals Submitted to Extramural Sponsors</h4>' +
-        '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
-        '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
-        '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">Federal Applications</th><td style=" text-align: center;">' + data.federalApplicationgoals + '</td><td style=" text-align: center;">' +
-        data.federalApplicationactual + '</td></tr>' +
-        '<tr><th class="border_right  padding_bottom padding_top ">State Applications</th><td style=" text-align: center;">' + data.stateApplicationgoals + '</td><td style=" text-align: center;">' +
-        data.stateApplicationactual + '</td></tr>' +
+    let totalBudget = formatter.format(data["total"]);
+    let currencyFormat1 = formatter.format(data.additionalAmount1);
+    let currencyFormat2 = formatter.format(data.additionalAmount2);
+    let currencyFormat3 = formatter.format(data.additionalAmount3);
 
-        '<tr><th class="border_right  padding_bottom padding_top ">Private/Other Sponsors Applications</th><td style=" text-align: center;">' + data.privateApplicationgoals + '</td><td style=" text-align: center;">' +
-        data.privateApplicationactual + '</td></tr>' +
+    content_research += '<h4> ANNUAL BUDGET </h4>' +
+    '<div class="annual-budget"><p>' + data.annualBudget + '</p>' +
+    '<h4> Number of State and RF Employees/FTEs.</h4>' +
+    '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
+    '<th class="border_bottom" width="36.5%">State</th><th class="border_bottom" width="36.5%">RF</th></tr></thead>' +
+    '<tbody><tr>' +
+    '<th class="border_right padding_bottom padding_top">#Employees (Headcounts)</th><td style=" text-align: center;">' + data.employeesState + '</td><td style=" text-align: center;">' +
+    data.employeesRF + '</td></tr>' +
+    '<tr><th class="border_right">#FTEs</th><td style=" text-align: center;">' + data.fteState + '</td><td style=" text-align: center;">' +
+    data.fteRF + '</td></tr>' +
+    '</tbody></table></div>' +
+    '</br>' +
+    '</br>' +
 
-        '<tr><th class="border_right  padding_bottom padding_top">Total</th><td style=" text-align: center;">' + data.proposal_total_goals + '</td><td style=" text-align: center;">' +
-        proposal_total_actual + '</td></tr>' +
-        '</tbody></table></div>' +
-        '</br>' +
-        '</br>' +
+    '<div class="annual-budget"> ' +
+    '<h4> Source of Other Revenue Generated</h4>' +
+    '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
+    '<th class="border_bottom" width="36.5%">Funding Source</th><th class="border_bottom" width="36.5%">Amount</th></tr></thead>' +
+    '<tbody><tr>' +
+    '<th class="border_right padding_bottom padding_top">Name of Additional Source 1 </th><td style=" text-align: center;">' + data.additionalSource1 + '</td><td style=" text-align: center;">' +
+    currencyFormat1 + '</td></tr>' +
+    '<tr><th class="border_right">Name of Additional Source 2</th><td style=" text-align: center;">' + data.additionalSource2 + '</td><td style=" text-align: center;">' +
+    currencyFormat2 + '</td></tr>' +
+    '<th class="border_right padding_bottom padding_top">Name of Additional Source 3 </th><td style=" text-align: center;">' + data.additionalSource3 + '</td><td style=" text-align: center;">' +
+    currencyFormat3 + '</td></tr>' +
+    '<th class="border_right padding_bottom padding_top">Total </th><td style=" text-align: center;"> </td><td style=" text-align: center;">' +
+    totalBudget + '</td></tr>' +
+    '</tbody></table></div>';
 
-        '<h4> AWARDS</h4>' +
-        '<div class="annual-budget">' +
-        '<h4> Numbers of Awards Received from Extramural Sponsors  </h4>' +
-        '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
-        '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
-        '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">Federals Awards </th><td style=" text-align: center;">' + data.federalAwardsgoals + '</td><td style=" text-align: center;">' +
-        data.federalAwardsactual + '</td></tr>' +
-        '<tr><th class="border_right">State Awards </th><td style=" text-align: center;">' + data.stateAwardsgoals + '</td><td style=" text-align: center;">' +
-        data.stateAwardsactual + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Private Awards </th><td style=" text-align: center;">' + data.privateAwardsgoals + '</td><td style=" text-align: center;">' +
-        data.privateAwardsactual + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Total </th><td style=" text-align: center;">' + data.awrds_total_goals + '</td><td style=" text-align: center;">' +
-        data.awrds_total_actual + '</td></tr>' +
-        '</tbody></table></div>' +
+    data["federalApplicationsGoal"] = checkNull(reportdata.federalApplicationsGoal, true);
+    data["federalApplicationsActual"] = checkNull(reportdata.federalApplicationsActual, true);
+    data["stateApplicationsGoal"] = checkNull(reportdata.stateApplicationsGoal, true);
+    data["stateApplicationsActual"] = checkNull(reportdata.stateApplicationsActual, true);
+    data["privateApplicationsGoal"] = checkNull(reportdata.privateApplicationsGoal, true);
+    data["privateApplicationsActual"] = checkNull(reportdata.privateApplicationsActual, true);
 
-        '</br>' +
-        '</br>' +
-        '<h4> LARGE SCALE PROPOSALS/AWARDS</h4>' +
+    addGoals = { 1: data["federalApplicationsGoal"], 2: data["stateApplicationsGoal"], 3: data["privateApplicationsGoal"] };
+    addActual = { 1: data["federalApplicationsActual"], 2: data["stateApplicationsActual"], 3: data["privateApplicationsActual"] };
 
-        '<div class="annual-budget">' +
-        '<h4> Number of Large Scale Proposals/Awards </h4>' +
-        '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
-        '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
-        '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">#Proposals </th><td style=" text-align: center;">' + data.proposal_goals + '</td><td style=" text-align: center;">' +
-        data.proposal_actual + '</td></tr>' +
-        '<tr><th class="border_right">#Awards </th><td style=" text-align: center;">' + data.lsAwards_goals + '</td><td style=" text-align: center;">' +
-        data.lsAwards_actual + '</td></tr>' +
-        '</tbody></table></div>' +
-        '</br>' +
-        '</br>' +
+    data["proposal_total_goals"] = add(addGoals);
+    data["proposal_total_actual"] = add(addActual);
 
-        '<h4>STTR/SBIR PROPOSALS/AWARDS</h4>' +
+    data["federalAwardsGoal"] = checkNull(reportdata.federalAwardsGoal, true);
+    data["federalAwardsActual"] = checkNull(reportdata.federalAwardsActual, true);
+    data["stateAwardsGoal"] = checkNull(reportdata.stateAwardsGoal, true);
+    data["stateAwardsActual"] = checkNull(reportdata.stateAwardsActual, true);
+    data["privateAwardsGoal"] = checkNull(reportdata.privateAwardsGoal, true);
+    data["privateAwardsActual"] = checkNull(reportdata.privateAwardsActual, true);
 
+    addGoals = { 1: data["federalAwardsGoal"], 2: data["stateAwardsGoal"], 3: data["privateAwardsGoal"] };
+    addActual = { 1: data["federalAwardsActual"], 2: data["stateAwardsActual"], 3: data["privateAwardsActual"] };
 
-        '<div class="annual-budget">' +
-        '<h4>Numbers of STTR/SBIR Proposals/Awards</h4>' +
-        '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
-        '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
-        '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">#Proposals </th><td style=" text-align: center;">' + data.stProposal_goals + '</td><td style=" text-align: center;">' +
-        data.stProposal_actual + '</td></tr>' +
-        '<tr><th class="border_right">#Awards </th><td style=" text-align: center;">' + data.stAwards_goals + '</td><td style=" text-align: center;">' +
-        data.stAwards_actual + '</td></tr>' +
-        '</tbody></table></div>' +
+    data["awards_goal_total"] = add(addGoals);
+    data["awards_actual_total"] = add(addActual);
 
-        '<h4> PUBLICATIONS </h4>' +
-        '<div class="annual-budget">' +
-        '<h4>Number of Publications by Center/Institute/Lab in the past FY</h4>' +
-        '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
-        '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
-        '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">Books Authored/Edited </th><td style=" text-align: center;">' + data.booksAuthoredgoals + '</td><td style=" text-align: center;">' +
-        data.bookauthoredsactual + '</td></tr>' +
-        '<tr><th class="border_right  padding_bottom padding_top">Books Chapters Authored/Edited  </th><td style=" text-align: center;">' + data.bookschaptersgoals + '</td><td style=" text-align: center;">' +
-        data.bookschapteractual + '</td></tr>' +
+    data["lsProposalsGoal"] = checkNull(reportdata.lsProposalsGoal, true);
+    data["lsProposalsActual"] = checkNull(reportdata.lsProposalsActual, true);
+    data["lsAwardsGoal"] = checkNull(reportdata.lsAwardsGoal, true);
+    data["lsAwardsActual"] = checkNull(reportdata.lsAwardsActual, true);
 
-        '<tr><th class="border_right padding_bottom padding_top ">Publications</th><td style=" text-align: center;">' + data.publicationsgoals + '</td><td style=" text-align: center;">' +
-        data.publicationsactual + '</td></tr>' +
+    data["sttrProposalsGoal"] = checkNull(reportdata.sttrProposalsGoal, true);
+    data["sttrProposalsActual"] = checkNull(reportdata.sttrProposalsActual, true);
+    data["sttrAwardssGoal"] = checkNull(reportdata.sttrAwardssGoal, true);
+    data["sttrAwardsActual"] = checkNull(reportdata.sttrAwardsActual, true);
 
-        '</tbody></table></div>' +
-        '</br>' +
-        '</br>' +
-        '<h4>List of Publications by Center/Institute/Lab in the past FY</h4>' +
-        '<div class="annual-budget">' + formatPara(data.listofpublications) +
-        '</div>' +
-        '</br>' +
-        '</br>' +
+    content_research += '<h4> PROPOSALS</h4>' +
+    '<div class="annual-budget">' +
+    '<h4> Number of Research Proposals Submitted to Extramural Sponsors</h4>' +
+    '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
+    '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
+    '<tbody><tr>' +
+    '<th class="border_right padding_bottom padding_top">Federal Applications</th><td style=" text-align: center;">' + data.federalApplicationsGoal + '</td><td style=" text-align: center;">' +
+    data.federalApplicationsActual + '</td></tr>' +
+    '<tr><th class="border_right  padding_bottom padding_top ">State Applications</th><td style=" text-align: center;">' + data.stateApplicationsGoal + '</td><td style=" text-align: center;">' +
+    data.stateApplicationsActual + '</td></tr>' +
+    '<tr><th class="border_right  padding_bottom padding_top ">Private/Other Sponsors Applications</th><td style=" text-align: center;">' + data.privateApplicationsGoal + '</td><td style=" text-align: center;">' +
+    data.privateApplicationsActual + '</td></tr>' +
+    '<tr><th class="border_right  padding_bottom padding_top">Total</th><td style=" text-align: center;">' + data.proposal_total_goals + '</td><td style=" text-align: center;">' +
+    data.proposal_total_actual + '</td></tr>' +
+    '</tbody></table></div>' +
+    '</br>' +
+    '</br>' +
 
-        '<h4> TECHNOLOGY TRANSFER/COMMERCIALIZATION </h4>' +
-        '<div class="annual-budget">' +
-        '<h4>Number of Intellectual Property/Technology Transfer/Commercialization in the Past FY </h4>' +
-        '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
-        '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
-        '<tbody><tr>' +
-        '<th class="border_right padding_bottom padding_top">Intellectual Property Disclosures </th><td style=" text-align: center;">' + data.intellctualgoals + '</td><td style=" text-align: center;">' +
-        data.intellctualgoals + '</td></tr>' +
-        '<tr><th class="border_right  padding_bottom padding_top">Patents Applications </th><td style=" text-align: center;">' + data.patentsactual + '</td><td style=" text-align: center;">' +
-        data.patnetsgoals + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Patents Issued  </th><td style=" text-align: center;">' + data.patlicenesedlgoals + '</td><td style=" text-align: center;">' +
-        data.patlicenesedlgoals + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Patents Licensed </th><td style=" text-align: center;">' + data.patlicgoals + '</td><td style=" text-align: center;">' +
-        data.patlicactuals + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">License Executed </th><td style=" text-align: center;">' + data.licensedexecutedgoals + '</td><td style=" text-align: center;">' +
-        data.licensedexecutedactual + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">License Revenue </th><td style=" text-align: center;">' + data.licensedrevenuegoals + '</td><td style=" text-align: center;">' +
-        data.licensedrevenueactual + '</td></tr>' +
-        '<th class="border_right padding_bottom padding_top">Start-up Companies </th><td style=" text-align: center;">' + data.startupcompaniesgoals + '</td><td style=" text-align: center;">' +
-        data.starupcomapnieseactual + '</td></tr>' +
-        '</tbody></table></div>' +
-        '</br>' +
-        '</br>' +
-        '<h4>List of Intellectual Property/Technology Transfer/Commercialization in the Past FY </h4>' +
-        '<div class="annual-budget"><p>' + formatPara(data.listofintelletual) + '</p>' +
-        '</div>' +
-        '<br/>' +
-        '<h4> CONFERENCE/SEMINAR PRESENTATIONS</h4>' +
-        '<div class="annual-budget">' +
-        '<h4> Numbers of all Keynote Address or Plenary Invited Presentations</h4>' +
-        '<table width="100%">' +
-        '<tbody><tr>' +
-        '<th class="padding_bottom padding_top">Your Goals for FY ' + period + ' </th><td style=" text-align: center;">' + data.yougoaloffy19020 + '</td></tr>' +
-        '<tr><th class="">Actual Numbers </th><td style=" text-align: center;">' + data.actualnumbers + '</td>' +
-        '</tbody></table></div>' +
-        '<br/>' +
-        '<br/>' +
-        '<h4> List of  all Keynote Address or Plenary Invited Presentations </h4>' +
-        '<div class="annual-budget"><p>' + formatPara(data.listofkeynote) + '</p>' +
-        '</div>' +
-        '<br/>' +
-        '<br/>' +
-        '<h4> OTHER ACTIVITIES</h4>' +
-        '<h4> List of other Scholarly Activity </h4>' +
+    '<h4> AWARDS</h4>' +
+    '<div class="annual-budget">' +
+    '<h4> Numbers of Awards Received from Extramural Sponsors  </h4>' +
+    '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
+    '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
+    '<tbody><tr>' +
+    '<th class="border_right padding_bottom padding_top">Federals Awards </th><td style=" text-align: center;">' + data.federalAwardsGoal + '</td><td style=" text-align: center;">' +
+    data.federalAwardsActual + '</td></tr>' +
+    '<tr><th class="border_right">State Awards </th><td style=" text-align: center;">' + data.stateAwardsGoal + '</td><td style=" text-align: center;">' +
+    data.stateAwardsActual + '</td></tr>' +
+    '<th class="border_right padding_bottom padding_top">Private Awards </th><td style=" text-align: center;">' + data.privateAwardsGoal + '</td><td style=" text-align: center;">' +
+    data.privateAwardsActual + '</td></tr>' +
+    '<th class="border_right padding_bottom padding_top">Total </th><td style=" text-align: center;">' + data.awards_goal_total + '</td><td style=" text-align: center;">' +
+    data.awards_actual_total + '</td></tr>' +
+    '</tbody></table></div>' +
+    '</br>' +
+    '</br>' +
 
-        '<div class="annual-budget"><p>' + formatPara(data.otheractivities) + '</p>' +
-        '</div>' +
+    '<h4> LARGE SCALE PROPOSALS/AWARDS</h4>' +
+    '<div class="annual-budget">' +
+    '<h4> Number of Large Scale Proposals/Awards </h4>' +
+    '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
+    '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
+    '<tbody><tr>' +
+    '<th class="border_right padding_bottom padding_top">#Proposals </th><td style=" text-align: center;">' + data.lsProposalsGoal + '</td><td style=" text-align: center;">' +
+    data.lsProposalsActual + '</td></tr>' +
+    '<tr><th class="border_right">#Awards </th><td style=" text-align: center;">' + data.lsAwardsGoal + '</td><td style=" text-align: center;">' +
+    data.lsAwardsActual + '</td></tr>' +
+    '</tbody></table></div>' +
+    '</br>' +
+    '</br>' +
 
-        '<h4> EDUCATION AND TRAINING </h4>' +
-        '<div class="annual-budget">' +
-        '<h4> Number of Undergraduate/Graduate/Postdoc Trained.</h4>' +
-        '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td><th class="border_bottom" width="25%">Undergraduate</th>' +
-        '<th class="border_bottom" width="25%">Graduate - Master </th>' +
-        '<th class="border_bottom" width=25%">Graduate - PhD </th>' +
-        '<th class="border_bottom" width="25%">Postdoctoral </th>' +
-        '</tr></thead>' +
-        '<tbody><tr><th class="border_right padding_bottom padding_top">#Students - Your Goal for FY ' + period + '</th><td style=" text-align: center;">' + data.students_goals_undergraduate + '</td>' +
-        '<td style=" text-align: center;">' + data.students_goals_graduate + '</td> ' +
-        '<td style=" text-align: center;">' + data.students_goals_graduate_phd + '</td> ' +
-        '<td style=" text-align: center;">' + data.students_goals_phd + '</td> ' +
+    '<h4>STTR/SBIR PROPOSALS/AWARDS</h4>' +
+    '<div class="annual-budget">' +
+    '<h4>Numbers of STTR/SBIR Proposals/Awards</h4>' +
+    '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
+    '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
+    '<tbody><tr>' +
+    '<th class="border_right padding_bottom padding_top">#Proposals </th><td style=" text-align: center;">' + data.sttrProposalsGoal + '</td><td style=" text-align: center;">' +
+    data.sttrProposalsActual + '</td></tr>' +
+    '<tr><th class="border_right">#Awards </th><td style=" text-align: center;">' + data.sttrAwardssGoal + '</td><td style=" text-align: center;">' +
+    data.sttrAwardsActual + '</td></tr>' +
+    '</tbody></table></div>';
 
-        '</tr>' +
+    //detailed research
+    data["booksAuthoredGoal"] = checkNull(reportdata.booksAuthoredGoal, true);
+    data["booksAuthoredActual"] = checkNull(reportdata.booksAuthoredActual, true);
+    data["bookChaptersGoal"] = checkNull(reportdata.bookChaptersGoal, true);
+    data["bookChaptersActual"] = checkNull(reportdata.bookChaptersActual, true);
+    data["publicationsGoal"] = checkNull(reportdata.publicationsGoal, true);
+    data["publicationsActual"] = checkNull(reportdata.publicationsActual, true);
+    data["listOfPublications"] = checkNull(reportdata.listOfPublications, true);
 
-        '<tr><th class="border_right padding_bottom padding_top">#Students - Actual Numbers</th><td style=" text-align: center;">' + data.students_actual_undergraduate + '</td>' +
-        '<td style=" text-align: center;">' + data.students_actual_graduate + '</td> ' +
-        '<td style=" text-align: center;">' + data.students_actual_graduate_phd + '</td> ' +
-        '<td style=" text-align: center;">' + data.students_actual_phd + '</td> ' +
+    data["intellectualPropertiesGoal"] = checkNull(reportdata.intellectualPropertiesGoal, true);
+    data["intellectualPropertiesActual"] = checkNull(reportdata.intellectualPropertiesActual, true);
+    data["patentAppsGoal"] = checkNull(reportdata.patentAppsGoal, true);
+    data["patentAppsActual"] = checkNull(reportdata.patentAppsActual, true);
+    data["patentsIssuedGoal"] = checkNull(reportdata.patentsIssuedGoal, true);
+    data["patentsIssuedActual"] = checkNull(reportdata.patentsIssuedActual, true);
+    data["patentsLicenesedGoal"] = checkNull(reportdata.patentsLicenesedGoal, true);
+    data["patentsLicenesedActual"] = checkNull(reportdata.patentsLicenesedActual, true);
+    data["licensesExecutedGoal"] = checkNull(reportdata.licensesExecutedGoal, true);
+    data["licensesExecutedActual"] = checkNull(reportdata.licensesExecutedActual, true);
+    data["licensedRevenueGoal"] = checkNull(reportdata.licensedRevenueGoal, true);
+    data["licensedRevenueActual"] = checkNull(reportdata.licensedRevenueActual, true);
+    data["startupCompaniesGoal"] = checkNull(reportdata.startupCompaniesGoal, true);
+    data["startupComapniesActual"] = checkNull(reportdata.startupComapniesActual, true);
 
-        '</tr>' +
+    data["listofIntellectualProperties"] = checkNull(reportdata.listofIntellectualProperties);
 
-        '<tr><th class="border_right padding_bottom padding_top"> Nature of Mentoring</th><td style=" text-align: center;">' + data.nature_of_mentoring_undergradudate + '</td>' +
-        '<td style=" text-align: center;">' + data.nature_of_mentoring_graduate + '</td> ' +
-        '<td style=" text-align: center;">' + data.nature_of_mentoring_graduate_phd + '</td> ' +
+    data["conferencesGoal"] = checkNull(reportdata.conferencesGoal, true);
+    data["conferencesActual"] = checkNull(reportdata.conferencesActual, true);
 
-        '<td style=" text-align: center;">' + data.nature_of_mentoringl_phd + '</td> ' +
+    data["keynoteAddresses"] = checkNull(reportdata.keynoteAddresses);
+    data["otherActivities"] = checkNull(reportdata.otherActivities);
 
-        '</tr>' +
-        '</tbody></table></div>';
+    content_research += '<h4> PUBLICATIONS </h4>' +
+    '<div class="annual-budget">' +
+    '<h4>Number of Publications by Center/Institute/Lab in the past FY</h4>' +
+    '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
+    '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
+    '<tbody><tr>' +
+    '<th class="border_right padding_bottom padding_top">Books Authored/Edited </th><td style=" text-align: center;">' + data.booksAuthoredGoal + '</td><td style=" text-align: center;">' +
+    data.booksAuthoredActual + '</td></tr>' +
+    '<tr><th class="border_right  padding_bottom padding_top">Books Chapters Authored/Edited  </th><td style=" text-align: center;">' + data.bookChaptersGoal + '</td><td style=" text-align: center;">' +
+    data.bookChaptersActual + '</td></tr>' +
+    '<tr><th class="border_right padding_bottom padding_top ">Publications</th><td style=" text-align: center;">' + data.publicationsGoal + '</td><td style=" text-align: center;">' +
+    data.publicationsActual + '</td></tr>' +
+    '</tbody></table></div>' +
+    '</br>' +
+    '</br>' +
+
+    '<h4>List of Publications by Center/Institute/Lab in the past FY</h4>' +
+    '<div class="annual-budget">' + formatPara(data.listOfPublications) +
+    '</div>' +
+    '</br>' +
+    '</br>' +
+
+    '<h4> TECHNOLOGY TRANSFER/COMMERCIALIZATION </h4>' +
+    '<div class="annual-budget">' +
+    '<h4>Number of Intellectual Property/Technology Transfer/Commercialization in the Past FY </h4>' +
+    '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td>' +
+    '<th class="border_bottom" width="36.5%">Your Goal in FY ' + period + '</th><th class="border_bottom" width="36.5%">Actual Number</th></tr></thead>' +
+    '<tbody><tr>' +
+    '<th class="border_right padding_bottom padding_top">Intellectual Property Disclosures </th><td style=" text-align: center;">' + data.intellectualPropertiesGoal + '</td><td style=" text-align: center;">' +
+    data.intellectualPropertiesActual + '</td></tr>' +
+    '<tr><th class="border_right  padding_bottom padding_top">Patents Applications </th><td style=" text-align: center;">' + data.patentAppsGoal + '</td><td style=" text-align: center;">' +
+    data.patentAppsActual + '</td></tr>' +
+    '<th class="border_right padding_bottom padding_top">Patents Issued  </th><td style=" text-align: center;">' + data.patentsIssuedGoal + '</td><td style=" text-align: center;">' +
+    data.patentsIssuedActual + '</td></tr>' +
+    '<th class="border_right padding_bottom padding_top">Patents Licensed </th><td style=" text-align: center;">' + data.patentsLicenesedGoal + '</td><td style=" text-align: center;">' +
+    data.patentsLicenesedActual + '</td></tr>' +
+    '<th class="border_right padding_bottom padding_top">License Executed </th><td style=" text-align: center;">' + data.licensesExecutedGoal + '</td><td style=" text-align: center;">' +
+    data.licensesExecutedActual + '</td></tr>' +
+    '<th class="border_right padding_bottom padding_top">License Revenue </th><td style=" text-align: center;">' + (isNaN(data.licensedRevenueGoal) ? data.licensedRevenueGoal : formatter.format(data.licensedRevenueGoal))  + '</td><td style=" text-align: center;">' +
+    (isNaN(data.licensedRevenueActual)? data.licensedRevenueActual : formatter.format(data.licensedRevenueActual)) + '</td></tr>' +
+    '<th class="border_right padding_bottom padding_top">Start-up Companies </th><td style=" text-align: center;">' + data.startupCompaniesGoal + '</td><td style=" text-align: center;">' +
+    data.startupComapniesActual + '</td></tr>' +
+    '</tbody></table></div>' +
+    '</br>' +
+    '</br>' +
+
+    '<h4>List of Intellectual Property/Technology Transfer/Commercialization in the Past FY </h4>' +
+    '<div class="annual-budget"><p>' + formatPara(data.listofIntellectualProperties) + '</p>' +
+    '</div>' +
+    '<br/>' +
+    '<br/>' +
+
+    '<h4> CONFERENCE/SEMINAR PRESENTATIONS</h4>' +
+    '<div class="annual-budget">' +
+    '<h4> Numbers of all Keynote Address or Plenary Invited Presentations</h4>' +
+    '<table width="100%">' +
+    '<tbody><tr>' +
+    '<th style="text-align: left; width: 50%;">Your Goals for FY ' + period + ' </th><td>' + data.conferencesGoal + '</td></tr>' +
+    '<tr><th style="text-align: left;">Actual Numbers </th><td>' + data.conferencesActual + '</td>' +
+    '</tbody></table></div>' +
+    '<br/>' +
+    '<br/>' +
+
+    '<h4> List of all Keynote Address or Plenary Invited Presentations </h4>' +
+    '<div class="annual-budget"><p>' + formatPara(data.keynoteAddresses) + '</p>' +
+    '</div>' +
+    '<br/>' +
+    '<br/>' +
+
+    '<h4> OTHER ACTIVITIES</h4>' +
+    '<h4>List of Scholarly Activity:</h4>' +
+    '<div class="annual-budget"><p>' + formatPara(data.otherActivities) + '</p>' +
+    '</div>';
+
+    data["undergraduateStudentsGoal"] = checkNull(reportdata.undergraduateStudentsGoal, true);
+    data["graduateStudentsGoal"] = checkNull(reportdata.graduateStudentsGoal, true);
+    data["graduatePhdStudentsGoal"] = checkNull(reportdata.graduatePhdStudentsGoal, true);
+    data["phdStudentsGoal"] = checkNull(reportdata.phdStudentsGoal, true);
+    data["undergraduateStudentsActual"] = checkNull(reportdata.undergraduateStudentsActual, true);
+    data["graduateStudentsActual"] = checkNull(reportdata.graduateStudentsActual, true);
+    data["graduatePhdStudentsActual"] = checkNull(reportdata.graduatePhdStudentsActual, true);
+    data["phdStudentsActual"] = checkNull(reportdata.phdStudentsActual, true);
+    data["natureOfMentoringUndergradudate"] = checkNull(reportdata.natureOfMentoringUndergradudate);
+    data["natureOfMentoringGraduate"] = checkNull(reportdata.natureOfMentoringGraduate);
+    data["natureOfMentoringGraduatePhd"] = checkNull(reportdata.natureOfMentoringGraduatePhd);
+    data["natureOfMentoringPhd"] = checkNull(reportdata.natureOfMentoringPhd); 
+    
+    content_research += '<h4> EDUCATION AND TRAINING </h4>' +
+    '<div class="annual-budget">' +
+    '<h4> Number of Undergraduate/Graduate/Postdoc Trained.</h4>' +
+    '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td><th class="border_bottom" width="25%">Undergraduate</th>' +
+    '<th class="border_bottom" width="25%">Graduate - Master </th>' +
+    '<th class="border_bottom" width=25%">Graduate - PhD </th>' +
+    '<th class="border_bottom" width="25%">Postdoctoral </th>' +
+    '</tr></thead>' +
+    '<tbody><tr><th class="border_right padding_bottom padding_top">#Students - Your Goal for FY ' + period + '</th><td style=" text-align: center;">' + data.undergraduateStudentsGoal + '</td>' +
+    '<td style=" text-align: center;">' + data.graduateStudentsGoal + '</td> ' +
+    '<td style=" text-align: center;">' + data.graduatePhdStudentsGoal + '</td> ' +
+    '<td style=" text-align: center;">' + data.phdStudentsGoal + '</td> ' +
+    '</tr>' +
+    '<tr><th class="border_right padding_bottom padding_top">#Students - Actual Numbers</th><td style=" text-align: center;">' + data.undergraduateStudentsActual + '</td>' +
+    '<td style=" text-align: center;">' + data.graduateStudentsActual + '</td> ' +
+    '<td style=" text-align: center;">' + data.graduatePhdStudentsActual + '</td> ' +
+    '<td style=" text-align: center;">' + data.phdStudentsActual + '</td> ' +
+    '</tr>' +
+    '<tr><th class="border_right padding_bottom padding_top"> Nature of Mentoring</th><td style=" text-align: center;">' + data.natureOfMentoringUndergradudate + '</td>' +
+    '<td style=" text-align: center;">' + data.natureOfMentoringGraduate + '</td> ' +
+    '<td style=" text-align: center;">' + data.natureOfMentoringGraduatePhd + '</td> ' +
+    '<td style=" text-align: center;">' + data.natureOfMentoringPhd + '</td> ' +
+    '</tr>' +
+    '</tbody></table></div>';
+
     content_research += goalDetailsResearch(reportdata);
 
     achievementdata = [];
-    if (reportdata.topAchievements1 != 'false' && reportdata.noteworthyResults1 != '')
-        achievementdata.push(reportdata.noteworthyResults1);
-    if (reportdata.topAchievements2 != 'false' && reportdata.noteworthyResults2 != '')
-        achievementdata.push(reportdata.noteworthyResults2);
-    if (reportdata.topAchievements3 != 'false' && reportdata.noteworthyResults3 != '')
-        achievementdata.push(reportdata.noteworthyResults3);
-    if (reportdata.topAchievements4 != 'false' && reportdata.noteworthyResults4 != '')
-        achievementdata.push(reportdata.noteworthyResults4);
-    if (reportdata.topAchievements5 != 'false' && reportdata.noteworthyResults5 != '')
-        achievementdata.push(reportdata.noteworthyResults5);
-    if (reportdata.achievement1 != '')
-        achievementdata.push(reportdata.achievement1);
-    if (reportdata.achievement2 != '')
-        achievementdata.push(reportdata.achievement2);
-    if (reportdata.achievement3 != '')
-        achievementdata.push(reportdata.achievement3);
-    if (reportdata.achievement4 != '')
-        achievementdata.push(reportdata.achievement4);
-    if (reportdata.achievement5 != '')
-        achievementdata.push(reportdata.achievement5);
-
+    if (reportdata.topAchievements1 != '')
+        achievementdata.push(reportdata.topAchievements1);
+    else
+        achievementdata.push("N/A");
+    if (reportdata.topAchievements2 != '')
+        achievementdata.push(reportdata.topAchievements2);
+    else
+        achievementdata.push("N/A");
+    if (reportdata.topAchievements3 != '')
+        achievementdata.push(reportdata.topAchievements3);
+    else
+        achievementdata.push("N/A");
+    if (reportdata.topAchievements4 != '')
+        achievementdata.push(reportdata.topAchievements4);
+    else
+        achievementdata.push("N/A");
+    if (reportdata.topAchievements5 != '')
+        achievementdata.push(reportdata.topAchievements5);
+    else
+        achievementdata.push("N/A");
+    
     content_research += printTopAchievements(achievementdata);
     content_research += '<br><br>';
-    content_research += addListOfContacts(data);
 
+    if (reportdata.hasOwnProperty("otherAchievements"))
+        content_research += printOtherAchievements(reportdata)
+
+    data["noofpartners"] = reportdata.noofpartners
+    if (reportdata.hasOwnProperty("partners"))
+        data["partners"] = reportdata.partners;
+    content_research += printListOfPartners(data);
+    
     otherdata = {};
     otherdata["opportunities"] = reportdata.otherThoughtsToGrowResearch;
     otherdata["challenges"] = reportdata.bigChallenges;
@@ -501,7 +475,7 @@ function printResearchAssessment(reportdata, year1, year2) {
 
 function printResearchPlanning(reportdata, year1, year2) {
     let data = {};
-    data["unit"] = reportdata.Unit;
+    data["unit"] = reportdata.unit;
 
     data["mission"] = reportdata.mission;
     data["vision"] = reportdata.vision;
@@ -704,10 +678,13 @@ function printResearchPlanning(reportdata, year1, year2) {
     return content_research1;
 }
 
-let checkNull = function (value) {
+let checkNull = function (value, num = false) {
 
     if (typeof value === "undefined" || value === "") {
-        return 'N/A';
+        if(num)
+            return "0";
+        else
+            return 'N/A';
     }
     else {
         return value;
@@ -719,7 +696,7 @@ let add = function (value) {
 
     for (var i = 1; i <= Object.keys(value).length; i++) {
 
-        sum += value[i];
+        sum += parseInt(value[i], 10);
     }
     return sum;
 }
@@ -760,7 +737,7 @@ let goalDetailsResearch = function (reportdata, year) {
     return content;
 }
 
-let addListOfContacts = function (data) {
+let printListOfPartners = function (data) {
     let content = '<div class="partners"><p><b>LIST OF PARTNERS/AFFILIATES </b><br>Total No of Partners: ' + data.noofpartners + '</p>';
     let partners = data.hasOwnProperty("partners") ? data["partners"] : [];
     if (partners.length > 0) {
@@ -888,7 +865,7 @@ let printSmartGoal = function (goal, year) {
 
 let printTopAchievements = function (data) {
     let achievements = '<div class="achievements">' +
-        '<p><br><b>TOP 3 ACHIEVEMENTS:</b></p>';
+        '<p><br><b>TOP 3-5 ACHIEVEMENTS:</b></p>';
     for (var i = 0; i < data.length; i++) {
         achievements += '<p><b>Achievement ' + (i + 1) + ': </b><p>';
         achievements += formatText(data[i]);

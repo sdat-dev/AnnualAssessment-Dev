@@ -156,11 +156,8 @@ let addAssessmentReport = function (reportdata, year1, year2) {
         content += addTopAchievements(ids, data);
 
         ids = getIds('FY' + year1);
-        data = {};
         if (reportdata.hasOwnProperty("otherAchievements"))
             content += addOtherAchievements(ids, reportdata.otherAchievements);
-    
-       
 
         ids = getIds('FY' + year1);
         data = {};
