@@ -120,63 +120,47 @@ let addAssessmentReport = function (reportdata, year1, year2) {
             //     break;
             // }
             ids = getIds('FY' + year1);
-            let no = i;
             // if (year1 == 2019) {
             //     let goal = new Goal(no, reportdata["1819Goal" + no], reportdata["1819Activities" + no],
             //         reportdata["1819Metrics" + no], reportdata["1819Timeframe" + no], reportdata["Q" + i + "2"], reportdata["Q" + i + "3"], reportdata["Q" + i + "4"]);
             //     content += addSmartGoal(ids, goal, year1);
             // }
-            let goal = new Goal(no, reportdata["goal" + i], reportdata["actions" + i],
-                reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["actionsImplemented" + i], reportdata["noteworthResults" + i], reportdata["changes" + i]);
+            let goal = new Goal(i, reportdata["goal" + i], reportdata["actions" + i],
+                reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["actionsImplemented" + i], reportdata["noteworthyResults" + i], reportdata["changes" + i]);
             content += addSmartGoal(ids, goal, year1);
 
         }
 
         ids = getIds('FY' + year1);
         data = [];
-        if (ids.parentId == "FY2020") {
-            if (reportdata.topAchievements1 != 'false' && reportdata.noteworthResults1 != '')
-                data.push(reportdata.noteworthResults1);
-            if (reportdata.topAchievements2 != 'false' && reportdata.noteworthResults2 != '')
-                data.push(reportdata.noteworthResults2);
-            if (reportdata.topAchievements3 != 'false' && reportdata.noteworthResults3 != '')
-                data.push(reportdata.noteworthResults3);
-            if (reportdata.topAchievements4 != 'false' && reportdata.noteworthResults4 != '')
-                data.push(reportdata.noteworthResults4);
-            if (reportdata.topAchievements5 != 'false' && reportdata.noteworthResults5 != '')
-                data.push(reportdata.noteworthResults5);
-            if (reportdata.achievement1 != '')
-                data.push(reportdata.achievement1);
-            if (reportdata.achievement2 != '')
-                data.push(reportdata.achievement2);
-            if (reportdata.achievement3 != '')
-                data.push(reportdata.achievement3);
-            if (reportdata.achievement4 != '')
-                data.push(reportdata.achievement4);
-            if (reportdata.achievement5 != '')
-                data.push(reportdata.achievement5);
-        }
-        else {
-            if (reportdata.topAchievements1 != 'false' && reportdata.noteworthResults1 != '')
-                data.push(reportdata.noteworthResults1);
-            if (reportdata.topAchievements2 != 'false' && reportdata.noteworthResults2 != '')
-                data.push(reportdata.noteworthResults2);
-            if (reportdata.topAchievements3 != 'false' && reportdata.noteworthResults3 != '')
-                data.push(reportdata.noteworthResults3);
-            if (reportdata.topAchievements4 != 'false' && reportdata.noteworthResults4 != '')
-                data.push(reportdata.noteworthResults4);
-            if (reportdata.topAchievements5 != 'false' && reportdata.noteworthResults5 != '')
-                data.push(reportdata.noteworthResults5);
-            if (reportdata.achievement1 != '')
-                data.push(reportdata.achievement1);
-            if (reportdata.achievement2 != '')
-                data.push(reportdata.achievement2);
-            if (reportdata.achievement3 != '')
-                data.push(reportdata.achievement3);
-        }
-
-
+        if (reportdata.topAchievements1 != 'false' && reportdata.noteworthyResults1 != '')
+            data.push(reportdata.noteworthyResults1);
+        if (reportdata.topAchievements2 != 'false' && reportdata.noteworthyResults2 != '')
+            data.push(reportdata.noteworthyResults2);
+        if (reportdata.topAchievements3 != 'false' && reportdata.noteworthyResults3 != '')
+            data.push(reportdata.noteworthyResults3);
+        if (reportdata.topAchievements4 != 'false' && reportdata.noteworthyResults4 != '')
+            data.push(reportdata.noteworthyResults4);
+        if (reportdata.topAchievements5 != 'false' && reportdata.noteworthyResults5 != '')
+            data.push(reportdata.noteworthyResults5);
+        if (reportdata.achievement1 != '')
+            data.push(reportdata.achievement1);
+        if (reportdata.achievement2 != '')
+            data.push(reportdata.achievement2);
+        if (reportdata.achievement3 != '')
+            data.push(reportdata.achievement3);
+        if (reportdata.achievement4 != '')
+            data.push(reportdata.achievement4);
+        if (reportdata.achievement5 != '')
+            data.push(reportdata.achievement5);
         content += addTopAchievements(ids, data);
+
+        ids = getIds('FY' + year1);
+        data = {};
+        if (reportdata.hasOwnProperty("otherAchievements"))
+            content += addOtherAchievements(ids, reportdata.otherAchievements);
+    
+       
 
         ids = getIds('FY' + year1);
         data = {};
@@ -274,7 +258,7 @@ let addPlanningReport = function (reportdata, year1, year2) {
 
         for (var i = 1; i <= 5; i++) {
             ids = getIds('FY' + year2);
-            let goal = new GoalPlan(reportdata["goal" + i], reportdata["actions" + i],
+            let goal = new GoalPlan(i, reportdata["goal" + i], reportdata["actions" + i],
                 reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["primaryLeader" + i],
                 reportdata["impactWorkplan" + i], reportdata["collaboratingUnits" + i], reportdata["impactResearchExcellence" + i]);
             content += addSmartGoalPlan(ids, goal, year1);
@@ -336,60 +320,6 @@ let addSmartGoal = function (ids, goal, year) {
     return generateAccordionElem(1, ids.collapseId, ids.headerId, ids.parentId, ids.childId, "SMART Goal " + goal.no, smartgoal);
 }
 
-
-let achievementsData = function (reportdata) {
-    let data = [];
-    if (reportdata.achievement1.trim() != '')
-        data.push(reportdata.achievement1);
-    if (reportdata.achievement2.trim() != '')
-        data.push(reportdata.achievement2);
-    if (reportdata.achievement3.trim() != '')
-        data.push(reportdata.achievement3);
-
-    if (data.size() == 3)
-        return data;
-    let data1 = [];
-    if (reportdata.achievement4.trim() != '')
-        data.push(reportdata.achievement4);
-    if (reportdata.achievement5.trim() != '')
-        data.push(reportdata.achievement5);
-    if (data.length + data1.length == 5) {
-        data1.concat(data);
-        return data1;
-    }
-    if (reportdata.topAchievements1.trim() != 'false')
-        data1.push(reportdata.noteworthResults1);
-    if (data.length + data1.length == 3) {
-        data1.concat(data);
-        return data1;
-    }
-    if (reportdata.topAchievements2.trim() != 'false')
-        data1.push(reportdata.noteworthResults2);
-    if (data.length + data1.length == 3) {
-        data1.concat(data);
-        return data1;
-    }
-    if (reportdata.topAchievements3.trim() != 'false')
-        data1.push(reportdata.noteworthResults3);
-    if (data.length + data1.length == 3) {
-        data1.concat(data);
-        return data1;
-    }
-    if (reportdata.topAchievements4.trim() != 'false')
-        data1.push(reportdata.noteworthResults4);
-    if (data.length + data1.length == 3) {
-        data1.concat(data);
-        return data1;
-    }
-    if (reportdata.topAchievements5.trim() != 'false')
-        data1.push(reportdata.noteworthResults5);
-    if (data.length + data1.length == 3) {
-        data1.concat(data);
-        return data1;
-    }
-    return data;
-}
-
 let addTopAchievements = function (ids, data) {
     let achievements = '<div class="achievements">';
     for (var i = 0; i < data.length; i++) {
@@ -398,6 +328,17 @@ let addTopAchievements = function (ids, data) {
     }
     achievements += "</div>";
     return generateAccordionElem(1, ids.collapseId, ids.headerId, ids.parentId, ids.childId, "Top 3-5 Achievements", achievements);
+}
+
+let addOtherAchievements = function (ids, achievements) {
+    let content = '<div class="achievements">';
+    for (var i = 0; i < achievements.length; i++) {
+        content += '<p><b>Achievement ' + (i + 1) + ': </b><p>';
+        content += formatText(achievements[i].Achievement);
+    }
+    content += "</div>";
+
+    return generateAccordionElem(1, ids.collapseId, ids.headerId, ids.parentId, ids.childId, "Other Achievements", content);
 }
 
 let addOtherThoughts = function (ids, data) {

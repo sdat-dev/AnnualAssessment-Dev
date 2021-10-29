@@ -1,4 +1,4 @@
-let sidemenuItems = [{"item":"HOME","link":"home.html"},{"item":"ANNUAL ASSESSMENTS","link":"annualassessments.html"},{"item":"ADMINISTRATIVE UNIT REPORTS","link":"#","subItems":[{"item":"FY 19-20","link":"administrativeunitreports-FY 19-20.html"},{"item":"FY 20-21","link":"administrativeunitreports-FY 20-21.html"}]},{"item":"RESEARCH CENTER REPORTS","link":"#","subItems":[{"item":"FY 19-20","link":"researchcenterreports-FY 19-20.html"},{"item":"FY 20-21","link":"researchcenterreports-FY 20-21.html"}]},{"item":"STEPS TO COMPLETION","link":"steps-to-completion.html"},{"item":"BENEFITS","link":"benifits.html"},{"item":"PRINT REPORTS","link":"print.html"},{"item":"QUESTIONS?","link":"questions.html"}]
+let sidemenuItems = [{"item":"HOME","link":"home.html"},{"item":"ANNUAL ASSESSMENTS","link":"annualassessments.html"},{"item":"ADMINISTRATIVE UNIT REPORTS","link":"#","subItems":[{"item":"FY 19-20","link":"administrativeunitreports-FY 19-20.html"},{"item":"FY 20-21","link":"administrativeunitreports-FY 20-21.html"},{"item":"FY 21-22","link":"administrativeunitreports-FY 21-22.html"}]},{"item":"RESEARCH CENTER REPORTS","link":"#","subItems":[{"item":"FY 19-20","link":"researchcenterreports-FY 19-20.html"},{"item":"FY 20-21","link":"researchcenterreports-FY 20-21.html"}]},{"item":"STEPS TO COMPLETION","link":"steps-to-completion.html"},{"item":"BENEFITS","link":"benifits.html"},{"item":"PRINT REPORTS","link":"print.html"},{"item":"QUESTIONS?","link":"questions.html"}]
 //SideMenu Start
 //What evet written  before '//SideMenu Start' will be relace with sidemenuItems in automation scripts
 let addsidemenu = function(page, subpage){
@@ -158,9 +158,16 @@ function printAssessmentReport(type){
         {
             content = printAdminAssessment(unitdata["FY 19-20"],'2019','2020');
         }
-        else
+        else if(reportdata.FY == 'FY 20-21')
         {
-            content = printAdminAssessment(unitdata["FY 20-21"],'2020','2021')
+            content = printAdminAssessment(unitdata["FY 20-21"],'2020','2021');
+        }
+        else if(reportdata.FY == 'FY 21-22')
+        {
+            content = printAdminAssessment(unitdata["FY 21-22"],'2021','2022');
+        }
+        else {
+            content = "Print Not implemented for the year:" + reportdata.FY;
         }
        
     }
@@ -170,9 +177,16 @@ function printAssessmentReport(type){
         {
             content = printResearchAssessment(unitdata["FY 19-20"],'2019','2020');
         }
-        else
+        else if(reportdata.FY == 'FY 20-21')
         {
             content = printResearchAssessment(unitdata["FY 20-21"],'2020','2021')
+        }
+        else if(reportdata.FY == 'FY 21-22')
+        {
+            content = printResearchAssessment(unitdata["FY 21-22"],'2021','2022')
+        }
+        else {
+            content = "Print Not implemented for the year:" + reportdata.FY;
         }
     }
     
@@ -194,10 +208,17 @@ function printPlanningReport(type){
         {
             content = printAdminPlanning(unitdata["FY 20-21"], '2020','2021');
         }
-        else
+        else if(reportdata.FY == 'FY 20-21')
         {
             content = printAdminPlanning(unitdata["FY 21-22"], '2021','2022');
-        }       
+        }  
+        else if(reportdata.FY == 'FY 21-22')
+        {
+            content = printAdminPlanning(unitdata["FY 22-23"], '2022','2023');
+        } 
+        else {
+            content = "Print Not implemented for the year:" + reportdata.FY;
+        }         
     }
     else
     {
@@ -205,9 +226,16 @@ function printPlanningReport(type){
         {
             content = printResearchPlanning(unitdata["FY 20-21"],'2020','2021');
         }
-        else
+        else if(reportdata.FY == 'FY 20-21')
         {
             content = printResearchPlanning(unitdata["FY 21-22"],'2021','2022');
+        }
+        else if(reportdata.FY == 'FY 21-22')
+        {
+            content = printResearchPlanning(unitdata["FY 22-23"],'2022','2023');
+        }
+        else {
+            content = "Print Not implemented for the year:" + reportdata.FY;
         }
     }
     

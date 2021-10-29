@@ -251,7 +251,6 @@ let addAssessmentReport = function (reportdata, year1, year2) {
     data["nature_of_mentoringl_phd"] = checkNull(reportdata.educationAndTraining12);
     content += addEducation(ids, data);
 
-
     for (var i = 1; i < 6; i++) {                                                  //Need Check
         ids = getIds('FY' + year1);
         let goal = new Goal(i, reportdata["goal" + i], reportdata["actions" + i],
@@ -260,54 +259,28 @@ let addAssessmentReport = function (reportdata, year1, year2) {
         content += addSmartGoal(ids, goal, year1);
     }
 
-
-
-    // for (var i = 9; i < 14; i++) {
-    //     ids = getIds('FY' + year1);
-    //     let goal = new Goal(i - 8, reportdata["Q" + i + "1"], reportdata["Q" + i + "2"],
-    //         reportdata["Q" + i + "3"], reportdata["Q" + i + "4"], reportdata["Q" + i + "5"],
-    //         reportdata["Q" + i + "6"], reportdata["Q" + i + "7"]);
-    //     content += addSmartGoal(ids, goal, year1);
-    // }
-
     ids = getIds('FY' + year1);                                                     //Need Check
     data = [];
-    if (ids.parentId == "FY2019") {
-        if (reportdata.topAchievements1 != '')
-            data.push(reportdata.topAchievements1);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements2 != '')
-            data.push(reportdata.topAchievements2);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements3 != '')
-            data.push(reportdata.topAchievements3);
-        else
-            data.push("N/A");
-    }
-    else {
-        if (reportdata.topAchievements1 != '')
-            data.push(reportdata.topAchievements1);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements2 != '')
-            data.push(reportdata.topAchievements2);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements3 != '')
-            data.push(reportdata.topAchievements3);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements4 != '')
-            data.push(reportdata.topAchievements4);
-        else
-            data.push("N/A");
-        if (reportdata.topAchievements5 != '')
-            data.push(reportdata.topAchievements5);
-        else
-            data.push("N/A");
-    }
+    if (reportdata.topAchievements1 != '')
+        data.push(reportdata.topAchievements1);
+    else
+        data.push("N/A");
+    if (reportdata.topAchievements2 != '')
+        data.push(reportdata.topAchievements2);
+    else
+        data.push("N/A");
+    if (reportdata.topAchievements3 != '')
+        data.push(reportdata.topAchievements3);
+    else
+        data.push("N/A");
+    if (reportdata.topAchievements4 != '')
+        data.push(reportdata.topAchievements4);
+    else
+        data.push("N/A");
+    if (reportdata.topAchievements5 != '')
+        data.push(reportdata.topAchievements5);
+    else
+        data.push("N/A");
 
     content += addTopAchievements(ids, data);
 

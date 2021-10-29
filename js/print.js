@@ -209,9 +209,16 @@ function printReport(event) {
                 {
                     content = printAdminAssessment(unitdata["FY 19-20"],'2019','2020');
                 }
-                else
+                else if(period == 'FY 20-21')
                 {
                     content = printAdminAssessment(unitdata["FY 20-21"],'2020','2021')
+                }
+                else if(period == 'FY 21-22')
+                {
+                    content = printAdminAssessment(unitdata["FY 21-22"],'2021','2022')
+                }
+                else {
+                    content = "Print Not implemented for the year:" + period;
                 }
                 if (content !== '') {
                     contenttotal += content;
@@ -229,10 +236,18 @@ function printReport(event) {
                 {
                     content = printResearchAssessment(centerdata["FY 19-20"],'2019','2020');
                 }
-                else
+                else if(period == 'FY 20-21')
                 {
                     content = printResearchAssessment(centerdata["FY 20-21"],'2020','2021')
                 }
+                else if(period == 'FY 21-22')
+                {
+                    content = printResearchAssessment(centerdata["FY 21-22"],'2021','2022')
+                }
+                else {
+                    content = "Print Not implemented for the year:" + period;
+                }
+
                 if (content !== '') {
                     contenttotal += content;
                 }
@@ -249,10 +264,18 @@ function printReport(event) {
                 {
                     content = printAdminPlanning(unitdata["FY 20-21"], '2020','2021');
                 }
-                else
+                else if(period == 'FY 20-21')
                 {
                     content = printAdminPlanning(unitdata["FY 21-22"], '2021','2022');
                 }
+                else if(period == 'FY 21-22')
+                {
+                    content = printAdminPlanning(unitdata["FY 22-23"], '2022','2023');
+                }
+                else {
+                    content = "Print Not implemented for the year:" + period;
+                }
+
                 if (content !== '') {
                     contenttotal += content;
                 }     
@@ -269,9 +292,16 @@ function printReport(event) {
                 {
                     content = printResearchPlanning(centerdata["FY 20-21"],'2020','2021');
                 }
-                else
+                else if(period == 'FY 20-21')
                 {
                     content = printResearchPlanning(centerdata["FY 21-22"],'2021','2022');
+                }
+                else if(period == 'FY 21-22')
+                {
+                    content = printResearchPlanning(centerdata["FY 22-23"],'2022','2023');
+                }
+                else {
+                    content = "Print Not implemented for the year:" + period;
                 }
                 if (content !== '') {
                     contenttotal += content;

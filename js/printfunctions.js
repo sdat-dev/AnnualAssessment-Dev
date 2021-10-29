@@ -1,7 +1,7 @@
 
 function printAdminAssessment(reportdata, year1, year2) {
     let data = {};
-    data["unit"] = reportdata["unit"];
+    data["unit"] = reportdata["Unit"];
 
     data["mission"] = reportdata.mission;
     data["vision"] = reportdata.vision;
@@ -26,15 +26,8 @@ function printAdminAssessment(reportdata, year1, year2) {
         '<tbody><tr><th class="border_right padding_bottom padding_top">#Employees (Headcounts)</th><td style=" text-align: center;">' + data.employeesState + '</td><td style=" text-align: center;">' +
         data.employeesRF + '</td></tr>' + '<tr><th class="border_right">#FTEs</th><td style=" text-align: center;">' + data.fteState + '</td><td style=" text-align: center;">' +
         data.fteRF + '</td></tr></tbody></table></div><br>';
-    content += goalDetailsAdmin(reportdata, year1, year2);
-    return content;
-}
-
-let goalDetailsAdmin = function (reportdata, year1, year2) {
-
-    let content = '';
-    let data = {};
-
+   
+    data = {};
     for (var i = 1; i < 7; i++) {
         data['membership' + i] = reportdata["organization" + i];
         data['benefit' + i] = reportdata["membershipBenefit" + i];
@@ -47,7 +40,6 @@ let goalDetailsAdmin = function (reportdata, year1, year2) {
         let goal = new Goal(no, reportdata["goal" + i], reportdata["actions" + i],
             reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["actionsImplemented" + i], reportdata["noteworthyResults" + i], reportdata["changes" + i]);
         content += printSmartGoal(goal, year1);
-
     }
 
     data = [];
@@ -73,18 +65,23 @@ let goalDetailsAdmin = function (reportdata, year1, year2) {
         data.push(reportdata.achievement5);
     content += printTopAchievements(data);
 
+    content += printOtherAchievements(reportdata)
+
+    data = {};
     data["opportunities"] = reportdata.bigOpportunities;
     data["challenges"] = reportdata.bigChallenges;
     data["needs"] = reportdata.resourceNeeds;
     data["strategies"] = reportdata.strategicSuggestions;
     data["suggestions"] = reportdata.otherthoughts;
     content += printOtherThoughts(data);
+    
     return content;
 }
 
+
 function printAdminPlanning(reportdata, year1, year2) {
     let data = {};
-    data["unit"] = reportdata.unit
+    data["unit"] = reportdata.Unit
     let content = '';
     data["mission"] = reportdata.mission;
     data["vision"] = reportdata.vision;
@@ -118,7 +115,7 @@ function printResearchAssessment(reportdata, year1, year2) {
 
     let data = {};
 
-    data["unit"] = reportdata.unit;
+    data["unit"] = reportdata.Unit;
 
     data["mission"] = reportdata.mission;
     data["vision"] = reportdata.vision;
@@ -504,7 +501,7 @@ function printResearchAssessment(reportdata, year1, year2) {
 
 function printResearchPlanning(reportdata, year1, year2) {
     let data = {};
-    data["unit"] = reportdata.unit;
+    data["unit"] = reportdata.Unit;
 
     data["mission"] = reportdata.mission;
     data["vision"] = reportdata.vision;
@@ -895,6 +892,18 @@ let printTopAchievements = function (data) {
     for (var i = 0; i < data.length; i++) {
         achievements += '<p><b>Achievement ' + (i + 1) + ': </b><p>';
         achievements += formatText(data[i]);
+    }
+    achievements += "</div>";
+    return achievements;
+
+}
+
+let printOtherAchievements = function (data) {
+    let achievements = '<div class="achievements">' +
+        '<p><br><b>OTHER ACHIEVEMENTS:</b></p>';
+    for (var i = 0; i < data.otherAchievements.length; i++) {
+        achievements += '<p><b>Achievement ' + (i + 1) + ': </b><p>';
+        achievements += formatText(data.otherAchievements[i].Achievement);
     }
     achievements += "</div>";
     return achievements;
