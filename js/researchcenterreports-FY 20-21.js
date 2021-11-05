@@ -13,6 +13,7 @@ window.onload = function () {
             if (units[i] != "")
                 validunits.push(units[i]);
         }
+        validunits.sort();
         let headercontent = ' <select id="selectunit" onchange="changeReportUnit()">';
         for (i = 0; i < validunits.length; i++) {
             headercontent = headercontent + '<option value="' + validunits[i] + '">' + validunits[i] + '</option>';
