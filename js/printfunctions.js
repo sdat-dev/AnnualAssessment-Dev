@@ -787,29 +787,15 @@ let goalPlanningDetailsAdmin = function (reportdata, year) {
 
 let goalPlanningDetailsResearch = function (reportdata, year) {
     let content = '';
-    for (var i = 7; i < 12; i++) {
+    for (var i = 1; i < 6; i++) {
 
-        let goal = new GoalPlan(i - 6, reportdata["Q" + i + "1"], reportdata["Q" + i + "2"],
-            reportdata["Q" + i + "3"], reportdata["Q" + i + "4"], reportdata["Q" + i + "5"],
-            reportdata["Q" + i + "6"], reportdata["Q" + i + "7"], reportdata["Q" + i + "8"]);
+        let goal = new GoalPlan(i, reportdata["goal" + i], reportdata["actions" + i],
+            reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["primaryLeader" + i],
+            reportdata["impactWorkplan" + i], reportdata["collaboratingUnits" + i],
+            reportdata["impactResearchExcellence" + i]);
         content += printSmartGoalPlan(goal, year);
     }
     return content;
-}
-
-let printSmartGoalPlan = function (goal, year) {
-    let period = getPeriod(year);
-    let smartgoal = '<h4>FY ' + period + ' SMART GOAL ' + goal.no + '</h4>';
-    smartgoal += '<div class="goal"><p><b>Goal: </b>' + (goal.goal == '' ? 'N/A' : formatText(goal.goal)) + '</p>';
-    smartgoal += "<p><b>Action(s): </b>" + (goal.action == '' ? 'N/A' : goal.action) + '</p>';
-    smartgoal += "<p><b>Metric(s): </b>" + (goal.metric == '' ? 'N/A' : goal.metric) + '</p>';
-    let time = (isNaN(goal.timeFrame) || goal.timeFrame == '') ? (goal.timeFrame == '' ? 'N/A' : goal.timeFrame) : getDate(goal.timeFrame);
-    smartgoal += "<p><b>Goal Evaluation Time Frame: </b>" + time + '</p>';
-    smartgoal += '<p><b>Primary Leader on this Project: </b>' + (goal.primaryLeader == '' ? 'N/A' : goal.primaryLeader) + '</p>';
-    smartgoal += '<p><b>Circumstances That Could Impact Workplan: </b>' + (goal.circumstances == '' ? 'N/A' : goal.circumstances) + '</p>';
-    smartgoal += '<p><b>Most Important Collaborating Units/Offices: </b>' + (goal.collaborations == '' ? 'N/A' : goal.collaborations) + '</p>';
-    smartgoal += '<p><b>Impact on Research Excellence (Campus Strategic Priorities): </b>' + (goal.impact == '' ? 'N/A' : goal.impact) + '</p>';
-    return smartgoal;
 }
 
 let printOrganizationalMemberships = function (data) {
@@ -860,6 +846,21 @@ let printSmartGoal = function (goal, year) {
     smartgoal += '<div class="goalresult"><p><b>Actions Implemented: </b>' + (goal.action == '' ? 'N/A' : formatText(goal.action)) + '</p>';
     smartgoal += '<p><b>Noteworthy Results of Assessment: </b>' + (goal.metric == '' ? 'N/A' : formatText(goal.metric)) + '</p>';
     smartgoal += '<p><b>Changes Made/Planned: </b>' + (goal.timeFrame == '' ? 'N/A' : formatText(goal.timeFrame)) + '</p></div>';
+    return smartgoal;
+}
+
+let printSmartGoalPlan = function (goal, year) {
+    let period = getPeriod(year);
+    let smartgoal = '<h4>FY ' + period + ' SMART GOAL ' + goal.no + '</h4>';
+    smartgoal += '<div class="goal"><p><b>Goal: </b>' + (goal.goal == '' ? 'N/A' : formatText(goal.goal)) + '</p>';
+    smartgoal += "<p><b>Action(s): </b>" + (goal.action == '' ? 'N/A' : goal.action) + '</p>';
+    smartgoal += "<p><b>Metric(s): </b>" + (goal.metric == '' ? 'N/A' : goal.metric) + '</p>';
+    let time = (isNaN(goal.timeFrame) || goal.timeFrame == '') ? (goal.timeFrame == '' ? 'N/A' : goal.timeFrame) : getDate(goal.timeFrame);
+    smartgoal += "<p><b>Goal Evaluation Time Frame: </b>" + time + '</p>';
+    smartgoal += '<p><b>Primary Leader on this Project: </b>' + (goal.primaryLeader == '' ? 'N/A' : goal.primaryLeader) + '</p>';
+    smartgoal += '<p><b>Circumstances That Could Impact Workplan: </b>' + (goal.circumstances == '' ? 'N/A' : goal.circumstances) + '</p>';
+    smartgoal += '<p><b>Most Important Collaborating Units/Offices: </b>' + (goal.collaborations == '' ? 'N/A' : goal.collaborations) + '</p>';
+    smartgoal += '<p><b>Impact on Research Excellence (Campus Strategic Priorities): </b>' + (goal.impact == '' ? 'N/A' : goal.impact) + '</p>';
     return smartgoal;
 }
 
