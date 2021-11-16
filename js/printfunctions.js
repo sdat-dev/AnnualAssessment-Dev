@@ -7,10 +7,10 @@ function printAdminAssessment(reportdata, year1, year2) {
     data["vision"] = reportdata.vision;
 
     data["annualBudget"] = reportdata.annualBudget;
-    data["employeesState"] = reportdata.stateHeadcount;
-    data["employeesRF"] = reportdata.rfHeadcount;
-    data["fteState"] = reportdata.stateNumber;
-    data["fteRF"] = reportdata.rfNumber;
+    data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
+    data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
+    data["fteState"] = checkNull(reportdata.stateNumber, true);
+    data["fteRF"] = checkNull(reportdata.rfNumber, true);
     let content = '';
     content = '<h1 style="text-align: center;">' + data.unit + '</h1><div style="margin-botton:30px;"></div><h1 style="text-align: center;">Annual Assessment Report (' + year1 + '-' + year2 + ')</h1>' +
         '<div style="margin-botton:30px;"></div><h3 style="text-align: center;">Director: ' + reportdata.firstName + ' ' + reportdata.lastName + '</h3>' +
@@ -486,46 +486,54 @@ function printResearchPlanning(reportdata, year1, year2) {
     data["fteState"] = checkNull(reportdata.stateNumber);
     data["fteRF"] = checkNull(reportdata.rfNumber);
     // content += addAnnualBudget(ids, data);
-    data["federalApplication"] = checkNull(reportdata.proposals1);
-    data["stateApplication"] = checkNull(reportdata.proposals2);
-    data["privateApplication"] = checkNull(reportdata.proposals3);
+    data["federalApplication"] = checkNull(reportdata.proposals1, true);
+    data["stateApplication"] = checkNull(reportdata.proposals2,true);
+    data["privateApplication"] = checkNull(reportdata.proposals3,true);
 
-    addData9 = { 1: data["federalApplication"], 2: data["stateApplication"], 3: data["privateApplication"] };
+    var federalApplication = parseInt(data.federalApplication);
+    var stateApplication = parseInt(data.stateApplication);
+    var privateApplication = parseInt(data.privateApplication);
 
+    addData9 = federalApplication + stateApplication + privateApplication;
     data["proposal_total"] = add(addData9);
-    data["awards"] = reportdata.Q52;
-    data["federalAwards"] = checkNull(reportdata.awards1);
-    data["stateAwards"] = checkNull(reportdata.awards2);
-    data["privateAwards"] = checkNull(reportdata.awards3);
-    addData11 = { 1: data["federalAwards"], 2: data["stateAwards"], 3: data["privateAwards"] };
 
-    data["awrds_total"] = add(addData11);
+    data["federalAwards"] = checkNull(reportdata.awards1, true);
+    data["stateAwards"] = checkNull(reportdata.awards2, true);
+    data["privateAwards"] = checkNull(reportdata.awards3, true);
 
-    data["proposal"] = checkNull(reportdata.largeScale1);
-    data["lsAwards"] = checkNull(reportdata.largeScale2);
+    var federalAwards = parseInt(data.federalAwards);
+    var stateAwards = parseInt(data.stateAwards);
+    var privateAwards = parseInt(data.stateAwards);
 
-    data["stProposal"] = checkNull(reportdata.sttrAwards1);
-    data["stAwards"] = checkNull(reportdata.sttrAwards2);
+    addData11 = federalAwards + stateAwards + privateAwards;
 
-    data["booksAuthored"] = checkNull(reportdata.publication1);
-    data["booksChapters"] = checkNull(reportdata.publication2);
-    data["publicationsTable"] = checkNull(reportdata.publication3);
+    data["awrds_total"] = addData11;
+
+    data["proposal"] = checkNull(reportdata.largeScale1, true);
+    data["lsAwards"] = checkNull(reportdata.largeScale2, true);
+
+    data["stProposal"] = checkNull(reportdata.sttrAwards1, true);
+    data["stAwards"] = checkNull(reportdata.sttrAwards2, true);
+
+    data["booksAuthored"] = checkNull(reportdata.publication1, true);
+    data["booksChapters"] = checkNull(reportdata.publication2, true);
+    data["publicationsTable"] = checkNull(reportdata.publication3, true);
 
 
-    data["intellectual"] = checkNull(reportdata.technologyTransfer1);
-    data["patentsApplications"] = checkNull(reportdata.technologyTransfer2);
-    data["patentsIssued"] = checkNull(reportdata.technologyTransfer3);
-    data["patentsLicensed"] = checkNull(reportdata.technologyTransfer4);
-    data["licensedExecuted"] = checkNull(reportdata.technologyTransfer5);
-    data["licensedRevenue"] = checkNull(reportdata.technologyTransfer6);
-    data["startupCompanies"] = checkNull(reportdata.technologyTransfer7);
+    data["intellectual"] = checkNull(reportdata.technologyTransfer1, true);
+    data["patentsApplications"] = checkNull(reportdata.technologyTransfer2, true);
+    data["patentsIssued"] = checkNull(reportdata.technologyTransfer3, true);
+    data["patentsLicensed"] = checkNull(reportdata.technologyTransfer4, true);
+    data["licensedExecuted"] = checkNull(reportdata.technologyTransfer5, true);
+    data["licensedRevenue"] = checkNull(reportdata.technologyTransfer6, true);
+    data["startupCompanies"] = checkNull(reportdata.technologyTransfer7, true);
 
-    data["goals"] = checkNull(reportdata.conference);
+    data["goals"] = checkNull(reportdata.conference, true);
 
-    data["undergraduate"] = checkNull(reportdata.educationAndTraining1);
-    data["graduate_masters"] = checkNull(reportdata.educationAndTraining2);
-    data["graduate_phd"] = checkNull(reportdata.educationAndTraining3);
-    data["post"] = checkNull(reportdata.educationAndTraining4);
+    data["undergraduate"] = checkNull(reportdata.educationAndTraining1, true);
+    data["graduate_masters"] = checkNull(reportdata.educationAndTraining2, true);
+    data["graduate_phd"] = checkNull(reportdata.educationAndTraining3, true);
+    data["post"] = checkNull(reportdata.educationAndTraining4, true);
     let period = getPeriod(year1);
     let content_research1 = '<h1 style="text-align: center;">' + data.unit + '</h1><div style="margin-botton:30px;"></div><h1 style="text-align: center;">Planning Report (' + year1 + '-' + year2 + ')</h1>';
     content_research1 +=
@@ -787,29 +795,15 @@ let goalPlanningDetailsAdmin = function (reportdata, year) {
 
 let goalPlanningDetailsResearch = function (reportdata, year) {
     let content = '';
-    for (var i = 7; i < 12; i++) {
+    for (var i = 1; i < 6; i++) {
 
-        let goal = new GoalPlan(i - 6, reportdata["Q" + i + "1"], reportdata["Q" + i + "2"],
-            reportdata["Q" + i + "3"], reportdata["Q" + i + "4"], reportdata["Q" + i + "5"],
-            reportdata["Q" + i + "6"], reportdata["Q" + i + "7"], reportdata["Q" + i + "8"]);
+        let goal = new GoalPlan(i, reportdata["goal" + i], reportdata["actions" + i],
+            reportdata["metrics" + i], reportdata["timeframe" + i], reportdata["primaryLeader" + i],
+            reportdata["impactWorkplan" + i], reportdata["collaboratingUnits" + i],
+            reportdata["impactResearchExcellence" + i]);
         content += printSmartGoalPlan(goal, year);
     }
     return content;
-}
-
-let printSmartGoalPlan = function (goal, year) {
-    let period = getPeriod(year);
-    let smartgoal = '<h4>FY ' + period + ' SMART GOAL ' + goal.no + '</h4>';
-    smartgoal += '<div class="goal"><p><b>Goal: </b>' + (goal.goal == '' ? 'N/A' : formatText(goal.goal)) + '</p>';
-    smartgoal += "<p><b>Action(s): </b>" + (goal.action == '' ? 'N/A' : goal.action) + '</p>';
-    smartgoal += "<p><b>Metric(s): </b>" + (goal.metric == '' ? 'N/A' : goal.metric) + '</p>';
-    let time = (isNaN(goal.timeFrame) || goal.timeFrame == '') ? (goal.timeFrame == '' ? 'N/A' : goal.timeFrame) : getDate(goal.timeFrame);
-    smartgoal += "<p><b>Goal Evaluation Time Frame: </b>" + time + '</p>';
-    smartgoal += '<p><b>Primary Leader on this Project: </b>' + (goal.primaryLeader == '' ? 'N/A' : goal.primaryLeader) + '</p>';
-    smartgoal += '<p><b>Circumstances That Could Impact Workplan: </b>' + (goal.circumstances == '' ? 'N/A' : goal.circumstances) + '</p>';
-    smartgoal += '<p><b>Most Important Collaborating Units/Offices: </b>' + (goal.collaborations == '' ? 'N/A' : goal.collaborations) + '</p>';
-    smartgoal += '<p><b>Impact on Research Excellence (Campus Strategic Priorities): </b>' + (goal.impact == '' ? 'N/A' : goal.impact) + '</p>';
-    return smartgoal;
 }
 
 let printOrganizationalMemberships = function (data) {
@@ -860,6 +854,21 @@ let printSmartGoal = function (goal, year) {
     smartgoal += '<div class="goalresult"><p><b>Actions Implemented: </b>' + (goal.action == '' ? 'N/A' : formatText(goal.action)) + '</p>';
     smartgoal += '<p><b>Noteworthy Results of Assessment: </b>' + (goal.metric == '' ? 'N/A' : formatText(goal.metric)) + '</p>';
     smartgoal += '<p><b>Changes Made/Planned: </b>' + (goal.timeFrame == '' ? 'N/A' : formatText(goal.timeFrame)) + '</p></div>';
+    return smartgoal;
+}
+
+let printSmartGoalPlan = function (goal, year) {
+    let period = getPeriod(year);
+    let smartgoal = '<h4>FY ' + period + ' SMART GOAL ' + goal.no + '</h4>';
+    smartgoal += '<div class="goal"><p><b>Goal: </b>' + (goal.goal == '' ? 'N/A' : formatText(goal.goal)) + '</p>';
+    smartgoal += "<p><b>Action(s): </b>" + (goal.action == '' ? 'N/A' : goal.action) + '</p>';
+    smartgoal += "<p><b>Metric(s): </b>" + (goal.metric == '' ? 'N/A' : goal.metric) + '</p>';
+    let time = (isNaN(goal.timeFrame) || goal.timeFrame == '') ? (goal.timeFrame == '' ? 'N/A' : goal.timeFrame) : getDate(goal.timeFrame);
+    smartgoal += "<p><b>Goal Evaluation Time Frame: </b>" + time + '</p>';
+    smartgoal += '<p><b>Primary Leader on this Project: </b>' + (goal.primaryLeader == '' ? 'N/A' : goal.primaryLeader) + '</p>';
+    smartgoal += '<p><b>Circumstances That Could Impact Workplan: </b>' + (goal.circumstances == '' ? 'N/A' : goal.circumstances) + '</p>';
+    smartgoal += '<p><b>Most Important Collaborating Units/Offices: </b>' + (goal.collaborations == '' ? 'N/A' : goal.collaborations) + '</p>';
+    smartgoal += '<p><b>Impact on Research Excellence (Campus Strategic Priorities): </b>' + (goal.impact == '' ? 'N/A' : goal.impact) + '</p>';
     return smartgoal;
 }
 
