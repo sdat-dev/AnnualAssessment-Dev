@@ -486,46 +486,54 @@ function printResearchPlanning(reportdata, year1, year2) {
     data["fteState"] = checkNull(reportdata.stateNumber);
     data["fteRF"] = checkNull(reportdata.rfNumber);
     // content += addAnnualBudget(ids, data);
-    data["federalApplication"] = checkNull(reportdata.proposals1);
-    data["stateApplication"] = checkNull(reportdata.proposals2);
-    data["privateApplication"] = checkNull(reportdata.proposals3);
+    data["federalApplication"] = checkNull(reportdata.proposals1, true);
+    data["stateApplication"] = checkNull(reportdata.proposals2,true);
+    data["privateApplication"] = checkNull(reportdata.proposals3,true);
 
-    addData9 = { 1: data["federalApplication"], 2: data["stateApplication"], 3: data["privateApplication"] };
+    var federalApplication = parseInt(data.federalApplication);
+    var stateApplication = parseInt(data.stateApplication);
+    var privateApplication = parseInt(data.privateApplication);
 
+    addData9 = federalApplication + stateApplication + privateApplication;
     data["proposal_total"] = add(addData9);
-    data["awards"] = reportdata.Q52;
-    data["federalAwards"] = checkNull(reportdata.awards1);
-    data["stateAwards"] = checkNull(reportdata.awards2);
-    data["privateAwards"] = checkNull(reportdata.awards3);
-    addData11 = { 1: data["federalAwards"], 2: data["stateAwards"], 3: data["privateAwards"] };
+    
+    data["federalAwards"] = checkNull(reportdata.awards1, true);
+    data["stateAwards"] = checkNull(reportdata.awards2, true);
+    data["privateAwards"] = checkNull(reportdata.awards3, true);
 
-    data["awrds_total"] = add(addData11);
+    var federalAwards = parseInt(data.federalAwards);
+    var stateAwards = parseInt(data.stateAwards);
+    var privateAwards = parseInt(data.stateAwards);
 
-    data["proposal"] = checkNull(reportdata.largeScale1);
-    data["lsAwards"] = checkNull(reportdata.largeScale2);
+    addData11 = federalAwards + stateAwards + privateAwards;
 
-    data["stProposal"] = checkNull(reportdata.sttrAwards1);
-    data["stAwards"] = checkNull(reportdata.sttrAwards2);
+    data["awrds_total"] = addData11;
 
-    data["booksAuthored"] = checkNull(reportdata.publication1);
-    data["booksChapters"] = checkNull(reportdata.publication2);
-    data["publicationsTable"] = checkNull(reportdata.publication3);
+    data["proposal"] = checkNull(reportdata.largeScale1, true);
+    data["lsAwards"] = checkNull(reportdata.largeScale2, true);
+
+    data["stProposal"] = checkNull(reportdata.sttrAwards1, true);
+    data["stAwards"] = checkNull(reportdata.sttrAwards2, true);
+
+    data["booksAuthored"] = checkNull(reportdata.publication1, true);
+    data["booksChapters"] = checkNull(reportdata.publication2, true);
+    data["publicationsTable"] = checkNull(reportdata.publication3, true);
 
 
-    data["intellectual"] = checkNull(reportdata.technologyTransfer1);
-    data["patentsApplications"] = checkNull(reportdata.technologyTransfer2);
-    data["patentsIssued"] = checkNull(reportdata.technologyTransfer3);
-    data["patentsLicensed"] = checkNull(reportdata.technologyTransfer4);
-    data["licensedExecuted"] = checkNull(reportdata.technologyTransfer5);
-    data["licensedRevenue"] = checkNull(reportdata.technologyTransfer6);
-    data["startupCompanies"] = checkNull(reportdata.technologyTransfer7);
+    data["intellectual"] = checkNull(reportdata.technologyTransfer1, true);
+    data["patentsApplications"] = checkNull(reportdata.technologyTransfer2, true);
+    data["patentsIssued"] = checkNull(reportdata.technologyTransfer3, true);
+    data["patentsLicensed"] = checkNull(reportdata.technologyTransfer4, true);
+    data["licensedExecuted"] = checkNull(reportdata.technologyTransfer5, true);
+    data["licensedRevenue"] = checkNull(reportdata.technologyTransfer6, true);
+    data["startupCompanies"] = checkNull(reportdata.technologyTransfer7, true);
 
-    data["goals"] = checkNull(reportdata.conference);
+    data["goals"] = checkNull(reportdata.conference, true);
 
-    data["undergraduate"] = checkNull(reportdata.educationAndTraining1);
-    data["graduate_masters"] = checkNull(reportdata.educationAndTraining2);
-    data["graduate_phd"] = checkNull(reportdata.educationAndTraining3);
-    data["post"] = checkNull(reportdata.educationAndTraining4);
+    data["undergraduate"] = checkNull(reportdata.educationAndTraining1, true);
+    data["graduate_masters"] = checkNull(reportdata.educationAndTraining2, true);
+    data["graduate_phd"] = checkNull(reportdata.educationAndTraining3, true);
+    data["post"] = checkNull(reportdata.educationAndTraining4, true);
     let period = getPeriod(year1);
     let content_research1 = '<h1 style="text-align: center;">' + data.unit + '</h1><div style="margin-botton:30px;"></div><h1 style="text-align: center;">Planning Report (' + year1 + '-' + year2 + ')</h1>';
     content_research1 +=
