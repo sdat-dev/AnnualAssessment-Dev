@@ -287,7 +287,8 @@ let addPlanningReport = function (reportdata, year1, year2) {
         content += '<p><b>Director\'s Name: </b>' + reportdata.firstName + ' ' + reportdata.lastName +
             '<br><b>Director\'s Email: </b>' + reportdata.email +
             '<br><b>Reporting Period: </b>July 1, ' + year1 + ' to June 30, ' + year2 +
-            '<button type="button" style="float:right; background-color: #46166b; color:white ; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 2px; margin-right: 1px;text-align: center; margin: 0 auto;"onclick="printPlanningReport(\'researchcenter\')">Print</button>';
+            '<button type="button" style="float:right; background-color: #46166b; color:white ; padding: 5px 10px 5px 10px; border-radius:5px; text-align: center; margin-left:auto;"onclick="printAssessmentReport(\'admin\')">Print</button></p>';
+
         content += '<div id = "FY' + year1 + '">';
 
         let ids = getIds('FY' + year1);
