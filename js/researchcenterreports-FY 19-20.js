@@ -299,10 +299,10 @@ let addPlanningReport = function (reportdata, year1, year2) {
         ids = getIds('FY' + year1);
         data = {};
         data["annualBudget"] = reportdata.annualBudget;
-        data["employeesState"] = checkNull(reportdata.stateHeadcount);
-        data["employeesRF"] = checkNull(reportdata.rfHeadcount);
-        data["fteState"] = checkNull(reportdata.stateNumber);
-        data["fteRF"] = checkNull(reportdata.rfNumber);
+        data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
+        data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
+        data["fteState"] = checkNull(reportdata.stateNumber, true);
+        data["fteRF"] = checkNull(reportdata.rfNumber, true);
         content += addAnnualBudget(ids, data);
 
 

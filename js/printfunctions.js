@@ -7,10 +7,10 @@ function printAdminAssessment(reportdata, year1, year2) {
     data["vision"] = reportdata.vision;
 
     data["annualBudget"] = reportdata.annualBudget;
-    data["employeesState"] = reportdata.stateHeadcount;
-    data["employeesRF"] = reportdata.rfHeadcount;
-    data["fteState"] = reportdata.stateNumber;
-    data["fteRF"] = reportdata.rfNumber;
+    data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
+    data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
+    data["fteState"] = checkNull(reportdata.stateNumber, true);
+    data["fteRF"] = checkNull(reportdata.rfNumber, true);
     let content = '';
     content = '<h1 style="text-align: center;">' + data.unit + '</h1><div style="margin-botton:30px;"></div><h1 style="text-align: center;">Annual Assessment Report (' + year1 + '-' + year2 + ')</h1>' +
         '<div style="margin-botton:30px;"></div><h3 style="text-align: center;">Director: ' + reportdata.firstName + ' ' + reportdata.lastName + '</h3>' +
@@ -496,7 +496,7 @@ function printResearchPlanning(reportdata, year1, year2) {
 
     addData9 = federalApplication + stateApplication + privateApplication;
     data["proposal_total"] = add(addData9);
-    
+
     data["federalAwards"] = checkNull(reportdata.awards1, true);
     data["stateAwards"] = checkNull(reportdata.awards2, true);
     data["privateAwards"] = checkNull(reportdata.awards3, true);
