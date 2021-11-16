@@ -100,10 +100,10 @@ let addAssessmentReport = function (reportdata, year1, year2) {
         ids = getIds('FY' + year1);
         data = {};
         data["annualBudget"] = reportdata.annualBudget;
-        data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
-        data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
-        data["fteState"] = checkNull(reportdata.stateNumber, true);
-        data["fteRF"] = checkNull(reportdata.rfNumber, true);
+        data["employeesState"] = reportdata.stateHeadcount;
+        data["employeesRF"] = reportdata.rfHeadcount;
+        data["fteState"] = reportdata.stateNumber;
+        data["fteRF"] = reportdata.rfNumber;
 
         content += addAnnualBudget(ids, data);
 
@@ -186,11 +186,11 @@ let addAssessmentReport = function (reportdata, year1, year2) {
 
         ids = getIds('FY' + year1);
         data = {};
-        data["annualBudget"] = reportdata.annualBudget;
-        data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
-        data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
-        data["fteState"] = checkNull(reportdata.stateNumber, true);
-        data["fteRF"] = checkNull(reportdata.rfNumber, true);
+        data["annualBudget"] = "";
+        data["employeesState"] = "";
+        data["employeesRF"] = "";
+        data["fteState"] = "";
+        data["fteRF"] = "";
 
         content += addAnnualBudget(ids, data);
 
@@ -248,10 +248,10 @@ let addPlanningReport = function (reportdata, year1, year2) {
         ids = getIds('FY' + year2);
         data = {};
         data["annualBudget"] = reportdata.annualBudget;
-        data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
-        data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
-        data["fteState"] = checkNull(reportdata.stateNumber, true);
-        data["fteRF"] = checkNull(reportdata.rfNumber, true);
+        data["employeesState"] = reportdata.stateHeadcount;
+        data["employeesRF"] = reportdata.rfHeadcount;
+        data["fteState"] = reportdata.stateNumber;
+        data["fteRF"] = reportdata.rfNumber;
         content += addAnnualBudget(ids, data);
 
         for (var i = 1; i <= 5; i++) {
