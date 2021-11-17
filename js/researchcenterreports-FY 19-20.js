@@ -299,10 +299,10 @@ let addPlanningReport = function (reportdata, year1, year2) {
         ids = getIds('FY' + year1);
         data = {};
         data["annualBudget"] = reportdata.annualBudget;
-        data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
-        data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
-        data["fteState"] = checkNull(reportdata.stateNumber, true);
-        data["fteRF"] = checkNull(reportdata.rfNumber, true);
+        data["employeesState"] = checkNull(reportdata.stateHeadcount);
+        data["employeesRF"] = checkNull(reportdata.rfHeadcount);
+        data["fteState"] = checkNull(reportdata.stateNumber);
+        data["fteRF"] = checkNull(reportdata.rfNumber);
         content += addAnnualBudget(ids, data);
 
 
@@ -538,12 +538,12 @@ let addMissionAndVision = function (ids, data) {
 }
 
 let addAnnualBudget = function (ids, data) {
-    let employeesStateTwoDecimal = Math.round(data.employeesState * 100 + Number.EPSILON) / 100;
+    // let employeesStateTwoDecimal = Math.round(data.employeesState * 100 + Number.EPSILON) / 100;
     let budgetContent = '<h4> ANNUAL BUDGET </h4>' +
         '<div class="annual-budget">' +
         '<h4> Number of State and RF Employees/FTEs.</h4>' +
         '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td><th class="border_bottom" width="36.5%">State</th><th class="border_bottom" width="36.5%">RF</th></tr></thead>' +
-        '<tbody><tr><th class="border_right padding_bottom padding_top">#Employees (Headcounts)</th><td>' + employeesStateTwoDecimal + '</td><td>' +
+        '<tbody><tr><th class="border_right padding_bottom padding_top">#Employees (Headcounts)</th><td>' + data.employeesState + '</td><td>' +
         data.employeesRF + '</td></tr>' + '<tr><th class="border_right">#FTEs</th><td>' + data.fteState + '</td><td>' +
         data.fteRF + '</td></tr></tbody></table></div>';
     return generateAccordionElem(1, ids.collapseId, ids.headerId, ids.parentId, ids.childId, "Annual Budget", budgetContent);
