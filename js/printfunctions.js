@@ -486,15 +486,52 @@ function printResearchPlanning(reportdata, year1, year2) {
     data["fteState"] = checkNull(reportdata.stateNumber);
     data["fteRF"] = checkNull(reportdata.rfNumber);
     // content += addAnnualBudget(ids, data);
-    data["federalApplication"] = checkNull(reportdata.proposals1, true);
-    data["stateApplication"] = checkNull(reportdata.proposals2,true);
-    data["privateApplication"] = checkNull(reportdata.proposals3,true);
+    data["federalApplication"] = checkNull(reportdata.proposals1);
+    data["stateApplication"] = checkNull(reportdata.proposals2);
+    data["privateApplication"] = checkNull(reportdata.proposals3);
+    if (data["federalApplication"] == "N/A" || data["stateApplication"] == "N/A" || data["privateApplication"] == "N/A") {
+        if (data["federalApplication"] == "N/A" && data["stateApplication"] == "N/A" && data["privateApplication"] == "N/A") {
+            addData9 = "N/A";
+        }
+        else if (data["federalApplication"] == "N/A" && data["stateApplication"] == "N/A") {
+            var privateApplication = parseInt(data.privateApplication);
+            addData9 = privateApplication;
+        }
+        else if (data["federalApplication"] == "N/A" && data["privateApplication"] == "N/A") {
+            var stateApplication = parseInt(data.stateApplication);
+            addData9 = stateApplication;
+        }
+        else if (data["stateApplication"] == "N/A" && data["privateApplication"] == "N/A") {
+            var federalApplication = parseInt(data.federalApplication);
+            addData9 = federalApplication;
+        }
+        else if (data["federalApplication"] == "N/A") {
+            var stateApplication = parseInt(data.stateApplication);
+            var privateApplication = parseInt(data.privateApplication);
 
-    var federalApplication = parseInt(data.federalApplication);
-    var stateApplication = parseInt(data.stateApplication);
-    var privateApplication = parseInt(data.privateApplication);
+            addData9 = stateApplication + privateApplication;
+        }
+        else if (data["stateApplication"] == "N/A") {
+            var federalApplication = parseInt(data.federalApplication);
+            var privateApplication = parseInt(data.privateApplication);
 
-    addData9 = federalApplication + stateApplication + privateApplication;
+            addData9 = federalApplication + privateApplication;
+        }
+        else if (data["privateApplication"] == "N/A") {
+            var stateApplication = parseInt(data.stateApplication);
+            var federalApplication = parseInt(data.federalApplication);
+
+            addData9 = stateApplication + federalApplication;
+        }
+    }
+    else {
+        var federalApplication = parseInt(data.federalApplication);
+        var stateApplication = parseInt(data.stateApplication);
+        var privateApplication = parseInt(data.privateApplication);
+
+        addData9 = federalApplication + stateApplication + privateApplication;
+    }
+
     data["proposal_total"] = add(addData9);
 
     data["federalAwards"] = checkNull(reportdata.awards1, true);
