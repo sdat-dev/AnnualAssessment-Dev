@@ -405,36 +405,36 @@ let addPlanningReport = function (reportdata, year1, year2) {
 
         data["awrds_total"] = addData6;
         //data["largeScale"] = checkNull(reportdata.Q53);                   //Need Check
-        data["proposal"] = checkNull(reportdata.largeScale1, true);
-        data["lsAwards"] = checkNull(reportdata.largeScale2, true);
+        data["proposal"] = checkNull(reportdata.largeScale1);
+        data["lsAwards"] = checkNull(reportdata.largeScale2);
 
         //data["strr"] = checkNull(reportdata.Q54);                         //Need Check
-        data["stProposal"] = checkNull(reportdata.sttrAwards1, true);
-        data["stAwards"] = checkNull(reportdata.sttrAwards2, true);
+        data["stProposal"] = checkNull(reportdata.sttrAwards1);
+        data["stAwards"] = checkNull(reportdata.sttrAwards2);
 
         //data["publications"] = checkNull(reportdata.Q55);                 //Need Check
-        data["booksAuthored"] = checkNull(reportdata.publication1, true);
-        data["booksChapters"] = checkNull(reportdata.publication2, true);
-        data["publicationsTable"] = checkNull(reportdata.publication3, true);
+        data["booksAuthored"] = checkNull(reportdata.publication1);
+        data["booksChapters"] = checkNull(reportdata.publication2);
+        data["publicationsTable"] = checkNull(reportdata.publication3);
 
 
         //data["technologyTransfer"] = checkNull(reportdata.Q56);           //Need Check
-        data["intellectual"] = checkNull(reportdata.technologyTransfer1, true);
-        data["patentsApplications"] = checkNull(reportdata.technologyTransfer2, true);
-        data["patentsIssued"] = checkNull(reportdata.technologyTransfer3, true);
-        data["patentsLicensed"] = checkNull(reportdata.technologyTransfer4, true);
-        data["licensedExecuted"] = checkNull(reportdata.technologyTransfer5, true);
-        data["licensedRevenue"] = checkNull(reportdata.technologyTransfer6, true);
-        data["startupCompanies"] = checkNull(reportdata.technologyTransfer7, true);
+        data["intellectual"] = checkNull(reportdata.technologyTransfer1);
+        data["patentsApplications"] = checkNull(reportdata.technologyTransfer2);
+        data["patentsIssued"] = checkNull(reportdata.technologyTransfer3);
+        data["patentsLicensed"] = checkNull(reportdata.technologyTransfer4);
+        data["licensedExecuted"] = checkNull(reportdata.technologyTransfer5);
+        data["licensedRevenue"] = checkNull(reportdata.technologyTransfer6);
+        data["startupCompanies"] = checkNull(reportdata.technologyTransfer7);
 
         //data["conference"] = checkNull(reportdata.Q57);                   //Need Check
-        data["goals"] = checkNull(reportdata.conference, true);
+        data["goals"] = checkNull(reportdata.conference);
 
         //data["education"] = checkNull(reportdata.Q58);                    //Need Check
-        data["undergraduate"] = checkNull(reportdata.educationAndTraining1, true);
-        data["graduate_masters"] = checkNull(reportdata.educationAndTraining2, true);
-        data["graduate_phd"] = checkNull(reportdata.educationAndTraining3, true);
-        data["post"] = checkNull(reportdata.educationAndTraining4, true);
+        data["undergraduate"] = checkNull(reportdata.educationAndTraining1);
+        data["graduate_masters"] = checkNull(reportdata.educationAndTraining2);
+        data["graduate_phd"] = checkNull(reportdata.educationAndTraining3);
+        data["post"] = checkNull(reportdata.educationAndTraining4);
         content += addResearchPerformancetarget(ids, data, year1);
 
 
