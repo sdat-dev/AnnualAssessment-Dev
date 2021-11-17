@@ -108,7 +108,7 @@ let addAssessmentReport = function (reportdata, year1, year2) {
     var amount1 = parseInt(data.additionalAmount1);
     var amount2 = parseInt(data.additionalAmount2);
     var amount3 = parseInt(data.additionalAmount3);
-    
+
     addTotal3 = amount1 + amount2 + amount3;
     data["total"] = addTotal3;
     content += addResearchAnnualBudget(ids, data);
@@ -356,15 +356,52 @@ let addPlanningReport = function (reportdata, year1, year2) {
 
         data["proposal_total"] = addData5;
         //data["awards"] = reportdata.Q52;                                  //Need Check
-        data["federalAwards"] = checkNull(reportdata.awards1, true);
-        data["stateAwards"] = checkNull(reportdata.awards2, true);
-        data["privateAwards"] = checkNull(reportdata.awards3, true);
+        data["federalAwards"] = checkNull(reportdata.awards1);
+        data["stateAwards"] = checkNull(reportdata.awards2);
+        data["privateAwards"] = checkNull(reportdata.awards3);
 
-        var federalAwards = parseInt(data.federalAwards);
-        var stateAwards = parseInt(data.stateAwards);
-        var privateAwards = parseInt(data.stateAwards);
+        if (data["federalAwards"] == "N/A" || data["stateAwards"] == "N/A" || data["privateAwards"] == "N/A") {
+            if (data["federalAwards"] == "N/A" && data["stateAwards"] == "N/A" && data["privateAwards"] == "N/A") {
+                addData6 = "N/A";
+            }
+            else if (data["federalAwards"] == "N/A" && data["stateAwards"] == "N/A") {
+                var privateAwards = parseInt(data.privateAwards);
+                addData6 = privateAwards;
+            }
+            else if (data["federalAwards"] == "N/A" && data["privateAwards"] == "N/A") {
+                var stateAwards = parseInt(data.stateAwards);
+                addData6 = stateAwards;
+            }
+            else if (data["stateAwards"] == "N/A" && data["privateAwards"] == "N/A") {
+                var federalAwards = parseInt(data.federalAwards);
+                addData6 = federalAwards;
+            }
+            else if (data["federalAwards"] == "N/A") {
+                var stateAwards = parseInt(data.stateAwards);
+                var privateAwards = parseInt(data.privateAwards);
 
-        addData6 = federalAwards + stateAwards + privateAwards;
+                addData6 = stateAwards + privateAwards;
+            }
+            else if (data["stateAwards"] == "N/A") {
+                var federalAwards = parseInt(data.federalAwards);
+                var privateAwards = parseInt(data.privateAwards);
+
+                addData6 = federalAwards + privateAwards;
+            }
+            else if (data["privateAwards"] == "N/A") {
+                var stateAwards = parseInt(data.stateAwards);
+                var federalAwards = parseInt(data.federalAwards);
+
+                addData6 = stateAwards + federalAwards;
+            }
+        }
+        else {
+            var federalAwards = parseInt(data.federalAwards);
+            var stateAwards = parseInt(data.stateAwards);
+            var privateAwards = parseInt(data.privateAwards);
+
+            addData6 = federalAwards + stateAwards + privateAwards;
+        }
 
         data["awrds_total"] = addData6;
         //data["largeScale"] = checkNull(reportdata.Q53);                   //Need Check
@@ -741,7 +778,7 @@ let addResearchActivity = function (ids, data, year) {
         '<th class="border_right padding_bottom padding_top">License Executed </th><td>' + data.licensesExecutedGoal + '</td><td>' +
         data.licensesExecutedActual + '</td></tr>' +
         '<th class="border_right padding_bottom padding_top">License Revenue </th><td>' + (isNaN(data.licensedRevenueGoal) ? data.licensedRevenueGoal : formatter.format(data.licensedRevenueGoal)) + '</td><td>' +
-        (isNaN(data.licensedRevenueActual)? data.licensedRevenueActual : formatter.format(data.licensedRevenueActual)) + '</td></tr>' +
+        (isNaN(data.licensedRevenueActual) ? data.licensedRevenueActual : formatter.format(data.licensedRevenueActual)) + '</td></tr>' +
         '<th class="border_right padding_bottom padding_top">Start-up Companies </th><td>' + data.startupCompaniesGoal + '</td><td>' +
         data.startupComapniesActual + '</td></tr>' +
         '</tbody></table></div>' +
