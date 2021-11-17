@@ -558,9 +558,9 @@ function printResearchPlanning(reportdata, year1, year2) {
         '</td><th class="border_bottom" width="36.5%">Your Goal for FY ' + period + '</th></tr></thead>' +
         '<tbody><tr><th class="border_right padding_bottom padding_top">Federal Applications</th>' +
         '<td style=" text-align: center;">' + data.federalApplication + '</td></tr>' +
-        '<tr><th class="border_right padding_bottom padding_top">State Application</th><td style=" text-align: center;">' +
+        '<tr><th class="border_right padding_bottom padding_top">State Applications</th><td style=" text-align: center;">' +
         data.stateApplication + '</td></tr>' +
-        '<tr><th class="border_right padding_bottom padding_top">Private Application</th><td style=" text-align: center;">' +
+        '<tr><th class="border_right padding_bottom padding_top">Private Applications</th><td style=" text-align: center;">' +
         data.privateApplication + '</td></tr>' +
         '<tr><th class="border_right padding_bottom padding_top">Total</th><td style=" text-align: center;">' +
         data.proposal_total + '</td></tr>' +

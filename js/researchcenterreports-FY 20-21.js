@@ -287,8 +287,7 @@ let addPlanningReport = function (reportdata, year1, year2) {
         content += '<p><b>Director\'s Name: </b>' + reportdata.firstName + ' ' + reportdata.lastName +
             '<br><b>Director\'s Email: </b>' + reportdata.email +
             '<br><b>Reporting Period: </b>July 1, ' + year1 + ' to June 30, ' + year2 +
-            '<button type="button" style="float:right; background-color: #46166b; color:white ; padding: 5px 10px 5px 10px; border-radius:5px; text-align: center; margin-left:auto;"onclick="printAssessmentReport(\'admin\')">Print</button></p>';
-
+            '<button type="button" style="float:right; background-color: #46166b; color:white ; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 2px; margin-right: 1px;text-align: center; margin: 0 auto;"onclick="printPlanningReport(\'researchcenter\')">Print</button>';
         content += '<div id = "FY' + year1 + '">';
 
         let ids = getIds('FY' + year1);
@@ -300,10 +299,10 @@ let addPlanningReport = function (reportdata, year1, year2) {
         ids = getIds('FY' + year1);
         data = {};
         data["annualBudget"] = reportdata.annualBudget;
-        data["employeesState"] = checkNull(reportdata.stateHeadcount);
-        data["employeesRF"] = checkNull(reportdata.rfHeadcount);
-        data["fteState"] = checkNull(reportdata.stateNumber);
-        data["fteRF"] = checkNull(reportdata.rfNumber);
+        data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
+        data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
+        data["fteState"] = checkNull(reportdata.stateNumber, true);
+        data["fteRF"] = checkNull(reportdata.rfNumber, true);
         content += addAnnualBudget(ids, data);
 
 
@@ -311,60 +310,59 @@ let addPlanningReport = function (reportdata, year1, year2) {
         ids = getIds('FY' + year1);
         data = {};
         //data["proposals"] = reportdata.Q51;                               //Need Check
-        data["federalApplication"] = checkNull(reportdata.proposals1);
-        data["stateApplication"] = checkNull(reportdata.proposals2);
-        data["privateApplication"] = checkNull(reportdata.proposals3);
+        data["federalApplication"] = checkNull(reportdata.proposals1, true);
+        data["stateApplication"] = checkNull(reportdata.proposals2,true);
+        data["privateApplication"] = checkNull(reportdata.proposals3,true);
 
-        var federalApplication = parseInt(data["federalApplication"], 10);
-        var stateApplication = parseInt(data["stateApplication"], 10);
-        var privateApplication = parseInt(data["privateApplication"], 10);
+        var federalApplication = parseInt(data.federalApplication);
+        var stateApplication = parseInt(data.stateApplication);
+        var privateApplication = parseInt(data.privateApplication);
 
         addData5 = federalApplication + stateApplication + privateApplication;
-
         data["proposal_total"] = addData5;
         //data["awards"] = reportdata.Q52;                                  //Need Check
-        data["federalAwards"] = checkNull(reportdata.awards1);
-        data["stateAwards"] = checkNull(reportdata.awards2);
-        data["privateAwards"] = checkNull(reportdata.awards3);
+        data["federalAwards"] = checkNull(reportdata.awards1, true);
+        data["stateAwards"] = checkNull(reportdata.awards2, true);
+        data["privateAwards"] = checkNull(reportdata.awards3, true);
 
-        var federalAwards = parseInt(data["federalAwards"], 10);
-        var stateAwards = parseInt(data["stateAwards"], 10);
-        var privateAwards = parseInt(data["privateAwards"], 10);
+        var federalAwards = parseInt(data.federalAwards);
+        var stateAwards = parseInt(data.stateAwards);
+        var privateAwards = parseInt(data.stateAwards);
 
         addData6 = federalAwards + stateAwards + privateAwards;
 
         data["awrds_total"] = addData6;
         //data["largeScale"] = checkNull(reportdata.Q53);                   //Need Check
-        data["proposal"] = checkNull(reportdata.largeScale1);
-        data["lsAwards"] = checkNull(reportdata.largeScale2);
+        data["proposal"] = checkNull(reportdata.largeScale1, true);
+        data["lsAwards"] = checkNull(reportdata.largeScale2, true);
 
         //data["strr"] = checkNull(reportdata.Q54);                         //Need Check
-        data["stProposal"] = checkNull(reportdata.sttrAwards1);
-        data["stAwards"] = checkNull(reportdata.sttrAwards2);
+        data["stProposal"] = checkNull(reportdata.sttrAwards1, true);
+        data["stAwards"] = checkNull(reportdata.sttrAwards2, true);
 
         //data["publications"] = checkNull(reportdata.Q55);                 //Need Check
-        data["booksAuthored"] = checkNull(reportdata.publication1);
-        data["booksChapters"] = checkNull(reportdata.publication2);
-        data["publicationsTable"] = checkNull(reportdata.publication3);
+        data["booksAuthored"] = checkNull(reportdata.publication1, true);
+        data["booksChapters"] = checkNull(reportdata.publication2, true);
+        data["publicationsTable"] = checkNull(reportdata.publication3, true);
 
 
         //data["technologyTransfer"] = checkNull(reportdata.Q56);           //Need Check
-        data["intellectual"] = checkNull(reportdata.technologyTransfer1);
-        data["patentsApplications"] = checkNull(reportdata.technologyTransfer2);
-        data["patentsIssued"] = checkNull(reportdata.technologyTransfer3);
-        data["patentsLicensed"] = checkNull(reportdata.technologyTransfer4);
-        data["licensedExecuted"] = checkNull(reportdata.technologyTransfer5);
-        data["licensedRevenue"] = checkNull(reportdata.technologyTransfer6);
-        data["startupCompanies"] = checkNull(reportdata.technologyTransfer7);
+        data["intellectual"] = checkNull(reportdata.technologyTransfer1, true);
+        data["patentsApplications"] = checkNull(reportdata.technologyTransfer2, true);
+        data["patentsIssued"] = checkNull(reportdata.technologyTransfer3, true);
+        data["patentsLicensed"] = checkNull(reportdata.technologyTransfer4, true);
+        data["licensedExecuted"] = checkNull(reportdata.technologyTransfer5, true);
+        data["licensedRevenue"] = checkNull(reportdata.technologyTransfer6, true);
+        data["startupCompanies"] = checkNull(reportdata.technologyTransfer7, true);
 
         //data["conference"] = checkNull(reportdata.Q57);                   //Need Check
-        data["goals"] = checkNull(reportdata.conference);
+        data["goals"] = checkNull(reportdata.conference, true);
 
         //data["education"] = checkNull(reportdata.Q58);                    //Need Check
-        data["undergraduate"] = checkNull(reportdata.educationAndTraining1);
-        data["graduate_masters"] = checkNull(reportdata.educationAndTraining2);
-        data["graduate_phd"] = checkNull(reportdata.educationAndTraining3);
-        data["post"] = checkNull(reportdata.educationAndTraining4);
+        data["undergraduate"] = checkNull(reportdata.educationAndTraining1, true);
+        data["graduate_masters"] = checkNull(reportdata.educationAndTraining2, true);
+        data["graduate_phd"] = checkNull(reportdata.educationAndTraining3, true);
+        data["post"] = checkNull(reportdata.educationAndTraining4, true);
         content += addResearchPerformancetarget(ids, data, year1);
 
 
@@ -400,9 +398,9 @@ let addResearchPerformancetarget = function (ids, data, year) {
         '</td><th class="border_bottom" width="36.5%">Your Goal for FY ' + period + '</th></tr></thead>' +
         '<tbody><tr><th class="border_right padding_bottom padding_top">Federal Applications</th>' +
         '<td>' + data.federalApplication + '</td></tr>' +
-        '<tr><th class="border_right padding_bottom padding_top">State Application</th><td>' +
+        '<tr><th class="border_right padding_bottom padding_top">State Applications</th><td>' +
         data.stateApplication + '</td></tr>' +
-        '<tr><th class="border_right padding_bottom padding_top">Private Application</th><td>' +
+        '<tr><th class="border_right padding_bottom padding_top">Private Applications</th><td>' +
         data.privateApplication + '</td></tr>' +
         '<tr><th class="border_right padding_bottom padding_top">Total</th><td>' +
         data.proposal_total + '</td></tr>' +
