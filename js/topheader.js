@@ -61,7 +61,7 @@ let addTopHeader = function () {
                                     '<li><a href="https://www.albany.edu/career/">Career Services</a></li>'+
                                     '<li><a href="https://www.albany.edu/arts">Arts</a></li>'+
                                     '<li><a href="https://www.albany.edu/student-life">Student Life</a></li>'+
-                                    '<li class="disappear"><a href="https://ualbanysports.com/">Athletics</a></li>'+
+                                    '<li><a href="https://ualbanysports.com/">Athletics</a></li>'+
                                 '</ul>'+
                             '</li>'+
                             '<li><a href="https://www.albany.edu/about-ualbany">About</a>'+
@@ -89,7 +89,7 @@ let addTopHeader = function () {
                                     '<li><a href="https://www.albany.edu/news-center/experts">Experts</a></li>'+
                                 '</ul>'+
                             '</li>'+
-                            '<li class="appear"><a href="https://ualbanysports.com/">Athletics</a></li>'+
+                            '<li><a href="https://ualbanysports.com/">Athletics</a></li>'+
                         '</ul>'+
                     '</nav>'+
 
@@ -185,7 +185,7 @@ let addTopHeader = function () {
                                         '<li><a href="https://www.albany.edu/career/">Career Services</a></li>'+
                                         '<li><a href="https://www.albany.edu/arts">Arts</a></li>'+
                                         '<li><a href="https://www.albany.edu/student-life">Student Life</a></li>'+
-                                        '<li class="disappear"><a href="https://ualbanysports.com/">Athletics</a></li>'+
+                                        '<li><a href="https://ualbanysports.com/">Athletics</a></li>'+
                                     '</ul>'+
                                     '</li>'+
                                     '<li>'+
