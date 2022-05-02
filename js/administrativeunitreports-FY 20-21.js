@@ -108,6 +108,10 @@ let addAssessmentReport = function (reportdata, year1, year2) {
         content += addAnnualBudget(ids, data);
 
         ids = getIds('FY' + year1);
+        console.log(reportdata);
+        content += addHonors(ids.collapseId,ids.headerId,ids.parentId,ids.childId,reportdata);
+
+        ids = getIds('FY' + year1);
         data = {};
         for (var i = 1; i < 7; i++) {
             data['membership' + i] = reportdata["organization" + i];
@@ -300,7 +304,13 @@ let addOrganizationalMemberships = function (ids, data) {
 }
 
 let addHonors = function (collapseId, headerId, parentId, childId, data) {
-    return generateAccordionElem(1, collapseId, headerId, parentId, childId, "Staff Honors, Awards, Other", data.staffHonors);
+    let honorsData = '<h4>STAFF HONORS, AWARDS, OTHER</h4>';
+    if(data.staffHonors != '')
+        honorsData+='<p class="honors">' + data.staffHonors + '</p>';
+    else
+        honorsData+='<p class="honors"><b>N/A</b></p>';
+            
+    return generateAccordionElem(1, collapseId, headerId, parentId, childId, "Staff Honors, Awards, Other", honorsData);
 }
 
 

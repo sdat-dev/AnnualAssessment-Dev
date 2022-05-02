@@ -100,12 +100,16 @@ let addAssessmentReport = function (reportdata, year1, year2) {
         ids = getIds('FY' + year1);
         data = {};
         data["annualBudget"] = reportdata.annualBudget;
-        data["employeesState"] = reportdata.stateHeadcount;
-        data["employeesRF"] = reportdata.rfHeadcount;
-        data["fteState"] = reportdata.stateNumber;
-        data["fteRF"] = reportdata.rfNumber;
+        data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
+        data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
+        data["fteState"] = checkNull(reportdata.stateNumber, true);
+        data["fteRF"] = checkNull(reportdata.rfNumber, true);
 
         content += addAnnualBudget(ids, data);
+
+        ids = getIds('FY' + year1);
+        console.log(reportdata);
+        content += addHonors(ids.collapseId,ids.headerId,ids.parentId,ids.childId,reportdata);
 
         ids = getIds('FY' + year1);
         data = {};
@@ -186,11 +190,11 @@ let addAssessmentReport = function (reportdata, year1, year2) {
 
         ids = getIds('FY' + year1);
         data = {};
-        data["annualBudget"] = "";
-        data["employeesState"] = "";
-        data["employeesRF"] = "";
-        data["fteState"] = "";
-        data["fteRF"] = "";
+        data["annualBudget"] = reportdata.annualBudget;
+        data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
+        data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
+        data["fteState"] = checkNull(reportdata.stateNumber, true);
+        data["fteRF"] = checkNull(reportdata.rfNumber, true);
 
         content += addAnnualBudget(ids, data);
 
@@ -248,10 +252,10 @@ let addPlanningReport = function (reportdata, year1, year2) {
         ids = getIds('FY' + year2);
         data = {};
         data["annualBudget"] = reportdata.annualBudget;
-        data["employeesState"] = reportdata.stateHeadcount;
-        data["employeesRF"] = reportdata.rfHeadcount;
-        data["fteState"] = reportdata.stateNumber;
-        data["fteRF"] = reportdata.rfNumber;
+        data["employeesState"] = checkNull(reportdata.stateHeadcount, true);
+        data["employeesRF"] = checkNull(reportdata.rfHeadcount, true);
+        data["fteState"] = checkNull(reportdata.stateNumber, true);
+        data["fteRF"] = checkNull(reportdata.rfNumber, true);
         content += addAnnualBudget(ids, data);
 
         for (var i = 1; i <= 5; i++) {
@@ -300,7 +304,13 @@ let addOrganizationalMemberships = function (ids, data) {
 }
 
 let addHonors = function (collapseId, headerId, parentId, childId, data) {
-    return generateAccordionElem(1, collapseId, headerId, parentId, childId, "Staff Honors, Awards, Other", data.staffHonors);
+    let honorsData = '<h4>STAFF HONORS, AWARDS, OTHER</h4>';
+    if(data.staffHonors != '')
+        honorsData+='<p class="honors">' + data.staffHonors + '</p>';
+    else
+        honorsData+='<p class="honors"><b>N/A</b></p>';
+            
+    return generateAccordionElem(1, collapseId, headerId, parentId, childId, "Staff Honors, Awards, Other", honorsData);
 }
 
 

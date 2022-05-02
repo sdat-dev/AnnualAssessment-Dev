@@ -108,7 +108,7 @@ let addAssessmentReport = function (reportdata, year1, year2) {
     var amount1 = parseInt(data.additionalAmount1);
     var amount2 = parseInt(data.additionalAmount2);
     var amount3 = parseInt(data.additionalAmount3);
-    
+
     addTotal3 = amount1 + amount2 + amount3;
     data["total"] = addTotal3;
     content += addResearchAnnualBudget(ids, data);
@@ -287,8 +287,7 @@ let addPlanningReport = function (reportdata, year1, year2) {
         content += '<p><b>Director\'s Name: </b>' + reportdata.firstName + ' ' + reportdata.lastName +
             '<br><b>Director\'s Email: </b>' + reportdata.email +
             '<br><b>Reporting Period: </b>July 1, ' + year1 + ' to June 30, ' + year2 +
-            '<button type="button" style="float:right; background-color: #46166b; color:white ; padding: 5px 10px 5px 10px; border-radius:5px; text-align: center; margin-left:auto;"onclick="printAssessmentReport(\'admin\')">Print</button></p>';
-
+            '<button type="button" style="float:right; background-color: #46166b; color:white ; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 2px; margin-right: 1px;text-align: center; margin: 0 auto;"onclick="printPlanningReport(\'researchcenter\')">Print</button>';
         content += '<div id = "FY' + year1 + '">';
 
         let ids = getIds('FY' + year1);
@@ -306,20 +305,54 @@ let addPlanningReport = function (reportdata, year1, year2) {
         data["fteRF"] = checkNull(reportdata.rfNumber);
         content += addAnnualBudget(ids, data);
 
-
-
         ids = getIds('FY' + year1);
         data = {};
         //data["proposals"] = reportdata.Q51;                               //Need Check
         data["federalApplication"] = checkNull(reportdata.proposals1);
         data["stateApplication"] = checkNull(reportdata.proposals2);
         data["privateApplication"] = checkNull(reportdata.proposals3);
+        if (data["federalApplication"] == "N/A" || data["stateApplication"] == "N/A" || data["privateApplication"] == "N/A") {
+            if (data["federalApplication"] == "N/A" && data["stateApplication"] == "N/A" && data["privateApplication"] == "N/A") {
+                addData5 = "N/A";
+            }
+            else if (data["federalApplication"] == "N/A" && data["stateApplication"] == "N/A") {
+                var privateApplication = parseInt(data.privateApplication);
+                addData5 = privateApplication;
+            }
+            else if (data["federalApplication"] == "N/A" && data["privateApplication"] == "N/A") {
+                var stateApplication = parseInt(data.stateApplication);
+                addData5 = stateApplication;
+            }
+            else if (data["stateApplication"] == "N/A" && data["privateApplication"] == "N/A") {
+                var federalApplication = parseInt(data.federalApplication);
+                addData5 = federalApplication;
+            }
+            else if (data["federalApplication"] == "N/A") {
+                var stateApplication = parseInt(data.stateApplication);
+                var privateApplication = parseInt(data.privateApplication);
 
-        var federalApplication = parseInt(data["federalApplication"], 10);
-        var stateApplication = parseInt(data["stateApplication"], 10);
-        var privateApplication = parseInt(data["privateApplication"], 10);
+                addData5 = stateApplication + privateApplication;
+            }
+            else if (data["stateApplication"] == "N/A") {
+                var federalApplication = parseInt(data.federalApplication);
+                var privateApplication = parseInt(data.privateApplication);
 
-        addData5 = federalApplication + stateApplication + privateApplication;
+                addData5 = federalApplication + privateApplication;
+            }
+            else if (data["privateApplication"] == "N/A") {
+                var stateApplication = parseInt(data.stateApplication);
+                var federalApplication = parseInt(data.federalApplication);
+
+                addData5 = stateApplication + federalApplication;
+            }
+        }
+        else {
+            var federalApplication = parseInt(data.federalApplication);
+            var stateApplication = parseInt(data.stateApplication);
+            var privateApplication = parseInt(data.privateApplication);
+
+            addData5 = federalApplication + stateApplication + privateApplication;
+        }
 
         data["proposal_total"] = addData5;
         //data["awards"] = reportdata.Q52;                                  //Need Check
@@ -327,11 +360,48 @@ let addPlanningReport = function (reportdata, year1, year2) {
         data["stateAwards"] = checkNull(reportdata.awards2);
         data["privateAwards"] = checkNull(reportdata.awards3);
 
-        var federalAwards = parseInt(data["federalAwards"], 10);
-        var stateAwards = parseInt(data["stateAwards"], 10);
-        var privateAwards = parseInt(data["privateAwards"], 10);
+        if (data["federalAwards"] == "N/A" || data["stateAwards"] == "N/A" || data["privateAwards"] == "N/A") {
+            if (data["federalAwards"] == "N/A" && data["stateAwards"] == "N/A" && data["privateAwards"] == "N/A") {
+                addData6 = "N/A";
+            }
+            else if (data["federalAwards"] == "N/A" && data["stateAwards"] == "N/A") {
+                var privateAwards = parseInt(data.privateAwards);
+                addData6 = privateAwards;
+            }
+            else if (data["federalAwards"] == "N/A" && data["privateAwards"] == "N/A") {
+                var stateAwards = parseInt(data.stateAwards);
+                addData6 = stateAwards;
+            }
+            else if (data["stateAwards"] == "N/A" && data["privateAwards"] == "N/A") {
+                var federalAwards = parseInt(data.federalAwards);
+                addData6 = federalAwards;
+            }
+            else if (data["federalAwards"] == "N/A") {
+                var stateAwards = parseInt(data.stateAwards);
+                var privateAwards = parseInt(data.privateAwards);
 
-        addData6 = federalAwards + stateAwards + privateAwards;
+                addData6 = stateAwards + privateAwards;
+            }
+            else if (data["stateAwards"] == "N/A") {
+                var federalAwards = parseInt(data.federalAwards);
+                var privateAwards = parseInt(data.privateAwards);
+
+                addData6 = federalAwards + privateAwards;
+            }
+            else if (data["privateAwards"] == "N/A") {
+                var stateAwards = parseInt(data.stateAwards);
+                var federalAwards = parseInt(data.federalAwards);
+
+                addData6 = stateAwards + federalAwards;
+            }
+        }
+        else {
+            var federalAwards = parseInt(data.federalAwards);
+            var stateAwards = parseInt(data.stateAwards);
+            var privateAwards = parseInt(data.privateAwards);
+
+            addData6 = federalAwards + stateAwards + privateAwards;
+        }
 
         data["awrds_total"] = addData6;
         //data["largeScale"] = checkNull(reportdata.Q53);                   //Need Check
@@ -400,9 +470,9 @@ let addResearchPerformancetarget = function (ids, data, year) {
         '</td><th class="border_bottom" width="36.5%">Your Goal for FY ' + period + '</th></tr></thead>' +
         '<tbody><tr><th class="border_right padding_bottom padding_top">Federal Applications</th>' +
         '<td>' + data.federalApplication + '</td></tr>' +
-        '<tr><th class="border_right padding_bottom padding_top">State Application</th><td>' +
+        '<tr><th class="border_right padding_bottom padding_top">State Applications</th><td>' +
         data.stateApplication + '</td></tr>' +
-        '<tr><th class="border_right padding_bottom padding_top">Private Application</th><td>' +
+        '<tr><th class="border_right padding_bottom padding_top">Private Applications</th><td>' +
         data.privateApplication + '</td></tr>' +
         '<tr><th class="border_right padding_bottom padding_top">Total</th><td>' +
         data.proposal_total + '</td></tr>' +
@@ -540,12 +610,12 @@ let addMissionAndVision = function (ids, data) {
 }
 
 let addAnnualBudget = function (ids, data) {
-    let employeesStateTwoDecimal = Math.round(data.employeesState * 100 + Number.EPSILON) / 100;
+    // let employeesStateTwoDecimal = Math.round(data.employeesState * 100 + Number.EPSILON) / 100;
     let budgetContent = '<h4> ANNUAL BUDGET </h4>' +
         '<div class="annual-budget">' +
         '<h4> Number of State and RF Employees/FTEs.</h4>' +
         '<table width="100%"><thead><tr><td class="border_bottom border_right" style="width: 25%;"></td><th class="border_bottom" width="36.5%">State</th><th class="border_bottom" width="36.5%">RF</th></tr></thead>' +
-        '<tbody><tr><th class="border_right padding_bottom padding_top">#Employees (Headcounts)</th><td>' + employeesStateTwoDecimal + '</td><td>' +
+        '<tbody><tr><th class="border_right padding_bottom padding_top">#Employees (Headcounts)</th><td>' + data.employeesState + '</td><td>' +
         data.employeesRF + '</td></tr>' + '<tr><th class="border_right">#FTEs</th><td>' + data.fteState + '</td><td>' +
         data.fteRF + '</td></tr></tbody></table></div>';
     return generateAccordionElem(1, ids.collapseId, ids.headerId, ids.parentId, ids.childId, "Annual Budget", budgetContent);
@@ -708,7 +778,7 @@ let addResearchActivity = function (ids, data, year) {
         '<th class="border_right padding_bottom padding_top">License Executed </th><td>' + data.licensesExecutedGoal + '</td><td>' +
         data.licensesExecutedActual + '</td></tr>' +
         '<th class="border_right padding_bottom padding_top">License Revenue </th><td>' + (isNaN(data.licensedRevenueGoal) ? data.licensedRevenueGoal : formatter.format(data.licensedRevenueGoal)) + '</td><td>' +
-        (isNaN(data.licensedRevenueActual)? data.licensedRevenueActual : formatter.format(data.licensedRevenueActual)) + '</td></tr>' +
+        (isNaN(data.licensedRevenueActual) ? data.licensedRevenueActual : formatter.format(data.licensedRevenueActual)) + '</td></tr>' +
         '<th class="border_right padding_bottom padding_top">Start-up Companies </th><td>' + data.startupCompaniesGoal + '</td><td>' +
         data.startupComapniesActual + '</td></tr>' +
         '</tbody></table></div>' +
