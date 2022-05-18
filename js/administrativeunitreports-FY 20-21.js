@@ -10,7 +10,7 @@ window.onload = function () {
         let units = getDistinctAttributes(responsedata.data, "Unit");
         let validunits = [];
         for (i = 0; i < units.length; i++) {
-            if (units[i] != "")
+            if (units[i] != "" && units[i] != "Testing Unit")
                 validunits.push(units[i]);
         }
         validunits.sort();
