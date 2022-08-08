@@ -96,18 +96,22 @@ let generateAccordionElem = function(level, collapseId, headerId, parentId, chil
 
 let createTabNavigation = function(distincttabs, tabname)
 {
+      let fy=sessionStorage.getItem('FY');
+    let fyObj=JSON.parse(sessionStorage.getItem(fy));
+    let activeBtn=fyObj.btnChoice;
+
     let navigationContent = '<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">';
     for(let i = 0; i< distincttabs.length; i++)
     {
         let buttonContent = '';
         let tabId = tabname + i.toString();
-        if(i == 0)
+        if(i == activeBtn)
         {
-            buttonContent = '<a class="nav-link active" id="pills-'+ tabId +'-tab" data-toggle="pill" href="#pills-'+ tabId +'" role="tab" aria-controls="pills-'+ tabId +'" aria-selected="true">'+ distincttabs[i] +'</a>';
+            buttonContent = '<a class="nav-link active" id="pills-'+ tabId +'-tab" data-toggle="pill" href="#pills-'+ tabId +'" role="tab" aria-controls="pills-'+ tabId +'" aria-selected="true" onClick="storeChoice(id)">'+ distincttabs[i] +'</a>';
         }
         else
         {
-            buttonContent = '<a class="nav-link" id="pills-'+ tabId +'-tab" data-toggle="pill" href="#pills-'+ tabId +'" role="tab" aria-controls="pills-'+ tabId +'" aria-selected="true">'+ distincttabs[i] +'</a>';
+            buttonContent = '<a class="nav-link" id="pills-'+ tabId +'-tab" data-toggle="pill" href="#pills-'+ tabId +'" role="tab" aria-controls="pills-'+ tabId +'" aria-selected="true" onClick="storeChoice(id)">'+ distincttabs[i] +'</a>';
         }
        
         let linkElement = '<li class="nav-item">' + buttonContent + '</li>';
@@ -118,24 +122,44 @@ let createTabNavigation = function(distincttabs, tabname)
 }
 
 let buildTabContent = function(distincttabs, tabname, tabContent){
-    let content = '<div class="tab-content" id="pills-tabContent">';
+  
     
+    let content = '<div class="tab-content" id="pills-tabContent">';
+    // let tabId;
     for(let i = 0; i< distincttabs.length; i++)
     {
         let tabId = tabname + i.toString();
         if(i == 0)
         {
-            content +='<div class="tab-pane fade show active" id="pills-'+ tabId +'" role="tabpanel" aria-labelledby="pills-'+ tabId +'-tab">';
+            content +='<div class="tab-pane fade show active"  id="pills-'+ tabId +'" role="tabpanel"  aria-labelledby="pills-'+ tabId +'-tab">';
         }
         else
         {
-            content +='<div class="tab-pane fade" id="pills-'+ tabId +'" role="tabpanel" aria-labelledby="pills-'+ tabId +'-tab">';
+            console.log("exec")
+            content +='<div class="tab-pane fade" id="pills-'+ tabId +'" role="tabpanel"  aria-labelledby="pills-'+ tabId +'-tab">';
         }
         content += tabContent[i];
         content += '</div>';
     }
     content += '</div>';
+
+    // console.log(tabId)
+
     return content;
+}
+
+const storeChoice=(id)=>{
+
+    let fy=sessionStorage.getItem('FY');
+    let fyObj=JSON.parse(sessionStorage.getItem(fy));
+    if(id.indexOf(0)==-1){
+        let obj=JSON.stringify({unitChoice:fyObj.unitChoice,'btnChoice':1})
+        sessionStorage.setItem(fy,obj)
+    }
+    else{
+        let obj=JSON.stringify({unitChoice:fyObj.unitChoice,'btnChoice':0})
+        sessionStorage.setItem(fy,obj)
+    }
 }
 
 function getDate(serial){
@@ -250,6 +274,12 @@ function changeReportUnit(){
     let unitdata = reportdata.data.filter(d => {
         return d.Unit == unit;
     })[0];
+    //logic to ssave prev selected data starts
+    let fy=sessionStorage.getItem('FY');
+    let fyObj=JSON.parse(sessionStorage.getItem(fy)); 
+    let obj=JSON.stringify({unitChoice:unit,'btnChoice':fyObj.btnChoice})
+    sessionStorage.setItem(fy,obj);//change the pref based on user change
+    //ends
     buildReport(unitdata, reportdata.FY);
 }
 

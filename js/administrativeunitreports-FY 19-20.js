@@ -14,16 +14,42 @@ window.onload = function () {
                 validunits.push(units[i]);
         }
         validunits.sort();
+        //logic for remembering prev selected values--- starts
+        let defaultUnit=validunits[0];
+        let prevFound=false;
+        //for dropdown
+        sessionStorage.setItem('FY','A'+responsedata.FY);
+        if(!sessionStorage.getItem('A'+responsedata.FY)){
+            let obj=JSON.stringify({unitChoice:validunits[0],'btnChoice':0})
+            sessionStorage.setItem('A'+responsedata.FY,obj)  //On first time navigation select 1st one as default
+        }
+        else{
+            let fy=responsedata.FY;
+            let unitObj=JSON.parse(sessionStorage.getItem('A'+responsedata.FY));
+            let unit=unitObj.unitChoice;
+            console.log(unit)
+            if(validunits.includes(unit)){ //if prev selected unit in list make it default selected
+                defaultUnit=unit;
+            }
+            else{
+                defaultUnit=validunits[0]; //if not in list take first option as default
+            }}
+        //------ends
+
         let headercontent = ' <select id="selectunit" onchange="changeReportUnit()">';
         for (i = 0; i < validunits.length; i++) {
+            if(validunits[i]===defaultUnit){
+                headercontent = headercontent + '<option selected value="' + validunits[i] + '">' + validunits[i] + '</option>';
+            }
+            else{
             headercontent = headercontent + '<option value="' + validunits[i] + '">' + validunits[i] + '</option>';
-        }
+        }}
         headercontent = headercontent + '</select> ' + responsedata.FY;
         let contentHeadr = document.getElementsByClassName('report-header')[0];
         contentHeadr.innerHTML = headercontent;
 
         let unitdata = responsedata.data.filter(d => {
-            return d.Unit == validunits[0];
+            return d.Unit == defaultUnit;
         });
         buildReport(unitdata[0], responsedata.FY);
     })).catch(errors => {
@@ -50,6 +76,7 @@ let buildReport = function (data, period) {
         tabcontent.push(addPlanningReport(data["FY 21-22"], '2021', '2022'));
     }
     else if (period == 'FY 19-20') {
+        // sessionStorage.setItem()
         years = ['FY 2019-20', 'FY 2020-21'];
         tabheaders = ['Assessment FY 19-20 <br><span style="font-size:15px;"> (Year Completed)</span>', 'Planning FY 20-21 <br> <span style="font-size:15px;">(Year Ahead)<span>'];
         tabcontent.push(addAssessmentReport(data["FY 19-20"], '2019', '2020'));
