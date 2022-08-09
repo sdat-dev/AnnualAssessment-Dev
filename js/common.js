@@ -1,4 +1,13 @@
-let sidemenuItems = [{"item":"HOME","link":"home.html"},{"item":"ANNUAL ASSESSMENTS","link":"annualassessments.html"},{"item":"ADMINISTRATIVE UNIT REPORTS","link":"#","subItems":[{"item":"FY 19-20","link":"administrativeunitreports-FY 19-20.html"},{"item":"FY 20-21","link":"administrativeunitreports-FY 20-21.html"},{"item":"FY 21-22","link":"administrativeunitreports-FY 21-22.html"}]},{"item":"RESEARCH CENTER REPORTS","link":"#","subItems":[{"item":"FY 19-20","link":"researchcenterreports-FY 19-20.html"},{"item":"FY 20-21","link":"researchcenterreports-FY 20-21.html"},{"item":"FY 21-22","link":"researchcenterreports-FY 21-22.html"}]},{"item":"STEPS TO COMPLETION","link":"steps-to-completion.html"},{"item":"BENEFITS","link":"benifits.html"},{"item":"PRINT REPORTS","link":"print.html"},{"item":"QUESTIONS?","link":"questions.html"}]
+let sidemenuItems = [{"item":"HOME","link":"home.html"},{"item":"ANNUAL ASSESSMENTS","link":"annualassessments.html"},
+{"item":"ADMINISTRATIVE UNIT REPORTS","link":"#","subItems":[
+    {"item":"FY 19-20","link":"administrativeunitreports-FY 19-20.html"}
+    ,{"item":"FY 20-21","link":"administrativeunitreports-FY 20-21.html"}
+    ,{"item":"FY 21-22","link":"administrativeunitreports-FY 21-22.html"}]},
+    {"item":"RESEARCH CENTER REPORTS","link":"#","subItems":
+    [{"item":"FY 19-20","link":"researchcenterreports-FY 19-20.html"},
+    {"item":"FY 20-21","link":"researchcenterreports-FY 20-21.html"},
+    {"item":"FY 21-22","link":"researchcenterreports-FY 21-22.html"}]},
+    {"item":"STEPS TO COMPLETION","link":"steps-to-completion.html"},{"item":"BENEFITS","link":"benifits.html"},{"item":"PRINT REPORTS","link":"print.html"},{"item":"QUESTIONS?","link":"questions.html"}]
 //SideMenu Start
 //What evet written  before '//SideMenu Start' will be relace with sidemenuItems in automation scripts
 let addsidemenu = function(page, subpage){
@@ -6,16 +15,26 @@ let addsidemenu = function(page, subpage){
 
     for(let i = 0; i < sidemenuItems.length; i++){
         let item = sidemenuItems[i];
-
+        // sessionStorage.setItem("initPage",page);
         if(page != item.item){
             let link = '';
             if(item.hasOwnProperty('subItems') && item.link == '#'){
+                // if(sessionStorage.getItem('FY')){
+                   
+                //     for(iter in item.subItems){
+                //         if(iter.item==sessionStorage.getItem('FY') && page == item.item){
+                //             link=iter.link;
+                //         }
+                //     }
+                // }
+                // else{ 
                 link = item.subItems[0].link;
-            } 
+                // }
+            }            
             else{
                 link = item.link;
             }
-
+            // console.log(link);
             let menuItem = document.createElement("li");
             let menuItemContent = '<a href="' + link + '">'+ item.item +'</a>'; 
             menuItem.innerHTML = menuItemContent;
@@ -32,7 +51,7 @@ let addsidemenu = function(page, subpage){
                 else{
                     link = item.link;
                 }
-
+                // console.log(link);
                 let menuItem = document.createElement("li");
                 let menuItemContent = '<a href="' + link + '">'+ item.item +'</a>'; 
                 menuItem.innerHTML = menuItemContent;
@@ -41,39 +60,80 @@ let addsidemenu = function(page, subpage){
                 menuItem.setAttribute("id", "active-page");
                 sidemenu.appendChild(menuItem);
             }
+            // else if(subpage.indexOf("FY")!=-1 && sessionStorage.getItem('FY')){
+            //     let subitems = item.subItems;
+            //     let itemActive;
+            //     if(page==sessionStorage.getItem("initPage")){
+            //     sessionStorage.setItem('FY',subpage);
+            //     }
+            //     sessionStorage.setItem("initPage",page);
+            //     let submenu = '<ul id="sub-navigation-bar">';
+            //     for(var j = 0; j< subitems.length; j++)
+            //     {
+            //         if(subitems[j].item==sessionStorage.getItem('FY')){
+            //             itemActive=subitems[j].item;
+            //             submenu +='<li class="first-sub-navigation-item hover-highlight"';
+            //             submenu += ' id = "active-page"';
+            //             submenu += '><a href="'+ subitems[j].link +'">'+ subitems[j].item +'</a></li>';
+            //         }
+            //         else{
+            //             submenu +='<li class="sub-navigation-items hover-highlight"';
+            //             if(sessionStorage.getItem('FY')== subitems[j].item)
+            //             {
+                            
+            //                 itemActive=subitems[j].item;
+            //                 submenu += ' id = "active-page"';
+            //             }
+            //             submenu += '><a href="'+ subitems[j].link +'">'+ subitems[j].item +'</a></li>';
+            //         }  
+            //     }
+               
+            //     let menuItem = document.createElement("li");
+            //     let menuItemContent = '<a href="' + subitems[0].link + '">'+ item.item +'</a>' + submenu; 
+            //     menuItem.innerHTML = menuItemContent;
+            //     menuItem.setAttribute("id", "expanded-navigation-item");
+            //     sidemenu.appendChild(menuItem);
+            // }
             else{
                 let subitems = item.subItems;
+                let itemActive;
                 let submenu = '<ul id="sub-navigation-bar">';
                 for(var j = 0; j< subitems.length; j++)
                 {
-                    if(j == 0)
+                     if(j == 0)
                     {
                         submenu +='<li class="first-sub-navigation-item hover-highlight"';
                         if(subpage == subitems[j].item)
                         {
+                            itemActive=subitems[j].item;
                             submenu += ' id = "active-page"';
                         }
                         submenu += '><a href="'+ subitems[j].link +'">'+ subitems[j].item +'</a></li>';
                     }
-                    else if(j == subitems.length-1)
-                    {
-                        submenu +='<li class="last-sub-navigation-item hover-highlight"';
-                        if(subpage == subitems[j].item)
-                        {
-                            submenu += ' id = "active-page"';
-                        }
-                        submenu += '><a href="'+ subitems[j].link +'">'+ subitems[j].item +'</a></li>';
-                    }
+                    // else if(j == subitems.length-1)
+                    // {
+                    //     submenu +='<li class="last-sub-navigation-item hover-highlight"';
+                    //     if(subpage == subitems[j].item)
+                    //     {
+                    //         itemActive=subitems[j].item;
+                    //         submenu += ' id = "active-page"';
+                    //     }
+                    //     submenu += '><a href="'+ subitems[j].link +'">'+ subitems[j].item +'</a></li>';
+                    // }   
                     else
                     {
                         submenu +='<li class="sub-navigation-items hover-highlight"';
                         if(subpage == subitems[j].item)
                         {
+                            itemActive=subitems[j].item;
                             submenu += ' id = "active-page"';
                         }
                         submenu += '><a href="'+ subitems[j].link +'">'+ subitems[j].item +'</a></li>';
                     }
                 }
+                
+                // sessionStorage.setItem('FY',itemActive);
+                // sessionStorage.setItem('initPage',page);
                 let menuItem = document.createElement("li");
                 let menuItemContent = '<a href="' + subitems[0].link + '">'+ item.item +'</a>' + submenu; 
                 menuItem.innerHTML = menuItemContent;
@@ -96,8 +156,8 @@ let generateAccordionElem = function(level, collapseId, headerId, parentId, chil
 
 let createTabNavigation = function(distincttabs, tabname)
 {
-      let fy=sessionStorage.getItem('FY');
-    let fyObj=JSON.parse(sessionStorage.getItem(fy));
+    //   let fy=sessionStorage.getItem('FY');
+    let fyObj=JSON.parse(sessionStorage.getItem('choices'));
     let activeBtn=fyObj.btnChoice;
 
     let navigationContent = '<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">';
@@ -122,20 +182,21 @@ let createTabNavigation = function(distincttabs, tabname)
 }
 
 let buildTabContent = function(distincttabs, tabname, tabContent){
-  
+    let fyObj=JSON.parse(sessionStorage.getItem('choices'));
+    let activeBtn=fyObj.btnChoice;
+
     
     let content = '<div class="tab-content" id="pills-tabContent">';
     // let tabId;
     for(let i = 0; i< distincttabs.length; i++)
     {
         let tabId = tabname + i.toString();
-        if(i == 0)
+        if(i == activeBtn)
         {
             content +='<div class="tab-pane fade show active"  id="pills-'+ tabId +'" role="tabpanel"  aria-labelledby="pills-'+ tabId +'-tab">';
         }
         else
         {
-            console.log("exec")
             content +='<div class="tab-pane fade" id="pills-'+ tabId +'" role="tabpanel"  aria-labelledby="pills-'+ tabId +'-tab">';
         }
         content += tabContent[i];
@@ -150,15 +211,15 @@ let buildTabContent = function(distincttabs, tabname, tabContent){
 
 const storeChoice=(id)=>{
 
-    let fy=sessionStorage.getItem('FY');
-    let fyObj=JSON.parse(sessionStorage.getItem(fy));
+    // let fy=sessionStorage.getItem('FY');
+    let fyObj=JSON.parse(sessionStorage.getItem('choices'));
     if(id.indexOf(0)==-1){
         let obj=JSON.stringify({unitChoice:fyObj.unitChoice,'btnChoice':1})
-        sessionStorage.setItem(fy,obj)
+        sessionStorage.setItem('choices',obj)
     }
     else{
         let obj=JSON.stringify({unitChoice:fyObj.unitChoice,'btnChoice':0})
-        sessionStorage.setItem(fy,obj)
+        sessionStorage.setItem('choices',obj)
     }
 }
 
@@ -275,10 +336,10 @@ function changeReportUnit(){
         return d.Unit == unit;
     })[0];
     //logic to ssave prev selected data starts
-    let fy=sessionStorage.getItem('FY');
-    let fyObj=JSON.parse(sessionStorage.getItem(fy)); 
+    // let fy=sessionStorage.getItem('FY');
+    let fyObj=JSON.parse(sessionStorage.getItem('choices')); 
     let obj=JSON.stringify({unitChoice:unit,'btnChoice':fyObj.btnChoice})
-    sessionStorage.setItem(fy,obj);//change the pref based on user change
+    sessionStorage.setItem('choices',obj);//change the pref based on user change
     //ends
     buildReport(unitdata, reportdata.FY);
 }

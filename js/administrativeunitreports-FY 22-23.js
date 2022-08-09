@@ -17,24 +17,23 @@ window.onload = function () {
 
          //logic for remembering prev selected values--- starts
          let defaultUnit=validunits[0];
-         let prevFound=false;
-         //for dropdown
-         sessionStorage.setItem('FY','A'+responsedata.FY);
-         if(!sessionStorage.getItem('A'+responsedata.FY)){
-             let obj=JSON.stringify({unitChoice:validunits[0],'btnChoice':0})
-             sessionStorage.setItem('A'+responsedata.FY,obj)  //On first time navigation select 1st one as default
-         }
-         else{
-             let fy=responsedata.FY;
-             let unitObj=JSON.parse(sessionStorage.getItem('A'+responsedata.FY));
-             let unit=unitObj.unitChoice;
-             console.log(unit)
-             if(validunits.includes(unit)){ //if prev selected unit in list make it default selected
-                 defaultUnit=unit;
-             }
-             else{
-                 defaultUnit=validunits[0]; //if not in list take first option as default
-             }}
+        let prevFound=false;
+        //for dropdown
+        // sessionStorage.setItem('FY',responsedata.FY);
+        if(!sessionStorage.getItem('choices')){
+            let obj=JSON.stringify({unitChoice:validunits[0],'btnChoice':0})
+            sessionStorage.setItem('choices',obj)  //On first time navigation select 1st one as default
+        }
+        else{
+            let fy=responsedata.FY;
+            let unitObj=JSON.parse(sessionStorage.getItem('choices'));
+            let unit=unitObj.unitChoice;
+            if(validunits.includes(unit)){ //if prev selected unit in list make it default selected
+                defaultUnit=unit;
+            }
+            else{
+                defaultUnit=validunits[0]; //if not in list take first option as default
+            }}
          //------ends
         let headercontent = ' <select id="selectunit" onchange="changeReportUnit()">';
         for (i = 0; i < validunits.length; i++) {
